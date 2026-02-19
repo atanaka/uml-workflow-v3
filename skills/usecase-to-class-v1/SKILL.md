@@ -741,12 +741,13 @@ end note
 
 ## Output
 
-### 1. PlantUML Class Diagram
+### 1. PlantUML Class Diagram（英語版）
 
 **Filename:** `{project-name}_class.puml`
 
 **Contents:**
 - Complete PlantUML class diagram
+- Class names and attribute names in English（コード生成の基準）
 - All actors with <<actor>> stereotype
 - All entities with full attributes
 - All relationships (associations, compositions, aggregations)
@@ -762,6 +763,51 @@ end note
 - **関連線は標準クラス図記法（カラス足記法禁止）、多重度を両端に明示** ⭐
 - **アクターは `class` + `<<actor>>` ステレオタイプで記述（`actor` キーワード禁止）** ⭐
 - Business logic methods included
+
+---
+
+### 1b. PlantUML Class Diagram（日本語版）⭐ NEW!
+
+**Filename:** `{project-name}_class_J.puml`
+
+モデラー向けに、クラス名・属性名・メソッド名をすべて日本語にした版を英語版と同時に生成する。
+`domain-model.json` の `japanese_name` フィールドを使用する。
+
+**変換ルール:**
+
+| 要素 | 英語版（_class.puml） | 日本語版（_class_J.puml） |
+|------|----------------------|--------------------------|
+| クラス名 | `Customer` | `顧客` |
+| 属性名 | `companyName: string` | `会社名: string` |
+| メソッド名 | `isActive(): boolean` | `有効確認(): boolean` |
+| enum名 | `OrderStatus` | `注文ステータス` |
+| enum値 | `pending_credit` | `与信審査中` |
+| 関連ラベル | そのまま（すでに日本語）| そのまま |
+| パッケージ名 | そのまま（すでに日本語）| そのまま |
+| アクター名 | そのまま（すでに日本語）| そのまま |
+
+**注意:** `_class_J.puml` はモデラーによる視認・レビュー用途。コード生成には英語版（`_class.puml`）を使用する。
+
+**例:**
+```plantuml
+' 英語版
+class Customer <<aggregate_root>> {
+  +id: string
+  +companyName: string
+  +status: CustomerStatus
+  --
+  +isActive(): boolean
+}
+
+' 日本語版（_class_J.puml）
+class 顧客 <<aggregate_root>> {
+  +顧客ID: string
+  +会社名: string
+  +ステータス: 顧客ステータス
+  --
+  +有効確認(): boolean
+}
+```
 
 ---
 
