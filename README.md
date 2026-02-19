@@ -254,7 +254,7 @@ Claude: [Step 1〜9 を自動実行]
 
 ## 🌐 GitHub
 
-https://github.com/[your-username]/ai-mbse-skills
+https://github.com/atanaka/uml-workflow-v3
 
 ---
 
