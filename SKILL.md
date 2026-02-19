@@ -191,6 +191,29 @@ Claude calls classdiagram-image-to-json with:
 
 **CRITICAL**: When a user requests to use this skill, Claude MUST follow this exact workflow.
 
+### 🔄 Resume Detection (CHECK FIRST — Before Any Phase)
+
+**Before starting PHASE 0**, Claude MUST check if execution is already in progress:
+
+```bash
+ls /mnt/user-data/outputs/{project_name}/ 2>/dev/null && echo "EXISTS" || echo "NEW"
+```
+
+**Decision:**
+
+| Condition | Action |
+|-----------|--------|
+| Directory does NOT exist | Proceed to PHASE 0 normally |
+| Directory EXISTS, user said "resume" or "continue" | Skip PHASE 0/1. Show existing files and resume from next incomplete step |
+| Directory EXISTS, user gave NEW scenario | Ask: "前回の成果物があります。クリアして新規生成しますか？" |
+| Mid-execution (SKILL.md re-read due to context) | **DO NOT restart PHASE 0.** Continue from the current step. |
+
+> ⛔ **ANTI-LOOP RULE**: If Claude re-reads this SKILL.md during execution (e.g. due to context length),
+> it must recognize the current execution state from existing outputs and **resume**, not restart.
+> Restarting PHASE 0 mid-execution is PROHIBITED.
+
+---
+
 ### Trigger Patterns
 
 Execute this workflow when user says:
@@ -203,12 +226,18 @@ Execute this workflow when user says:
 
 ```
 1. Determine project_name from user's request
-2. Ask questions using ask_user_input_v0 tool
-3. Execute: bash_tool run_workflow.py with user's answers
-4. Read execution plan JSON
-5. Call each sub-skill in sequence
-6. Present results with present_files
+2. [RESUME CHECK] If outputs already exist → skip to step 5 or ask where to resume
+3. Ask questions using ask_user_input_v0 tool
+   ⛔ STOP HERE. End response. Wait for user's next message with selections.
+4. Receive user's selections → Execute bash_tool run_workflow.py
+5. Read execution plan JSON
+6. Call each sub-skill in sequence (Step 1 → 9, never restart mid-execution)
+7. Present results with present_files
 ```
+
+> ⚠️ **CRITICAL**: Step 3 and step 4 are in DIFFERENT conversation turns.
+> After calling `ask_user_input_v0`, Claude MUST end its response and wait.
+> Proceeding without user's explicit answers is PROHIBITED.
 
 **Detail**: See CLAUDE_QUICK_GUIDE.md for concise reference, or follow detailed phases below.
 
@@ -381,7 +410,27 @@ ask_user_input_v0({
 ```
 
 > ⚠️ **収集したテックスタック選択値は会話コンテキストに記録し、Step 8 で usecase-to-code-v1 を呼び出す際に Case A として渡すこと。Step 8 で再度ユーザーに質問してはならない。**
+
+---
+
+## ⛔ PHASE 1 → PHASE 2 BOUNDARY (CRITICAL)
+
+After calling `ask_user_input_v0` in PHASE 1, Claude MUST:
+
+1. **End the response immediately** — do not write any more text after the widget call
+2. **Wait** for the user's next message containing their selections
+3. **Only then** proceed to PHASE 2 with the confirmed values
+
+**This is a hard boundary between two conversation turns.**
+
 ```
+Turn N  : Claude calls ask_user_input_v0 → ENDS RESPONSE
+Turn N+1: User replies with selections (e.g. "フルワークフロー / TypeScript+Express / ...")
+Turn N+1: Claude reads selections → proceeds to PHASE 2
+```
+
+**Proceeding to PHASE 2 in the same turn as the widget call is STRICTLY PROHIBITED.**
+Even if the user's original message seems to imply preferences, Claude must wait for explicit confirmation via the widget response.
 
 ---
 
