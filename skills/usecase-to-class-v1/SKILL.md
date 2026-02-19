@@ -628,6 +628,23 @@ enum OrderStatus {
 enum OrderStatus { pending / approved / shipped / cancelled }
 ```
 
+**ルール C — アクターは `actor` キーワードではなく `class` + `<<actor>>` ステレオタイプで記述する**
+
+PlantUMLクラス図では `actor` キーワードはエラーになるビューワーがある。
+`class` + `<<actor>>` ステレオタイプで代替する。
+
+```plantuml
+' ❌ 禁止（クラス図内でのactor宣言）
+actor "購買担当者" as Buyer   <<actor>>
+actor "営業担当者" as SalesRep <<actor>>
+
+' ✅ 正しい（classキーワード + <<actor>>ステレオタイプ）
+class "購買担当者" as Buyer    <<actor>>
+class "営業担当者" as SalesRep <<actor>>
+```
+
+---
+
 **ルール B — 関連線はカラス足記法（--o{, }o--）を使わず標準クラス図記法を使う**
 
 多重度は `"1"`, `"0..1"`, `"0..*"`, `"1..*"` の形式で両端に明示する。
@@ -657,9 +674,9 @@ OrderItem }o-- Product      : 参照
 ```plantuml
 @startuml {project}_class
 
-' Actors
-actor 顧客 <<actor>>
-actor 受注係 <<actor>>
+' Actors（classキーワード + <<actor>>ステレオタイプ）
+class "顧客" as Customer_Actor   <<actor>>
+class "受注係" as OrderStaff     <<actor>>
 ...
 
 ' Enumerations（必ず改行形式で記述）
@@ -743,6 +760,7 @@ end note
 - Enumeration types for status fields
 - **enum は改行形式（1行スラッシュ/カンマ区切り禁止）** ⭐
 - **関連線は標準クラス図記法（カラス足記法禁止）、多重度を両端に明示** ⭐
+- **アクターは `class` + `<<actor>>` ステレオタイプで記述（`actor` キーワード禁止）** ⭐
 - Business logic methods included
 
 ---
