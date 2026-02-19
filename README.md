@@ -1,449 +1,261 @@
-# UML Workflow v3 - README
+# AI-Assisted UML Workflow v3 - Complete Package
 
-Token効率化を極めたUMLワークフロー統合スキル
-
-## 🎯 これは何？
-
-**uml-workflow-v3**は、3つの最適化機能を統合したUMLワークフローです：
-
-1. **キャッシュシステム**: 中間成果物を自動保存・再利用
-2. **段階的実行**: 必要なステップのみ実行
-3. **XMI最適化**: デフォルトでXMI生成OFF（40%高速化）
-
-**最大75%のtoken削減を実現**
-
-## 🚀 使い方（超簡単）
-
-### Claude会話での使用
-
-```
-あなた: 「uml-workflow-v3で受注管理システムを生成して」
-
-Claude: [対話的に質問]
-  1. プロジェクト名は？ → order-management
-  2. キャッシュ使用？ → はい
-  3. 実行モードは？ → フルワークフロー
-  4. XMI生成？ → いいえ（推奨）
-  5. テスト生成？ → はい
-
-Claude: [自動的に実行]
-  ✅ Step 1-9を実行
-  💾 すべてキャッシュに保存
-  🎉 完成！
-```
-
-### 2回目以降（キャッシュ活用）
-
-```
-あなた: 「order-managementに在庫管理機能を追加」
-
-Claude: [対話的に質問]
-  1. プロジェクト名は？ → order-management（既存）
-  2. キャッシュ使用？ → はい
-  3. 実行モードは？ → Step 2から再開
-  
-Claude: [自動的に実行]
-  💾 Step 1: キャッシュから復元
-  ⚙️ Step 2-8: 再生成
-  
-Token削減: 約30%
-```
-
-## 📊 Token削減効果
-
-### シナリオ別の削減率
-
-| シナリオ | 実行内容 | Token削減率 |
-|---------|---------|------------|
-| **初回実行** | 全ステップ | 0% （基準） |
-| **機能追加** | Step 2から | 20-30% |
-| **モデル調整** | Step 3から | 30-40% |
-| **モデルのみ** | Step 1-6のみ | 30-35% |
-| **検証のみ** | Step 6のみ | 95% |
-| **最適組合せ** | Step 3から + モデルのみ | **75%** |
-
-### XMI生成OFF の追加効果
-
-すべてのシナリオで、XMI生成をOFFにすることで**さらに18%削減**
-
-```
-例：モデルのみ + XMI OFF
-  基本削減: 33%
-  XMI削減: 18%
-  合計: 約50%削減
-```
-
-## 🎮 実行モード
-
-### 1. フルワークフロー（デフォルト）
-
-すべてのステップを実行：
-
-```
-Step 1: シナリオ → アクティビティ図
-Step 2: アクティビティ図 → ユースケース
-Step 3: ユースケース → クラス図
-Step 4: クラス図 → ステートマシン図
-Step 5: ユースケース → シーケンス図
-Step 6: モデルバリデーション
-Step 7: セキュリティ設計
-Step 8: コード生成
-Step 9: テスト生成
-```
-
-**いつ使う**: 初回生成、完全な再生成
-
-### 2. 指定ステップから再開
-
-任意のステップから実行を開始：
-
-**例**: Step 3（クラス図生成）から再開
-- Step 1-2をスキップ（キャッシュ利用）
-- Step 3-9を実行
-
-**いつ使う**: 前段が変わっていない場合
-
-### 3. モデルのみ生成
-
-コード生成をスキップ：
-
-- Step 1-7のみ実行
-- Step 8-9をスキップ
-
-**いつ使う**: 要件定義・設計フェーズ
-
-### 4. 単一スキル実行
-
-1つのステップのみ：
-
-**例**: バリデーションのみ
-- Step 6のみ実行
-
-**いつ使う**: モデル検証、特定の図の再生成
-
-### 5. バリデーションのみ
-
-モデルの検証のみ実行：
-
-- Step 6のみ実行
-- 約95%のtoken削減
-
-**いつ使う**: モデル修正後の確認
-
-## 💾 キャッシュの仕組み
-
-### 自動キャッシュ
-
-各ステップ実行後、以下が自動的にキャッシュされます：
-
-```
-Step 1: activity-data.json, activity.puml
-Step 2: usecase-output.json, usecase-diagram.puml
-Step 3: domain-model.json, class.puml
-Step 4: statemachine.puml
-Step 5: sequence.puml
-Step 6: validation-report.md
-```
-
-### キャッシュの利用
-
-次回実行時、Claudeが自動的に：
-
-1. キャッシュの存在をチェック
-2. ユーザーに確認（「キャッシュを使用しますか？」）
-3. 承認されれば自動復元
-
-### キャッシュの管理
-
-**キャッシュ状態の確認**:
-```
-「order-managementのキャッシュ状況を確認して」
-```
-
-**キャッシュのクリア**:
-```
-「order-managementのキャッシュをクリアして」
-```
-
-または、実行開始時に「クリア」を選択
-
-## ⚡ XMI生成の最適化
-
-### デフォルト: OFF
-
-すべての実行モードで、XMI生成はデフォルトでOFF：
-
-**効果**: 各モデル生成ステップで40%高速化
-
-### いつONにするべきか？
-
-以下の場合のみ有効化を推奨：
-
-1. **UMLツールへのインポート**
-   - Enterprise Architect
-   - Papyrus
-   - MagicDraw
-
-2. **ラウンドトリップエンジニアリング**
-   - UMLツールで編集後、再インポート
-
-3. **組織標準**
-   - XMI形式が必須要件の場合
-
-### 有効化方法
-
-実行時の質問で「はい」を選択：
-
-```
-質問: XMIファイルを生成しますか？（いいえ推奨：40%高速化）
-回答: はい  ← 明示的に選択
-```
-
-## 🎯 ユースケース別ガイド
-
-### ケース1: 新規プロジェクト立ち上げ
-
-```
-目的: ビジネスシナリオから完全なアプリを生成
-
-手順:
-1. 「uml-workflow-v3で{プロジェクト名}を生成」
-2. 実行モード: フルワークフロー
-3. XMI生成: いいえ
-4. すべて自動実行
-
-結果:
-- 完全なUMLモデル
-- 実行可能なアプリケーション
-- 包括的なテストコード
-- すべてキャッシュ済み
-```
-
-### ケース2: 機能追加の反復開発
-
-```
-目的: 既存システムに新機能を追加
-
-手順:
-1. 「{プロジェクト名}に{新機能}を追加」
-2. キャッシュ使用: はい
-3. 実行モード: Step 2から再開
-4. 変更のないStepはキャッシュから復元
-
-結果:
-- Token削減: 20-30%
-- 開発時間: 半分以下
-```
-
-### ケース3: モデル検証・調整
-
-```
-目的: コード生成前にモデルを確認・調整
-
-手順:
-1. 「{プロジェクト名}のモデルのみ生成」
-2. 実行モード: モデルのみ
-3. Step 1-7実行、Step 8-9スキップ
-
-結果:
-- Token削減: 約33%
-- 軽量で素早い検証
-- 必要に応じてコード生成は後で
-```
-
-### ケース4: ドメインモデルの改善
-
-```
-目的: クラス図を調整・改善
-
-手順:
-1. 「{プロジェクト名}のクラス図を再生成」
-2. キャッシュ使用: はい
-3. 実行モード: Step 3から
-4. コード生成: なし
-
-結果:
-- Token削減: 約75%
-- Step 1-2はキャッシュ
-- Step 3-6のみ実行
-```
-
-### ケース5: 定期的なバリデーション
-
-```
-目的: モデルの品質チェック
-
-手順:
-1. 「{プロジェクト名}のバリデーションを実行」
-2. 実行モード: バリデーションのみ
-3. Step 6のみ実行
-
-結果:
-- Token削減: 約95%
-- 即座に品質レポート
-```
-
-## 📁 ファイル構成
-
-### 実行後の出力
-
-```
-/mnt/user-data/outputs/
-├── {project-name}_activity-data.json
-├── {project-name}_activity.puml
-├── {project-name}_usecase-output.json
-├── {project-name}_usecase-diagram.puml
-├── usecase-specifications/
-│   ├── UC-001_*.md
-│   └── UC-002_*.md
-├── {project-name}_domain-model.json  ⭐ Single Source of Truth
-├── {project-name}_class.puml
-├── {project-name}_architecture-overview.md
-├── {project-name}_statemachine.puml
-├── {project-name}_sequence.puml
-├── {project-name}_validation-report.md
-└── {project-name}/                   (Step 8実行時)
-    ├── backend/
-    ├── frontend/
-    ├── README.md
-    └── docker-compose.yml
-```
-
-### キャッシュディレクトリ
-
-```
-/mnt/user-data/outputs/workflow-cache/
-├── cache_index.json
-└── {project-name}/
-    ├── scenario_to_activity_activity-data.json
-    ├── scenario_to_activity_activity.puml
-    ├── activity_to_usecase_usecase-output.json
-    ├── activity_to_usecase_usecase-diagram.puml
-    ├── usecase_to_class_domain-model.json
-    └── usecase_to_class_class.puml
-```
-
-## 🎓 ベストプラクティス
-
-### Token節約のコツ
-
-1. **キャッシュを常に有効**: 次回以降の効率化
-2. **変更箇所から再開**: 前段をスキップ
-3. **XMIはデフォルトOFF**: 必要時のみ有効化
-4. **段階的な開発**: 小さい変更を繰り返す
-
-### 品質のコツ
-
-1. **定期的なバリデーション**: Step 6を単独実行
-2. **大きな変更時はフル再生成**: キャッシュクリア
-3. **コード生成前にモデル確認**: モデルのみモード
-
-### 開発フローの推奨
-
-```
-Phase 1: 要件定義
-  → モデルのみ生成（Step 1-6）
-  → バリデーション確認
-
-Phase 2: 設計調整
-  → Step 3から再開（必要に応じて）
-  → バリデーション確認
-
-Phase 3: 実装
-  → コード生成追加（Step 8-9）
-  → テスト実行
-
-Phase 4: 機能追加
-  → Step 2から再開
-  → キャッシュ活用
-```
-
-## ⚠️ 注意事項
-
-### キャッシュの有効期限
-
-キャッシュには有効期限がありません。以下の場合は手動でクリア：
-
-- ビジネス要件が大きく変わった
-- モデルを完全にやり直したい
-- キャッシュが破損している疑いがある
-
-### ディスク容量
-
-キャッシュはディスク容量を使用します（プロジェクトあたり10-50MB）。
-
-定期的に不要なプロジェクトのキャッシュをクリアすることを推奨。
-
-### 依存関係
-
-各ステップは前のステップの成果物に依存します：
-
-```
-Step 2 → Step 1の成果物が必要
-Step 3 → Step 2の成果物が必要
-Step 4 → Step 3の成果物が必要
-...
-```
-
-途中のステップから開始する場合、必要な成果物がキャッシュにあることを確認。
-
-## 🆚 従来版との比較
-
-| 機能 | uml-workflow-v1 | uml-workflow-v3 |
-|-----|-----------------|--------------------------|
-| キャッシュ | ❌ なし | ✅ 自動管理 |
-| 段階的実行 | ⚠️ 限定的 | ✅ 完全対応 |
-| XMI最適化 | ❌ 常にON | ✅ デフォルトOFF |
-| Token効率 | 基準 | 最大75%削減 |
-| 開発速度 | 基準 | 3-5倍高速 |
-| ユーザビリティ | 良い | 非常に良い |
-
-## 📚 関連ドキュメント
-
-- `SKILL.md` - 技術詳細とAPI仕様
-- `QUICKSTART.md` - 項目1のクイックガイド
-- `ITEM2_COMPLETION_REPORT.md` - 項目2の詳細
-- `ITEM3_COMPLETION_REPORT.md` - 項目3の詳細
-
-## 🤝 トラブルシューティング
-
-### Q: キャッシュが見つからない
-
-A: 以下を確認：
-1. プロジェクト名が正しいか
-2. 過去に実行したことがあるか
-3. キャッシュをクリアしていないか
-
-### Q: 途中のステップから開始できない
-
-A: 必要な成果物が不足している可能性：
-1. キャッシュ状況を確認
-2. 必要なステップを先に実行
-3. またはフルワークフローで再生成
-
-### Q: Token削減効果が想定より低い
-
-A: 以下を確認：
-1. XMI生成がOFFになっているか
-2. キャッシュを活用しているか
-3. 不要なステップをスキップしているか
-
-### Q: モデルが古い
-
-A: キャッシュをクリアして再生成：
-1. 「{プロジェクト名}のキャッシュをクリア」
-2. フルワークフローで再実行
-
-## 🎉 成功の指標
-
-このスキルが正しく動作している場合：
-
-1. ✅ Token消費が削減されている
-2. ✅ 開発スピードが向上している
-3. ✅ キャッシュが適切に管理されている
-4. ✅ 必要な成果物がすべて生成されている
-5. ✅ バリデーションをパスしている
+ビジネスシナリオから本番品質のフルスタックアプリケーションを自動生成する、Claude用スキルパッケージです。
 
 ---
 
-**Happy modeling with maximum efficiency! 🚀**
+## 🎯 このパッケージでできること
+
+自然言語で書いたビジネスシナリオを入力するだけで、以下を自動生成します：
+
+```
+ビジネスシナリオ（自然言語）
+  ↓ 自動生成
+  ├── UMLモデル一式
+  │     ├── アクティビティ図
+  │     ├── ユースケース図 + 仕様書
+  │     ├── クラス図（ドメインモデル）
+  │     ├── ステートマシン図
+  │     └── シーケンス図
+  ├── バリデーションレポート
+  ├── セキュリティ設計書（OWASP準拠）
+  ├── フルスタックアプリケーションコード
+  │     ├── Backend（TypeScript/Python/Java/Go）
+  │     └── Frontend（React/Vue）
+  └── テストコード（Unit / Integration / E2E）
+```
+
+**最大75%のトークン削減**を実現するキャッシュシステム・段階的実行・XMI最適化を搭載しています。
+
+---
+
+## 📁 パッケージ構成
+
+```
+uml-workflow-v3/              ← メインオーケストレーター
+└── （詳細は下記）
+
+skills/                       ← 関連スキル12件（全量収録）
+  ├── [メインスキル 9件]
+  │   ├── scenario-to-activity-v1/
+  │   ├── activity-to-usecase-v1/
+  │   ├── usecase-to-class-v1/
+  │   ├── class-to-statemachine-v1/
+  │   ├── usecase-to-sequence-v1/
+  │   ├── model-validator-v1/
+  │   ├── security-design-v1/
+  │   ├── usecase-to-code-v1/
+  │   └── usecase-to-test-v1/
+  └── [オプションスキル 3件]
+      ├── json-to-models/
+      ├── usecase-md-to-json/
+      └── classdiagram-image-to-json/
+```
+
+---
+
+## 🚀 セットアップ手順（初めての方）
+
+### 必要なもの
+
+- Claude.ai アカウント（Pro または Team プラン推奨）
+- このパッケージのZIPファイル
+
+### Step 1: スキルフォルダを準備する
+
+ZIPを展開すると以下の構成になります：
+
+```
+uml-workflow-v3-release/
+├── README.md              ← このファイル
+├── uml-workflow-v3/       ← メインオーケストレーター
+└── skills/                ← 関連スキル12件
+```
+
+### Step 2: Claude にスキルをアップロードする
+
+Claude.ai の **Skills** 機能を使って、以下のフォルダをすべてアップロードします。
+
+**アップロード順序（推奨）:**
+
+まず関連スキルを先にアップロードしてください：
+
+```
+skills/scenario-to-activity-v1/
+skills/activity-to-usecase-v1/
+skills/usecase-to-class-v1/
+skills/class-to-statemachine-v1/
+skills/usecase-to-sequence-v1/
+skills/model-validator-v1/
+skills/security-design-v1/
+skills/usecase-to-code-v1/
+skills/usecase-to-test-v1/
+skills/json-to-models/
+skills/usecase-md-to-json/
+skills/classdiagram-image-to-json/
+```
+
+次にメインオーケストレーターをアップロードします：
+
+```
+uml-workflow-v3/
+```
+
+### Step 3: 動作確認
+
+Claudeとの会話で以下のように話しかけてください：
+
+```
+「uml-workflow-v3が使えるか確認して」
+```
+
+正常に認識されたら、以下で実行できます：
+
+```
+「uml-workflow-v3で受注管理システムを生成して」
+```
+
+---
+
+## 💬 使い方
+
+### 基本的な使い方
+
+```
+あなた: 「uml-workflow-v3で[システム名]を生成して」
+
+Claude: いくつか確認させてください。
+  1. キャッシュを使用しますか？ → はい（推奨）
+  2. 実行モードは？ → フルワークフロー
+  3. XMI生成は？ → いいえ（推奨・40%高速化）
+  4. テスト生成は？ → はい
+  5. バックエンドは？ → TypeScript + Express
+  6. フロントエンドは？ → React + TypeScript
+  7. アーキテクチャは？ → モノリス
+
+Claude: [Step 1〜9 を自動実行]
+  ✅ アクティビティ図
+  ✅ ユースケース
+  ✅ クラス図
+  ✅ ステートマシン図
+  ✅ シーケンス図
+  ✅ バリデーション
+  ✅ セキュリティ設計
+  ✅ アプリケーションコード
+  ✅ テストコード
+```
+
+### 途中から再実行する場合
+
+```
+「uml-workflow-v3で[プロジェクト名]のStep 3から再開して」
+```
+
+### モデルだけ生成する場合（コード生成なし）
+
+```
+「uml-workflow-v3でモデルのみ生成して」
+```
+
+### バリデーションだけ実行する場合
+
+```
+「uml-workflow-v3でバリデーションのみ実行して」
+```
+
+---
+
+## 📋 スキル一覧と役割
+
+### メインスキル（Step 1〜9）
+
+| Step | スキル名 | 入力 | 出力 |
+|------|---------|------|------|
+| 1 | scenario-to-activity-v1 | ビジネスシナリオ（自然言語） | アクティビティ図 |
+| 2 | activity-to-usecase-v1 | アクティビティ図 | ユースケース図・仕様書 |
+| 3 | usecase-to-class-v1 | ユースケース | クラス図・ドメインモデル |
+| 4 | class-to-statemachine-v1 | クラス図 | ステートマシン図 |
+| 5 | usecase-to-sequence-v1 | ユースケース・クラス図 | シーケンス図 |
+| 6 | model-validator-v1 | 全モデル | バリデーションレポート |
+| 7 | security-design-v1 | ドメインモデル・ユースケース | セキュリティ設計書 |
+| 8 | usecase-to-code-v1 | ドメインモデル・ユースケース | フルスタックアプリ |
+| 9 | usecase-to-test-v1 | ドメインモデル・ユースケース | テストコード |
+
+### オプションスキル
+
+| スキル名 | 使う場面 |
+|---------|---------|
+| json-to-models | domain-model.json を手動編集後、PlantUML/XMIを再生成したい場合 |
+| usecase-md-to-json | ユースケース仕様（Markdown）を手動編集後、JSONに反映したい場合 |
+| classdiagram-image-to-json | 手描き・ツール作成のクラス図画像をワークフローに取り込みたい場合 |
+
+---
+
+## ⚙️ 対応技術スタック
+
+**バックエンド**
+- TypeScript + Express（推奨・軽量）
+- TypeScript + NestJS（大規模向け）
+- Python + FastAPI
+- Java + Spring Boot
+
+**フロントエンド**
+- React + TypeScript + Vite + Tailwind CSS（推奨）
+- Vue 3 + TypeScript + Vite
+
+**アーキテクチャ**
+- モノリス（推奨・シンプル）
+- マイクロサービス
+- サーバーレス
+
+**対応言語**
+- 日本語・英語・バイリンガル（自動検出）
+
+---
+
+## 🔧 トラブルシューティング
+
+### スキルが認識されない
+
+```
+「uml-workflow-v3のSKILL.mdを確認して」
+```
+と伝えて、Claudeにスキルの読み込みを確認させてください。
+
+### スクリプトが見つからない
+
+`uml-workflow-v3/scripts/` にPythonファイルが5つ存在することを確認してください：
+- `run_workflow.py`
+- `workflow_cache_helper.py`
+- `execution_mode_manager.py`
+- `unified_workflow_executor.py`
+- `interactive_workflow_executor.py`
+
+### 途中でエラーが発生した場合
+
+```
+「uml-workflow-v3で[プロジェクト名]のStep [N]から再開して」
+```
+キャッシュが保存されているため、エラーが発生したステップから再実行できます。
+
+---
+
+## 📚 詳細ドキュメント
+
+| ファイル | 内容 |
+|---------|------|
+| `uml-workflow-v3/README.md` | オーケストレーターの詳細説明 |
+| `uml-workflow-v3/INSTALL.md` | インストールの詳細手順 |
+| `uml-workflow-v3/SKILL.md` | Claude実行仕様（技術者向け） |
+| `uml-workflow-v3/CHANGELOG.md` | バージョン履歴 |
+| `skills/[スキル名]/README.md` | 各スキルの個別説明 |
+
+---
+
+## 🌐 GitHub
+
+https://github.com/atanaka/uml-workflow-v3
+
+---
+
+*このパッケージは Claude + MBSE（モデルベースシステムズエンジニアリング）の統合を目的として開発されました。*
