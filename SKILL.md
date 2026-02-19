@@ -1,9 +1,9 @@
 ---
-name: uml-workflow-v3
+name: uml-workflow-v2-enhanced
 description: Token-efficient 9-step UML workflow with intelligent caching, staged execution, XMI optimization, and security design. Automatically manages cache, supports resume from any step, and defaults to XMI-off for 40% performance boost. Generates full-stack applications from business scenarios through activity diagrams, use cases, class diagrams, state machines, sequence diagrams, model validation, security design, code generation, and test generation.
 ---
 
-# UML Workflow v3 - Token-Optimized Edition
+# UML Workflow v2 Enhanced - Token-Optimized Edition
 
 完全統合されたtoken効率化UMLワークフロー。キャッシュ管理・段階的実行・XMI最適化をすべて自動化。
 
@@ -19,206 +19,15 @@ description: Token-efficient 9-step UML workflow with intelligent caching, stage
 
 ---
 
-## 📦 利用するスキル一覧
-
-### メインスキル（9ステップ）
-
-| Step | スキル名 | 役割 |
-|------|---------|------|
-| 1 | scenario-to-activity-v1 | ビジネスシナリオ → アクティビティ図 |
-| 2 | activity-to-usecase-v1 | アクティビティ図 → ユースケース |
-| 3 | usecase-to-class-v1 | ユースケース → クラス図（ドメインモデル） |
-| 4 | class-to-statemachine-v1 | クラス図 → ステートマシン図 |
-| 5 | usecase-to-sequence-v1 | ユースケース → シーケンス図 |
-| 6 | model-validator-v1 | モデルバリデーション |
-| 7 | security-design-v1 | セキュリティ設計（OWASP対応） |
-| 8 | usecase-to-code-v1 | フルスタックコード生成 |
-| 9 | usecase-to-test-v1 | テストコード生成 |
-
-### オプションスキル（条件付き利用）
-
-以下の3スキルは、状況に応じてワークフロー内またはユーザーの指示により呼び出されます。Claude はこのスキルを読み込んだ際、これらも利用可能なスキルとして認識し、必要に応じて使用すること。
-
-| スキル名 | 利用される条件・場面 |
-|---------|-------------------|
-| **json-to-models** | 各サブスキルの内部から呼び出される補助スキル。XMI ON/OFFに関わらずPlantUML・XMI・Markdownドキュメントの生成に使用。scenario-to-activity-v1 などが内部で依存する。 |
-| **usecase-md-to-json** | ユースケース仕様（Markdown）を手動編集した後、JSON・ユースケース図に再同期する際に使用。Step 2 成果物を修正した場合に活用。 |
-| **classdiagram-image-to-json** | 手書きや既存モデリングツールで作成したクラス図画像を domain-model.json に変換する際に使用。Step 3（usecase-to-class-v1）の代替入力として活用。 |
-
----
-
-## 🔧 オプションスキル 使用手順
-
-### json-to-models
-
-**呼び出し条件:**
-- Step 3（usecase-to-class-v1）完了後に `domain-model.json` を手動編集した場合
-- 各サブスキルが内部的にPlantUML・XMI・Markdownを再生成する必要がある場合
-- `config.generate_xmi = True` のときに XMI ファイルを派生生成する場合
-
-**ワークフロー上の位置:**
-```
-domain-model.json（手動編集）
-  ↓ json-to-models
-  ├→ {project_name}_class.puml         （常に生成）
-  ├→ {project_name}_class-model.xmi    （XMI ON の場合のみ）
-  └→ {project_name}_architecture-overview.md （常に生成）
-  ↓ 以降のステップへ（Step 4〜）
-```
-
-**入力:**
-- `{project_name}_domain-model.json`（必須）
-- XMI生成フラグ: `config.generate_xmi`（デフォルト False）
-
-**出力:**
-- `{project_name}_class.puml`
-- `{project_name}_architecture-overview.md`
-- `{project_name}_class-model.xmi`（XMI ON の場合のみ）
-
-**呼び出し方:**
-```
-Claude calls json-to-models with:
-- Input: {project_name}_domain-model.json
-- XMI generation: config.generate_xmi (ワークフロー全体の設定を引き継ぐ)
-```
-
-**XMI設定の判断基準:**
-- `config.generate_xmi = False`（推奨・デフォルト）: PlantUML + Markdown のみ生成、約40%高速化
-- `config.generate_xmi = True`: UMLツール（Papyrus、Enterprise Architect）連携が必要な場合のみ
-
----
-
-### usecase-md-to-json
-
-**呼び出し条件（以下のいずれかに該当する場合）:**
-- Step 2（activity-to-usecase-v1）で生成された `usecase-specifications/UC-*.md` をユーザーが手動編集した後
-- ユースケース仕様を Markdown で追記・修正し、`usecase-output.json` と `usecase-diagram.puml` に反映したい場合
-
-**ワークフロー上の位置（Step 2.5 として挿入）:**
-```
-Step 2: activity-to-usecase-v1
-  ├→ usecase-specifications/UC-*.md（手動編集可能）
-  └→ usecase-output.json
-
-    ↓ UC-*.md を手動編集した場合
-Step 2.5: usecase-md-to-json ← ここで呼び出す
-  ├→ usecase-output.json（更新）
-  └→ {project_name}_usecase-diagram.puml（再生成）
-
-Step 3: usecase-to-class-v1（更新された JSON を入力として使用）
-```
-
-**入力:**
-- `usecase-specifications/UC-*.md`（Cockburn形式、必須）
-- `{project_name}_usecase-output.json`（既存 JSON、存在する場合はマージ）
-
-**出力:**
-- `{project_name}_usecase-output.json`（更新または新規生成）
-- `{project_name}_usecase-diagram.puml`（再生成）
-
-**呼び出し方:**
-```
-Claude calls usecase-md-to-json with:
-- Input directory: usecase-specifications/
-- Existing JSON: {project_name}_usecase-output.json (マージ対象)
-- Language: usecase-output.json の language_config から自動継承
-```
-
-**マージ動作:**
-- Markdown に存在するユースケース → JSON に追加または更新
-- JSON に存在するが Markdown にないユースケース → 自動削除せず保持
-- 実行後は必ず Step 3（usecase-to-class-v1）以降を再実行すること
-
----
-
-### classdiagram-image-to-json
-
-**呼び出し条件（以下のいずれかに該当する場合）:**
-- Eclipse Papyrus、Draw.io、Lucidchart 等で作成したクラス図画像（JPEG/PNG/PDF）を入力として使いたい場合
-- Step 3（usecase-to-class-v1）の自動生成結果を、手描きのクラス図で上書き・補完したい場合
-
-**ワークフロー上の位置（2パターン）:**
-
-```
-【Pattern A: Step 3 の完全代替】
-  ユーザーがクラス図画像を提供
-  ↓ classdiagram-image-to-json（新規生成モード）
-  → {project_name}_domain-model.json を新規作成
-  ↓ Step 4: class-to-statemachine-v1 へ
-
-【Pattern B: Step 3 結果をマージして精緻化】
-  Step 3: usecase-to-class-v1（自動生成）
-  ↓ {project_name}_domain-model.json（自動生成）
-  ↓ classdiagram-image-to-json（マージモード）
-  → ユーザーの手修正クラス図と自動生成結果をマージ
-  ↓ Step 4: class-to-statemachine-v1 へ
-```
-
-**入力:**
-- クラス図画像ファイル（JPEG / PNG / PDF）（必須）
-- `{project_name}_domain-model.json`（マージモードの場合のみ、既存ファイル）
-
-**出力:**
-- `{project_name}_domain-model.json`（新規生成またはマージ更新）
-- 変更サマリーレポート（マージモードの場合）
-
-**呼び出し方:**
-```
-Claude calls classdiagram-image-to-json with:
-- Input image: ユーザー提供の画像ファイル（JPEG/PNG/PDF）
-- Mode: 新規生成（既存 domain-model.json なし）
-       または マージ（既存 domain-model.json あり）
-- Existing JSON: {project_name}_domain-model.json（マージモード時）
-- Language: 画像内テキストから自動検出（日本語・英語・混在対応）
-```
-
-**日本語テキスト自動認識:**
-```json
-// 画像内に「受注」と書かれている場合の自動変換例
-{
-  "name": "ReceivedOrder",       // 英語名に自動ローマ字変換
-  "japanese_name": "受注"        // 元の日本語テキストを保持
-}
-```
-
-**実行後の注意事項:**
-- 新規生成・マージいずれの場合も、Step 4（class-to-statemachine-v1）以降を再実行すること
-- マージ後は必ず `model-validator-v1`（Step 6）でバリデーションを実施すること
-
----
-
 ## 🤖 EXECUTION INSTRUCTIONS FOR CLAUDE
 
 **CRITICAL**: When a user requests to use this skill, Claude MUST follow this exact workflow.
 
-### 🔄 Resume Detection (CHECK FIRST — Before Any Phase)
-
-**Before starting PHASE 0**, Claude MUST check if execution is already in progress:
-
-```bash
-ls /mnt/user-data/outputs/{project_name}/ 2>/dev/null && echo "EXISTS" || echo "NEW"
-```
-
-**Decision:**
-
-| Condition | Action |
-|-----------|--------|
-| Directory does NOT exist | Proceed to PHASE 0 normally |
-| Directory EXISTS, user said "resume" or "continue" | Skip PHASE 0/1. Show existing files and resume from next incomplete step |
-| Directory EXISTS, user gave NEW scenario | Ask: "前回の成果物があります。クリアして新規生成しますか？" |
-| Mid-execution (SKILL.md re-read due to context) | **DO NOT restart PHASE 0.** Continue from the current step. |
-
-> ⛔ **ANTI-LOOP RULE**: If Claude re-reads this SKILL.md during execution (e.g. due to context length),
-> it must recognize the current execution state from existing outputs and **resume**, not restart.
-> Restarting PHASE 0 mid-execution is PROHIBITED.
-
----
-
 ### Trigger Patterns
 
 Execute this workflow when user says:
-- "uml-workflow-v3で〜を生成"
-- "uml-workflow-v3を使って〜"
+- "uml-workflow-v2-enhancedで〜を生成"
+- "uml-workflow-v2-enhancedを使って〜"
 - "token効率化ワークフローで〜"
 - Any mention of this skill by name
 
@@ -226,18 +35,12 @@ Execute this workflow when user says:
 
 ```
 1. Determine project_name from user's request
-2. [RESUME CHECK] If outputs already exist → skip to step 5 or ask where to resume
-3. Ask questions using ask_user_input_v0 tool
-   ⛔ STOP HERE. End response. Wait for user's next message with selections.
-4. Receive user's selections → Execute bash_tool run_workflow.py
-5. Read execution plan JSON
-6. Call each sub-skill in sequence (Step 1 → 9, never restart mid-execution)
-7. Present results with present_files
+2. Ask questions using ask_user_input_v0 tool
+3. Execute: bash_tool run_workflow.py with user's answers
+4. Read execution plan JSON
+5. Call each sub-skill in sequence
+6. Present results with present_files
 ```
-
-> ⚠️ **CRITICAL**: Step 3 and step 4 are in DIFFERENT conversation turns.
-> After calling `ask_user_input_v0`, Claude MUST end its response and wait.
-> Proceeding without user's explicit answers is PROHIBITED.
 
 **Detail**: See CLAUDE_QUICK_GUIDE.md for concise reference, or follow detailed phases below.
 
@@ -281,12 +84,12 @@ User: "generate an inventory system"
 Claude executes the following bash command to verify Python scripts are accessible:
 
 ```bash
-ls -la /mnt/skills/user/uml-workflow-v3/scripts/
+ls -la /mnt/skills/user/uml-workflow-v2-enhanced/scripts/
 ```
 
 If the directory doesn't exist, try fallback:
 ```bash
-ls -la /mnt/user-data/outputs/uml-workflow-v3-complete/scripts/
+ls -la /mnt/user-data/outputs/uml-workflow-v2-enhanced-complete/scripts/
 ```
 
 **Expected output**: 4 Python files should be listed
@@ -410,27 +213,7 @@ ask_user_input_v0({
 ```
 
 > ⚠️ **収集したテックスタック選択値は会話コンテキストに記録し、Step 8 で usecase-to-code-v1 を呼び出す際に Case A として渡すこと。Step 8 で再度ユーザーに質問してはならない。**
-
----
-
-## ⛔ PHASE 1 → PHASE 2 BOUNDARY (CRITICAL)
-
-After calling `ask_user_input_v0` in PHASE 1, Claude MUST:
-
-1. **End the response immediately** — do not write any more text after the widget call
-2. **Wait** for the user's next message containing their selections
-3. **Only then** proceed to PHASE 2 with the confirmed values
-
-**This is a hard boundary between two conversation turns.**
-
 ```
-Turn N  : Claude calls ask_user_input_v0 → ENDS RESPONSE
-Turn N+1: User replies with selections (e.g. "フルワークフロー / TypeScript+Express / ...")
-Turn N+1: Claude reads selections → proceeds to PHASE 2
-```
-
-**Proceeding to PHASE 2 in the same turn as the widget call is STRICTLY PROHIBITED.**
-Even if the user's original message seems to imply preferences, Claude must wait for explicit confirmation via the widget response.
 
 ---
 
@@ -473,7 +256,7 @@ test_flag = "--no-tests" # if user selected "いいえ"
 Claude executes the run_workflow.py script using bash_tool:
 
 ```bash
-python3 /mnt/skills/user/uml-workflow-v3/scripts/run_workflow.py \
+python3 /mnt/skills/user/uml-workflow-v2-enhanced/scripts/run_workflow.py \
   {project_name} \
   --cache {cache_param} \
   --mode {mode_param} \
@@ -484,15 +267,15 @@ python3 /mnt/skills/user/uml-workflow-v3/scripts/run_workflow.py \
 
 **Example**:
 ```bash
-python3 /mnt/skills/user/uml-workflow-v3/scripts/run_workflow.py \
+python3 /mnt/skills/user/uml-workflow-v2-enhanced/scripts/run_workflow.py \
   order-system \
   --cache yes \
   --mode full
 ```
 
-**Important**: If the scripts directory is not found at `/mnt/skills/user/uml-workflow-v3/scripts/`, try the fallback location:
+**Important**: If the scripts directory is not found at `/mnt/skills/user/uml-workflow-v2-enhanced/scripts/`, try the fallback location:
 ```bash
-python3 /mnt/user-data/outputs/uml-workflow-v3-complete/scripts/run_workflow.py \
+python3 /mnt/user-data/outputs/uml-workflow-v2-enhanced-complete/scripts/run_workflow.py \
   {project_name} ...
 ```
 
@@ -611,7 +394,7 @@ Output directory: /mnt/user-data/outputs
 ```bash
 python3 -c "
 import sys
-sys.path.append('/mnt/skills/user/uml-workflow-v3/scripts')
+sys.path.append('/mnt/skills/user/uml-workflow-v2-enhanced/scripts')
 from workflow_cache_helper import cache_file
 
 cache_file('{project_name}', 'scenario_to_activity', 'activity-data',
@@ -631,7 +414,7 @@ if [ ! -f "/mnt/user-data/outputs/{project_name}_activity-data.json" ]; then
     # Try to restore from cache
     python3 -c "
 import sys
-sys.path.append('/mnt/skills/user/uml-workflow-v3/scripts')
+sys.path.append('/mnt/skills/user/uml-workflow-v2-enhanced/scripts')
 from unified_workflow_executor import UnifiedWorkflowExecutor
 executor = UnifiedWorkflowExecutor('{project_name}')
 from execution_mode_manager import SkillStep
@@ -660,7 +443,7 @@ Generate XMI: {config.generate_xmi}
 ```bash
 python3 -c "
 import sys
-sys.path.append('/mnt/skills/user/uml-workflow-v3/scripts')
+sys.path.append('/mnt/skills/user/uml-workflow-v2-enhanced/scripts')
 from workflow_cache_helper import cache_file
 
 cache_file('{project_name}', 'activity_to_usecase', 'usecase-output',
@@ -699,7 +482,7 @@ Generate XMI: {config.generate_xmi}
 ```bash
 python3 -c "
 import sys
-sys.path.append('/mnt/skills/user/uml-workflow-v3/scripts')
+sys.path.append('/mnt/skills/user/uml-workflow-v2-enhanced/scripts')
 from workflow_cache_helper import cache_file
 
 cache_file('{project_name}', 'usecase_to_class', 'domain-model',
@@ -735,7 +518,7 @@ Language: Inherit from domain model
 ```bash
 python3 -c "
 import sys
-sys.path.append('/mnt/skills/user/uml-workflow-v3/scripts')
+sys.path.append('/mnt/skills/user/uml-workflow-v2-enhanced/scripts')
 from workflow_cache_helper import cache_file
 
 cache_file('{project_name}', 'class_to_statemachine', 'statemachine-puml',
@@ -770,7 +553,7 @@ Language: Inherit from use cases
 ```bash
 python3 -c "
 import sys
-sys.path.append('/mnt/skills/user/uml-workflow-v3/scripts')
+sys.path.append('/mnt/skills/user/uml-workflow-v2-enhanced/scripts')
 from workflow_cache_helper import cache_file
 
 cache_file('{project_name}', 'usecase_to_sequence', 'sequence-puml',
@@ -804,7 +587,7 @@ Language: Inherit from models
 ```bash
 python3 -c "
 import sys
-sys.path.append('/mnt/skills/user/uml-workflow-v3/scripts')
+sys.path.append('/mnt/skills/user/uml-workflow-v2-enhanced/scripts')
 from workflow_cache_helper import cache_file
 
 cache_file('{project_name}', 'model_validator', 'validation-report',
@@ -840,7 +623,7 @@ Language: Inherit from models
 ```bash
 python3 -c "
 import sys
-sys.path.append('/mnt/skills/user/uml-workflow-v3/scripts')
+sys.path.append('/mnt/skills/user/uml-workflow-v2-enhanced/scripts')
 from workflow_cache_helper import cache_file
 
 cache_file('{project_name}', 'security_design', 'security-design',
@@ -877,6 +660,8 @@ Claude calls usecase-to-code-v1 with the tech stack already selected in Phase 1:
 ```
 Input: {project_name}_domain-model.json
        {project_name}_usecase-output.json
+       {project_name}_security-config.json   ← Step 7 出力。存在する場合は必ず渡す。
+                                                Step 3.5 のセキュリティインフラ生成が自動実行される。
 Tech stack: {phase1_selected_stack}   ← Phase 1 の選択値をそのまま渡す
 Architecture: {phase1_architecture}
 ```
@@ -900,6 +685,11 @@ find /home/claude/{project_name}/frontend/src -type f | sort
 **Expected Outputs**:
 - Complete application in `{project_name}/` directory
   - `backend/` — ドメイン・サービス・ルート
+  - `backend/src/infrastructure/crypto.ts` — AES-256-GCM暗号化ユーティリティ ⭐ security-config.jsonがある場合
+  - `backend/src/infrastructure/AuditLogger.ts` — 監査ログ ⭐ security-config.jsonがある場合
+  - `backend/src/presentation/middleware/auth.ts` — JWT認証・RBAC認可 ⭐ security-config.jsonがある場合
+  - `backend/src/app.ts` — helmet / CORS / rateLimit 組み込み済み ⭐ security-config.jsonがある場合
+  - `backend/.env.example` — セキュリティ変数（JWT_SECRET, ENCRYPTION_KEY等）含む
   - `frontend/` — UI コンポーネント・ページ・API クライアント
   - `README.md`
   - `docker-compose.yml`
@@ -921,13 +711,22 @@ Claude calls usecase-to-test-v1:
 ```
 Input: {project_name}_domain-model.json
        {project_name}_usecase-output.json
+       {project_name}_security-config.json   ← Step 7 出力。存在する場合は必ず渡す。
+                                                tests/security/ 以下の6ファイルが自動生成される。
 Test frameworks: Jest/Vitest/Playwright/Cypress (auto-selected based on tech stack)
 ```
 
 **Expected Outputs**:
-- Unit tests
-- Integration tests
-- E2E tests
+- Unit tests — ドメインエンティティ・ビジネスルール
+- Integration tests — ユースケース・APIエンドポイント
+- E2E tests — クリティカルユーザーフロー
+- Security tests ⭐ security-config.jsonがある場合
+  - `tests/security/auth.test.ts` — JWT認証・トークン有効期限
+  - `tests/security/authorization.test.ts` — ロール×エンドポイント全組み合わせ
+  - `tests/security/rate-limit.test.ts` — レート制限
+  - `tests/security/encryption.test.ts` — AES-256-GCM暗号化
+  - `tests/security/audit.test.ts` — 監査ログ記録
+  - `tests/security/headers.test.ts` — HTTPセキュリティヘッダー・CORS
 - Test documentation
 
 ---
@@ -998,7 +797,7 @@ Claude informs the user:
 💡 For your next execution:
 
 1. To add features:
-   "uml-workflow-v3で{project_name}に{新機能}を追加"
+   "uml-workflow-v2-enhancedで{project_name}に{新機能}を追加"
    → Will use cache for unchanged steps (~30% token savings)
 
 2. To regenerate models only:
@@ -1086,7 +885,7 @@ print('Cache cleared. Please re-run workflow.')
 #### First Run (No Cache)
 
 ```
-User: "uml-workflow-v3で受注システムを生成"
+User: "uml-workflow-v2-enhancedで受注システムを生成"
 
 Tokens consumed:
   - XMI OFF: 83,000 tokens (18% savings vs baseline)
@@ -1426,12 +1225,15 @@ def execute_step_8(project_name, config):
     """
     Claude calls usecase-to-code-v1 with:
     - Input: {project_name}_domain-model.json, {project_name}_usecase-output.json
+    - Security config: {project_name}_security-config.json (if available)
+      → triggers Step 3.5: crypto.ts, AuditLogger.ts, auth.ts, helmet/CORS/rateLimit in app.ts
     - Tech stack: selected by user or default
     - Architecture: monolith/microservices/serverless
     
     Output:
     - Complete application in {project_name}/ directory
     - Backend + Frontend + Infrastructure
+    - Security infrastructure (when security-config.json present)
     - Docker configuration
     - Documentation
     """
@@ -1697,4 +1499,4 @@ clear_project_cache("order-management")
 
 ---
 
-**このスキルで、uml-workflow-v1・v2からの進化版が実現されます。**
+**このスキルで、uml-workflow-v2の完全なtoken最適化版が実現されます。**
