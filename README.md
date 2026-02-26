@@ -40,7 +40,7 @@ Quality Code with UML documentation / 本番品質のアプリケーション + 
 - **Security-First** — OWASP Top 10準拠のセキュリティ設計を自動生成
 - **Full Traceability** — 要件→モデル→コード→テストの追跡マトリクス
 
-### Coming Soon: Commercial support and extensions by a new company/新会社による商用サポート・拡張版
+### Coming Soon: Commercial support and extensions by a new company / 新会社による商用サポート・拡張版
 
 ---
 
