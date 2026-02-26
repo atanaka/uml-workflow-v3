@@ -51,7 +51,7 @@ UML Workflow v3 は、Claude AI の [Skills](https://docs.claude.com/en/docs/cla
 
 ### Installation / インストール
 
-1. [Releases](../../releases) から `uml-workflow-v3-all-skills.zip` をダウンロード
+1. [Releases](../../releases) から `uml-workflow-v3-github-repo.zip` をダウンロード
 2. ZIP を解凍すると **5つの ZIP ファイル** が出現
 3. Claude.ai → **Settings** → **Capabilities** → **Skills** セクション
 4. 「**Upload skill**」で各 ZIP を1つずつアップロード（5回）
