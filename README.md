@@ -63,6 +63,16 @@ Quality Code with UML documentation / 本番品質のアプリケーション + 
 
 ### First Run / 最初の実行
 
+Start a new chat, and type in the following.
+
+```
+Use uml-workflow-v3 to generate an application from the following business scenario.
+
+Scenario:
+Employees submit expense requests, and their managers approve or reject them.
+The accounting department processes the approved application.
+```
+
 新しい会話を開き、以下のように入力してください：
 
 ```
