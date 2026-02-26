@@ -538,28 +538,6 @@ Attribute: ステータス
 → enum 在庫ステータス {在庫あり, 在庫不足, 発注中}
 ```
 
-**6c. PlantUML enum 出力形式ルール（⚠️ 必須）**
-
-PlantUMLビューワーとの互換性のため、**必ず改行形式で出力する**こと。
-1行スラッシュ区切り・カンマ区切りはエラーになるビューワーがある。
-
-```plantuml
-' ❌ 禁止（1行形式）
-enum OrderStatus { pending / approved / confirmed / shipped / cancelled }
-enum OrderStatus { pending, approved, confirmed, shipped, cancelled }
-
-' ✅ 必須（改行形式）
-enum OrderStatus {
-  pending
-  approved
-  confirmed
-  shipped
-  cancelled
-}
-```
-
-> この形式はすべての主要PlantUMLビューワー（plantuml.com, VS Code拡張, IntelliJ）で動作する。
-
 ---
 
 ### Step 7: Add Business Methods
@@ -612,85 +590,18 @@ end note
 
 ### Step 9: Generate Complete PlantUML Class Diagram
 
-**⚠️ PlantUML 出力ルール（ビューワー互換性のため厳守）**
-
-**ルール A — enum は必ず改行形式**
-```plantuml
-' ✅ 正しい形式
-enum OrderStatus {
-  pending
-  approved
-  shipped
-  cancelled
-}
-
-' ❌ 禁止（ビューワーによってエラー）
-enum OrderStatus { pending / approved / shipped / cancelled }
-```
-
-**ルール C — アクターは `actor` キーワードではなく `class` + `<<actor>>` ステレオタイプで記述する**
-
-PlantUMLクラス図では `actor` キーワードはエラーになるビューワーがある。
-`class` + `<<actor>>` ステレオタイプで代替する。
-
-```plantuml
-' ❌ 禁止（クラス図内でのactor宣言）
-actor "購買担当者" as Buyer   <<actor>>
-actor "営業担当者" as SalesRep <<actor>>
-
-' ✅ 正しい（classキーワード + <<actor>>ステレオタイプ）
-class "購買担当者" as Buyer    <<actor>>
-class "営業担当者" as SalesRep <<actor>>
-```
-
----
-
-**ルール B — 関連線はカラス足記法（--o{, }o--）を使わず標準クラス図記法を使う**
-
-多重度は `"1"`, `"0..1"`, `"0..*"`, `"1..*"` の形式で両端に明示する。
-
-```plantuml
-' ✅ 正しい記法（標準クラス図）
-Customer    "1"    o-- "0..*" Order      : 持つ
-Order       "1"    o-- "1..*" OrderItem  : 含む
-OrderItem   "0..*" --> "1"    Product    : 参照
-
-' ❌ 禁止（カラス足記法）
-Customer "1" --o{ Order     : 持つ
-OrderItem }o-- Product      : 参照
-```
-
-**記法の選択基準:**
-
-| 関係の種類 | 記法 | 例 |
-|-----------|------|-----|
-| 集約（aggregation） | `"1" o-- "0..*"` | Customer o-- Order |
-| 依存・参照 | `"0..*" --> "1"` | OrderItem --> Product |
-| コンポジション | `"1" *-- "1..*"` | Order *-- OrderItem（強い所有） |
-
----
-
 **Structure:**
 ```plantuml
 @startuml {project}_class
 
-' Actors（classキーワード + <<actor>>ステレオタイプ）
-class "顧客" as Customer_Actor   <<actor>>
-class "受注係" as OrderStaff     <<actor>>
+' Actors
+actor 顧客 <<actor>>
+actor 受注係 <<actor>>
 ...
 
-' Enumerations（必ず改行形式で記述）
-enum 受注ステータス {
-  仮登録
-  確定
-  出荷済
-  キャンセル
-}
-enum 在庫ステータス {
-  在庫あり
-  在庫不足
-  発注中
-}
+' Enumerations
+enum 受注ステータス { ... }
+enum 在庫ステータス { ... }
 
 ' Core Entities
 class 受注 {
@@ -703,9 +614,8 @@ class 在庫 {
   ...
 }
 
-' Relationships（標準クラス図記法・多重度は両端に明示）
-受注     "1"    o-- "1..*" 受注明細   : 含む
-受注明細 "0..*" --> "1"    商品       : 参照
+' Relationships
+受注 "1" *-- "1..*" 受注明細
 ...
 
 ' Notes
@@ -741,13 +651,12 @@ end note
 
 ## Output
 
-### 1. PlantUML Class Diagram（英語版）
+### 1. PlantUML Class Diagram
 
 **Filename:** `{project-name}_class.puml`
 
 **Contents:**
 - Complete PlantUML class diagram
-- Class names and attribute names in English（コード生成の基準）
 - All actors with <<actor>> stereotype
 - All entities with full attributes
 - All relationships (associations, compositions, aggregations)
@@ -759,55 +668,7 @@ end note
 - Complete attribute definitions (no TBD)
 - Proper relationship multiplicities
 - Enumeration types for status fields
-- **enum は改行形式（1行スラッシュ/カンマ区切り禁止）** ⭐
-- **関連線は標準クラス図記法（カラス足記法禁止）、多重度を両端に明示** ⭐
-- **アクターは `class` + `<<actor>>` ステレオタイプで記述（`actor` キーワード禁止）** ⭐
 - Business logic methods included
-
----
-
-### 1b. PlantUML Class Diagram（日本語版）⭐ NEW!
-
-**Filename:** `{project-name}_class_J.puml`
-
-モデラー向けに、クラス名・属性名・メソッド名をすべて日本語にした版を英語版と同時に生成する。
-`domain-model.json` の `japanese_name` フィールドを使用する。
-
-**変換ルール:**
-
-| 要素 | 英語版（_class.puml） | 日本語版（_class_J.puml） |
-|------|----------------------|--------------------------|
-| クラス名 | `Customer` | `顧客` |
-| 属性名 | `companyName: string` | `会社名: string` |
-| メソッド名 | `isActive(): boolean` | `有効確認(): boolean` |
-| enum名 | `OrderStatus` | `注文ステータス` |
-| enum値 | `pending_credit` | `与信審査中` |
-| 関連ラベル | そのまま（すでに日本語）| そのまま |
-| パッケージ名 | そのまま（すでに日本語）| そのまま |
-| アクター名 | そのまま（すでに日本語）| そのまま |
-
-**注意:** `_class_J.puml` はモデラーによる視認・レビュー用途。コード生成には英語版（`_class.puml`）を使用する。
-
-**例:**
-```plantuml
-' 英語版
-class Customer <<aggregate_root>> {
-  +id: string
-  +companyName: string
-  +status: CustomerStatus
-  --
-  +isActive(): boolean
-}
-
-' 日本語版（_class_J.puml）
-class 顧客 <<aggregate_root>> {
-  +顧客ID: string
-  +会社名: string
-  +ステータス: 顧客ステータス
-  --
-  +有効確認(): boolean
-}
-```
 
 ---
 

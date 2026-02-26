@@ -221,10 +221,14 @@ usecase-specifications/                 ← 個別UC仕様（Cockburn形式）
 
 | Document | Description |
 |----------|-------------|
-| [INSTALLATION_GUIDE.md](docs/INSTALLATION_GUIDE.md) | インストール手順（日本語） |
-| [INSTALLATION_GUIDE_EN.md](docs/INSTALLATION_GUIDE_EN.md) | Installation guide (English) |
-| [CHANGELOG.md](CHANGELOG.md) | 変更履歴 |
-| [examples/expense-report.md](examples/expense-report.md) | 経費申請システムのサンプルシナリオ |
+| [docs/USER_GUIDE.md](docs/USER_GUIDE.md) | 詳細ユーザーガイド（日英）/ Comprehensive user guide (bilingual) |
+| [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) | アーキテクチャ解説（日英）/ Architecture overview (bilingual) |
+| [docs/INSTALLATION_GUIDE.md](docs/INSTALLATION_GUIDE.md) | インストール手順（日本語）/ Installation guide (Japanese) |
+| [docs/INSTALLATION_GUIDE_EN.md](docs/INSTALLATION_GUIDE_EN.md) | Installation guide (English) |
+| [skills/uml-workflow-v3/README.md](skills/uml-workflow-v3/README.md) | スキル詳細説明（日英）/ Skill detail guide (bilingual) |
+| [CHANGELOG.md](CHANGELOG.md) | 変更履歴（日英）/ Change log (bilingual) |
+| [CONTRIBUTING.md](CONTRIBUTING.md) | コントリビューションガイド（日英）/ Contributing guide (bilingual) |
+| [examples/expense-report.md](examples/expense-report.md) | サンプルシナリオ（日英）/ Sample scenario (bilingual) |
 
 ---
 

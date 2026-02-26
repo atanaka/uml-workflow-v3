@@ -131,3 +131,8 @@ To update a skill, upload the new ZIP file using the same process. Skills with t
 | Pro | Limited | Message limits apply. Best for small scenarios |
 | Max | Recommended | Can complete all 10 steps even for large scenarios |
 | Team / Enterprise | Recommended | Best for organizational use |
+
+---
+
+*For the comprehensive user guide, see [USER_GUIDE.md](USER_GUIDE.md).*  
+*日本語インストールガイドは [INSTALLATION_GUIDE.md](INSTALLATION_GUIDE.md) を参照してください。*
