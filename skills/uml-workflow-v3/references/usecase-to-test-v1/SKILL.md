@@ -65,10 +65,14 @@ Step 6: security-design-v1
 1. **Use case specifications:** `{project}_usecase-output.json`
 2. **Domain model:** `{project}_domain-model.json`
 3. **Generated source code:** Backend/Frontend code structure
+4. **⭐ Security configuration:** `{project}_security-config.json`
+   - **MUST read this file before generating tests**
+   - Used to generate: authentication tests, RBAC tests, rate limit tests, input validation tests, audit log tests
+   - If file is missing, warn user and skip security test generation
 
 ### Optional
 
-4. **Test configuration:**
+5. **Test configuration:**
    - `test_framework`: 'jest' | 'vitest' (default: 'jest')
    - `e2e_framework`: 'playwright' | 'cypress' (default: 'playwright')
    - `coverage_threshold`: number (default: 80)
@@ -99,6 +103,74 @@ Generate tests for critical user flows:
 - Error handling scenarios
 - User interactions
 
+### 4. ⭐ Security Tests (from security-config.json) — MANDATORY
+
+**Claude MUST generate `tests/security/security.test.ts` by reading `{project}_security-config.json`.**
+
+Generate tests covering ALL of the following categories:
+
+#### 4a. Authentication Tests
+```typescript
+// From security-config.json: authentication section
+describe('認証テスト', () => {
+  it('未認証リクエストは401を返す')
+  it('無効なJWTトークンは401を返す')
+  it('期限切れトークンは401を返す')
+  it('改ざんされたトークンは401を返す')
+})
+```
+
+#### 4b. RBAC Tests (Role-Permission Matrix)
+```typescript
+// From security-config.json: permissions section
+// Generate one test per role × resource × operation combination
+describe('RBACテスト', () => {
+  // For each resource in permissions:
+  //   For each role:
+  //     For each operation (create/read/update/delete):
+  //       it('{role}は{resource}の{operation}を{許可/拒否}される')
+})
+```
+
+#### 4c. Rate Limit Tests
+```typescript
+// From security-config.json: api_security.rate_limiting section
+describe('レートリミットテスト', () => {
+  // For each endpoint in rate_limiting:
+  //   it('{endpoint}は{max}回超で429を返す')
+})
+```
+
+#### 4d. Input Validation Tests
+```typescript
+describe('入力バリデーションテスト', () => {
+  it('SQLインジェクション文字列は400を返す')
+  it('XSSペイロードは400を返す')
+  it('過大なペイロード（>10MB）は413を返す')
+  it('不正なJSON形式は400を返す')
+})
+```
+
+#### 4e. Audit Log Tests
+```typescript
+// From security-config.json: audit_logging.events section
+describe('監査ログテスト', () => {
+  // For each event in audit_logging.events:
+  //   it('{event}発生時に監査ログが記録される')
+  it('ログにパスワード・トークンが含まれない')
+})
+```
+
+#### 4f. Data Protection Tests
+```typescript
+// From security-config.json: data_protection section
+describe('データ保護テスト', () => {
+  // For each field in sensitive_fields:
+  //   it('{field}がレスポンスに平文で含まれない')
+  it('パスワードがbcryptでハッシュ化されている')
+})
+```
+
 ---
 
 ## Output / 出力
@@ -116,10 +188,14 @@ Generate tests for critical user flows:
 3. **E2E Tests**
    - `tests/e2e/{feature}.spec.ts`
 
-4. **Test Fixtures**
+4. **⭐ Security Tests** (generated from security-config.json)
+   - `tests/security/security.test.ts`
+   - Covers: Authentication, RBAC, Rate Limiting, Input Validation, Audit Logging, Data Protection
+
+5. **Test Fixtures**
    - `tests/fixtures/{entity}.fixture.ts`
 
-5. **Configuration**
+6. **Configuration**
    - `jest.config.js` or `vitest.config.ts`
    - `playwright.config.ts` or `cypress.config.ts`
 
@@ -143,14 +219,20 @@ usecase-to-test-v1 --project b2b-ec-platform
 
 ## Test Coverage Matrix / テストカバレッジマトリクス
 
-| Layer | Unit | Integration | E2E |
-|-------|------|-------------|-----|
-| Domain Entities | ✅ All methods | ✅ State transitions | - |
-| Services | - | ✅ All use cases | - |
-| API | - | ✅ All endpoints | ✅ Critical flows |
-| Business Rules | ✅ All rules | ✅ Combinations | - |
+| Layer | Unit | Integration | E2E | Security |
+|-------|------|-------------|-----|----------|
+| Domain Entities | ✅ All methods | ✅ State transitions | - | - |
+| Services | - | ✅ All use cases | - | - |
+| API | - | ✅ All endpoints | ✅ Critical flows | - |
+| Business Rules | ✅ All rules | ✅ Combinations | - | - |
+| Authentication | - | - | - | ✅ JWT/Token validation |
+| Authorization (RBAC) | - | - | - | ✅ All role×resource combinations |
+| Rate Limiting | - | - | - | ✅ All configured limits |
+| Input Validation | - | - | - | ✅ Injection, XSS, oversized payloads |
+| Audit Logging | - | - | - | ✅ All configured events |
+| Data Protection | - | - | - | ✅ Sensitive field masking |
 
-Target: 80%+ code coverage
+Target: 80%+ code coverage, 100% security-config.json coverage
 
 ---
 
