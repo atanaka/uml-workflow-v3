@@ -40,6 +40,8 @@ UML Workflow v3 は、Claude AI の [Skills](https://docs.claude.com/en/docs/cla
 - **Security-First** — OWASP Top 10準拠のセキュリティ設計を自動生成
 - **Full Traceability** — 要件→モデル→コード→テストの追跡マトリクス
 
+### Coming Soon: 新会社による商用サポート・拡張版
+
 ---
 
 ## Quick Start / クイックスタート
