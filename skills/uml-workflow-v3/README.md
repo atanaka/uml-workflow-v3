@@ -1,16 +1,12 @@
-# UML Workflow v3
+# UML Workflow v3 / UMLワークフロー v3
 
-**ビジネスシナリオから本番品質アプリケーションを自動生成する Claude AI スキル**
-
-*A Claude AI Skill that transforms business scenarios into production-ready applications through a 10-step UML pipeline.*
+**ビジネスシナリオから本番品質アプリケーションを自動生成する Claude AI スキル / A Claude AI Skill that transforms business scenarios into production-ready applications through a 10-step UML pipeline.**
 
 ---
 
 ## 🎯 これは何？ / What is this?
 
-**uml-workflow-v3** は、自然言語で書かれたビジネスシナリオを入力として、UML設計からフルスタックコード・テスト・トレーサビリティマトリクスまでを自動生成する Claude AI スキルです。
-
-**uml-workflow-v3** is a Claude AI skill that takes a natural-language business scenario and automatically generates UML diagrams, full-stack application code, test suites, and a complete traceability matrix — all in a single 10-step pipeline.
+**uml-workflow-v3** は、自然言語で書かれたビジネスシナリオを入力として、UML設計からフルスタックコード・テスト・トレーサビリティマトリクスまでを自動生成する Claude AI スキルです。 **uml-workflow-v3** is a Claude AI skill that takes a natural-language business scenario and automatically generates UML diagrams, full-stack application code, test suites, and a complete traceability matrix — all in a single 10-step pipeline.
 
 ### パイプライン全体像 / Full Pipeline Overview
 
@@ -40,18 +36,12 @@ Production-Quality App + Full UML Docs + Traceable Evidence
 
 | 特長 / Feature | 詳細 / Details |
 |---------------|---------------|
-| **10ステップパイプライン** | シナリオ→コード→テスト→追跡マトリクスまで一貫自動実行 |
-| **10-Step Pipeline** | Seamlessly automated from scenario to code, tests, and traceability |
-| **バイリンガル対応** | 日本語・英語の両出力に対応。コメント・ドキュメントも選択可能 |
-| **Bilingual Output** | Japanese and English outputs. Comments and docs in your language |
-| **キャッシュシステム** | 中間成果物を自動保存。再実行時のトークン消費を最大75%削減 |
-| **Caching System** | Auto-saves intermediate artifacts. Up to 75% token reduction on reruns |
-| **柔軟な実行モード** | フル実行・途中再開・単一ステップ・モデルのみなど複数モード |
-| **Flexible Execution** | Full run, resume from step, single-step, model-only — your choice |
-| **セキュリティファースト** | OWASP Top 10準拠のセキュリティ設計を Step 7 で自動生成 |
-| **Security-First** | OWASP Top 10–compliant security design auto-generated at Step 7 |
-| **完全なトレーサビリティ** | 要件→モデル→コード→テストを Step 10 で双方向追跡 |
-| **Full Traceability** | Requirements ↔ Model ↔ Code ↔ Tests bidirectionally tracked at Step 10 |
+| **10ステップパイプライン** / **10-Step Pipeline** | シナリオ→コード→テスト→追跡マトリクスまで一貫自動実行 / Seamlessly automated from scenario to code, tests, and traceability |
+| **バイリンガル対応** / **Bilingual Output** | 日本語・英語の両出力に対応。コメント・ドキュメントも選択可能 / Japanese and English outputs. Comments and docs in your language |
+| **キャッシュシステム** / **Caching System** | 中間成果物を自動保存。再実行時のトークン消費を最大75%削減 / Auto-saves intermediate artifacts. Up to 75% token reduction on reruns |
+| **柔軟な実行モード** / **Flexible Execution** | フル実行・途中再開・単一ステップ・モデルのみなど複数モード / Full run, resume from step, single-step, model-only — your choice |
+| **セキュリティファースト** / **Security-First** | OWASP Top 10準拠のセキュリティ設計を Step 7 で自動生成 / OWASP Top 10–compliant security design auto-generated at Step 7 |
+| **完全なトレーサビリティ** / **Full Traceability** | 要件→モデル→コード→テストを Step 10 で双方向追跡 / Requirements ↔ Model ↔ Code ↔ Tests bidirectionally tracked at Step 10 |
 
 ---
 
@@ -59,9 +49,7 @@ Production-Quality App + Full UML Docs + Traceable Evidence
 
 ### 初回実行 / First Run
 
-Claude の新しい会話を開き、以下のように入力してください：
-
-Open a new Claude conversation and type:
+Claude の新しい会話を開き、以下のように入力してください：/ Open a new Claude conversation and type:
 
 ```
 uml-workflow-v3を使って、以下のビジネスシナリオからアプリケーションを生成してください。
@@ -79,9 +67,7 @@ Employees submit expense reports. Managers approve or reject them.
 The accounting department processes approved expense reports for reimbursement.
 ```
 
-Claude が対話的に質問しながら、10ステップを自動実行します。
-
-Claude will ask a few configuration questions, then automatically execute all 10 steps.
+Claude が対話的に質問しながら、10ステップを自動実行します。 / Claude will ask a few configuration questions, then automatically execute all 10 steps.
 
 ### 対話の例 / Sample Dialogue
 
@@ -138,9 +124,7 @@ Claude: [キャッシュ検出 / Cache detected]
 
 ### XMI生成OFF の追加効果 / Additional Gain from XMI=OFF
 
-全シナリオでXMI生成をOFFにすることで **さらに最大18%削減** できます。
-
-Disabling XMI generation provides an **additional up to 18% reduction** across all scenarios.
+全シナリオでXMI生成をOFFにすることで **さらに最大18%削減** できます。 / Disabling XMI generation provides an **additional up to 18% reduction** across all scenarios.
 
 ```
 例 / Example: モデルのみ + XMI OFF / Model only + XMI OFF
@@ -155,9 +139,7 @@ Disabling XMI generation provides an **additional up to 18% reduction** across a
 
 ### 1. フルワークフロー / Full Workflow（デフォルト / Default）
 
-全10ステップを実行。初回のプロジェクト生成に使用します。
-
-Executes all 10 steps. Use this for initial project generation.
+全10ステップを実行。初回のプロジェクト生成に使用します。 / Executes all 10 steps. Use this for initial project generation.
 
 ```
 「uml-workflow-v3で{プロジェクト名}を生成して」
@@ -181,48 +163,36 @@ Step 10: トレーサビリティマトリクス生成 / Traceability Matrix Gen
 
 ### 2. 指定ステップから再開 / Resume from Step
 
-任意のステップから実行を開始します。それ以前のステップはキャッシュから復元されます。
-
-Starts execution from any step. Prior steps are restored from cache.
+任意のステップから実行を開始します。それ以前のステップはキャッシュから復元されます。 / Starts execution from any step. Prior steps are restored from cache.
 
 ```
 「uml-workflowをStep 5から再開してください」
 "Resume uml-workflow from Step 5"
 ```
 
-いつ使うか / When to use: 前段のモデルは変更せず、後段のみ再生成したい場合。機能追加など。
-
-Use this when you want to regenerate only later steps without changing earlier models — e.g., when adding features.
+いつ使うか / When to use: 前段のモデルは変更せず、後段のみ再生成したい場合（機能追加など）。 Use this when you want to regenerate only later steps without changing earlier models, e.g., when adding features.
 
 ### 3. モデルのみ / Model Only
 
-コード生成（Step 8–9）をスキップし、Step 1–7 のみを実行します。
-
-Executes Steps 1–7, skipping code generation (Steps 8–9).
+コード生成（Step 8–9）をスキップし、Step 1–7 のみを実行します。 / Executes Steps 1–7, skipping code generation (Steps 8–9).
 
 ```
 「{プロジェクト名}のモデルのみ生成して」
 "Generate models only for {project-name}"
 ```
 
-いつ使うか / When to use: 要件定義・設計フェーズ。ステークホルダーレビュー用のUML図のみ欲しい場合。
-
-Use during requirements or design phase, or when only UML diagrams are needed for stakeholder review.
+いつ使うか / When to use: 要件定義・設計フェーズ。ステークホルダーレビュー用のUML図のみ欲しい場合。 Use during requirements or design phase when only UML diagrams are needed for stakeholder review.
 
 ### 4. 単一ステップ / Single Step
 
-特定のステップのみを実行します。
-
-Executes one specific step in isolation.
+特定のステップのみを実行します。 / Executes one specific step in isolation.
 
 ```
 「uml-workflowのStep 6（モデル検証）を実行してください」
 "Run Step 6 (model validation) of uml-workflow"
 ```
 
-いつ使うか / When to use: モデル手動修正後のバリデーション。特定のUML図の再生成。
-
-Use after manually editing a model, or to regenerate a specific UML diagram.
+いつ使うか / When to use: モデル手動修正後のバリデーション。特定のUML図の再生成。 Use after manually editing a model, or to regenerate a specific UML diagram.
 
 ### 5. バリデーションのみ / Validation Only
 
@@ -231,9 +201,7 @@ Use after manually editing a model, or to regenerate a specific UML diagram.
 "Run validation for {project-name}"
 ```
 
-Step 6 のみを実行します。トークン削減率は最大約95%。
-
-Runs Step 6 only. Up to ~95% token reduction.
+Step 6 のみを実行します。トークン削減率は最大約95%。 / Runs Step 6 only. Up to ~95% token reduction.
 
 ---
 
@@ -241,9 +209,7 @@ Runs Step 6 only. Up to ~95% token reduction.
 
 ### 自動キャッシュ / Automatic Caching
 
-各ステップ完了後、Claude が自動的に成果物をキャッシュに保存します。
-
-After each step completes, Claude automatically saves artifacts to the cache.
+各ステップ完了後、Claude が自動的に成果物をキャッシュに保存します。 / After each step completes, Claude automatically saves artifacts to the cache.
 
 ```
 キャッシュ保存先 / Cache location:
@@ -273,9 +239,7 @@ After each step completes, Claude automatically saves artifacts to the cache.
 
 ### キャッシュの利用条件 / When Cache is Used
 
-キャッシュは次の条件を満たすときに利用されます：
-
-Cache is used when all of the following apply:
+キャッシュは次の条件を満たすときに利用されます：/ Cache is used when all of the following apply:
 
 1. 同じプロジェクト名のキャッシュが存在する / A cache entry exists for the same project name
 2. キャッシュファイルが壊れていない / Cache files are intact
@@ -287,20 +251,15 @@ Cache is used when all of the following apply:
 
 ### デフォルト: OFF / Default: OFF
 
-XMI生成はすべての実行モードでデフォルト OFF です。効果: 各モデル生成ステップで **最大40%高速化**。
-
-XMI generation is OFF by default in all modes. Effect: **up to 40% faster** per model step.
+XMI生成はすべての実行モードでデフォルト OFF です。効果: 各モデル生成ステップで **最大40%高速化**。 / XMI generation is OFF by default in all modes. Effect: **up to 40% faster** per model step.
 
 ### XMIが必要なケース / When You Need XMI
 
 | ユースケース / Use Case | 説明 / Description |
 |------------------------|-------------------|
-| UMLツールへのインポート | Enterprise Architect / Papyrus / MagicDraw |
-| ラウンドトリップ | UMLツールで編集後、再インポートする場合 |
-| 組織標準要件 | XMI形式が必須要件の場合 |
-| Import to UML tool | Enterprise Architect / Papyrus / MagicDraw |
-| Round-trip engineering | Re-importing after editing in a UML tool |
-| Org standard | When XMI is a mandatory requirement |
+| UMLツールへのインポート / Import to UML tool | Enterprise Architect / Papyrus / MagicDraw |
+| ラウンドトリップ / Round-trip engineering | UMLツールで編集後、再インポートする場合 / Re-importing after editing in a UML tool |
+| 組織標準要件 / Org standard | XMI形式が必須要件の場合 / When XMI is a mandatory requirement |
 
 ---
 
@@ -341,16 +300,13 @@ XMI generation is OFF by default in all modes. Effect: **up to 40% faster** per 
     {project-name}_traceability-matrix.md    ← Step 10
 ```
 
-> ⭐ `domain-model.json` はすべてのステップが参照する Single Source of Truth です。  
-> ⭐ `domain-model.json` is the Single Source of Truth referenced by all subsequent steps.
+> ⭐ `domain-model.json` はすべてのステップが参照する Single Source of Truth です。/ `domain-model.json` is the Single Source of Truth referenced by all subsequent steps.
 
 ---
 
 ## 🛠️ ヘルパースキル / Helper Skills
 
-メインワークフローに加え、モデルの手動修正を支援するヘルパースキルが4つあります。
-
-Four helper skills support manual model editing alongside the main workflow.
+メインワークフローに加え、モデルの手動修正を支援するヘルパースキルが4つあります。 / Four helper skills support manual model editing alongside the main workflow.
 
 | スキル / Skill | 用途 / Purpose | 使用タイミング / When to Use |
 |---------------|---------------|---------------------------|
@@ -390,9 +346,7 @@ Step  9 → Step 2, 3, 8 の成果物が必要
 Step 10 → Step 1–9 全ての成果物を参照
 ```
 
-途中のステップから開始する場合、必要な成果物がキャッシュにあることを確認してください。
-
-When resuming from a middle step, ensure all required prior artifacts exist in cache.
+途中のステップから開始する場合、必要な成果物がキャッシュにあることを確認してください。 / When resuming from a middle step, ensure all required prior artifacts exist in cache.
 
 ### 推奨プラン / Recommended Plans
 
@@ -424,33 +378,25 @@ When resuming from a middle step, ensure all required prior artifacts exist in c
 
 **Q: スキルが認識されない / Skill not recognized**
 
-Settings > Capabilities でスキルのトグルが ON か確認してください。スキルをアップロードした後に開いた新しい会話を使ってください。
-
-Check the toggle is ON in Settings > Capabilities. Use a new conversation opened after uploading the skill.
+Settings > Capabilities でスキルのトグルが ON か確認してください。スキルをアップロードした後に開いた新しい会話を使ってください。 / Check the toggle is ON in Settings > Capabilities. Use a new conversation opened after uploading the skill.
 
 ---
 
 **Q: キャッシュが見つからない / Cache not found**
 
-プロジェクト名が前回と同じか確認してください。過去に同じプロジェクト名で実行したことが必要です。
-
-Verify the project name matches the previous session. The cache requires a prior run with the same project name.
+プロジェクト名が前回と同じか確認してください。過去に同じプロジェクト名で実行したことが必要です。 / Verify the project name matches the previous session. The cache requires a prior run with the same project name.
 
 ---
 
 **Q: Token削減効果が想定より低い / Token reduction lower than expected**
 
-XMI生成がOFFになっているか確認してください。また、フルワークフローではなく「途中から再開」や「モデルのみ」を活用してください。
-
-Confirm XMI generation is OFF. Also, use "Resume from step" or "Model only" instead of the full workflow when possible.
+XMI生成がOFFになっているか確認してください。また、フルワークフローではなく「途中から再開」や「モデルのみ」を活用してください。 / Confirm XMI generation is OFF. Also, use "Resume from step" or "Model only" instead of the full workflow when possible.
 
 ---
 
 **Q: バリデーションエラーが出る / Validation errors**
 
-Step 6 のエラーはモデルの不整合を示します。ヘルパースキルでモデルを修正してから Step 3 以降を再実行してください。
-
-Step 6 errors indicate model inconsistencies. Edit the model using helper skills, then resume from Step 3.
+Step 6 のエラーはモデルの不整合を示します。ヘルパースキルでモデルを修正してから Step 3 以降を再実行してください。 / Step 6 errors indicate model inconsistencies. Edit the model using helper skills, then resume from Step 3.
 
 ---
 
@@ -463,7 +409,7 @@ Step 6 errors indicate model inconsistencies. Edit the model using helper skills
 | [../../docs/USER_GUIDE.md](../../docs/USER_GUIDE.md) | 詳細ユーザーガイド / Comprehensive user guide |
 | [../../docs/ARCHITECTURE.md](../../docs/ARCHITECTURE.md) | アーキテクチャ説明 / Architecture overview |
 | [../../docs/INSTALLATION_GUIDE.md](../../docs/INSTALLATION_GUIDE.md) | インストールガイド（日本語）|
-| [../../docs/INSTALLATION_GUIDE_EN.md](../../docs/INSTALLATION_GUIDE_EN.md) | Installation Guide (English) |
+| [../../docs/INSTALLATION_GUIDE_EN.md](../../docs/INSTALLATION_GUIDE_EN.md) | インストールガイド（英語）/ Installation Guide (English) |
 | [../../examples/expense-report.md](../../examples/expense-report.md) | サンプルシナリオ / Sample scenario |
 | [../../CHANGELOG.md](../../CHANGELOG.md) | 変更履歴 / Change log |
 
