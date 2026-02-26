@@ -3,6 +3,8 @@
 **ビジネスシナリオから本番品質のアプリケーションを自動生成する Claude AI スキル**  
 **A Claude AI Skill that transforms business scenarios into production-ready applications via a 10-step UML pipeline. / ビジネスシナリオから本番品質のアプリケーションを自動生成する Claude AI スキル**
 
+## Coming Soon: Commercial support and extensions / 新会社による商用サポート・拡張版
+
 ---
 
 ## Overview / 概要
