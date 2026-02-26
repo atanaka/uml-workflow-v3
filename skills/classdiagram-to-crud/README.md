@@ -1,9 +1,9 @@
-# classdiagram-to-crud
+# classdiagram-to-crud / クラス図→CRUD HTML生成
 
 **UML Workflow v3 ヘルパースキル / Helper Skill for UML Workflow v3**
 
 UMLクラス図を入力として、各エンティティの CRUD 操作用 HTML フラグメントを自動生成します。  
-Generates CRUD operation HTML fragments for each entity from a UML class diagram.
+UML クラス図を入力として、各エンティティの CRUD 操作用 HTML フラグメントを自動生成します。 / Generates CRUD operation HTML fragments for each entity from a UML class diagram.
 
 **使い方 / Usage:**
 ```
@@ -20,7 +20,7 @@ Generates CRUD operation HTML fragments for each entity from a UML class diagram
 
 クラス図（PlantUML・draw.io・XMI・画像・JSON）を入力として、各クラスにつき以下の4つのHTMLフラグメントを生成します。
 
-Takes a class diagram (PlantUML, draw.io, XMI, image, or JSON) as input and generates the following 4 HTML fragments for each class.
+クラス図（PlantUML・draw.io・XMI・画像・JSON）を入力として、各クラスにつき以下の 4 つの HTML フラグメントを生成します。 / Takes a class diagram (PlantUML, draw.io, XMI, image, or JSON) as input and generates the following 4 HTML fragments for each class.
 
 | ファイル / File | 用途 / Purpose |
 |---------------|--------------|
@@ -30,7 +30,7 @@ Takes a class diagram (PlantUML, draw.io, XMI, image, or JSON) as input and gene
 | `{class}_delete.html` | 削除確認画面 / Delete confirmation |
 
 > **フラグメントとは / About HTML Fragments**: `<!DOCTYPE html>` / `<html>` / `<head>` / `<body>` を含まない、単一ルート要素のみのHTMLファイル。crud-composer などの合成ツールが直接読み込める形式です。  
-> HTML files consisting of a single root element only (no `<!DOCTYPE html>` / `<html>` / `<head>` / `<body>`). Directly loadable by composition tools like crud-composer.
+> `<!DOCTYPE html>` / `<html>` / `<head>` / `<body>` を含まない単一ルート要素のみの HTML ファイル。crud-composer などの合成ツールが直接読み込める形式です。 / HTML files consisting of a single root element only. Directly loadable by composition tools like crud-composer.
 
 ---
 
@@ -64,7 +64,7 @@ classdiagram-to-crud  ← このスキル / This skill
 
 このスキルは単独でも使用できます。uml-workflow-v3 の Step 8（コード生成）とは独立しており、プロトタイプや画面設計の確認用途に最適です。
 
-This skill can also be used standalone. It is independent of uml-workflow-v3 Step 8 (code generation) and is ideal for prototyping and UI design review.
+このスキルは単独でも使用できます。uml-workflow-v3 の Step 8（コード生成）とは独立しており、プロトタイプや画面設計の確認用途に最適です。 / This skill can also be used standalone. It is independent of uml-workflow-v3 Step 8 (code generation) and is ideal for prototyping and UI design review.
 
 ---
 
