@@ -32,7 +32,7 @@ Download the following 5 ZIP files from the GitHub [Releases](../../releases) pa
 
 1. Scroll to the **Skills** section in the Capabilities page
 2. Click **"Upload skill"**
-3. Select the downloaded **`uml-workflow-v3.zip`** and upload
+3. Select the downloaded **`uml-workflow-v3-github-repo.zip`** and upload
 4. After upload, `uml-workflow-v3` appears in the skill list
 5. Toggle the switch to **ON**
 
