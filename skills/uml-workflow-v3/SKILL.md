@@ -7,7 +7,7 @@ description: 10-step UML workflow: scenario→activity→usecase→class→state
 
 完全統合されたtoken効率化UMLワークフロー。キャッシュ管理・段階的実行・XMI最適化をすべて自動化。
 
-## 🎯 Overview
+## 🎯 Overview / 概要
 
 このスキルは3つの最適化機能を統合：
 
@@ -19,11 +19,11 @@ description: 10-step UML workflow: scenario→activity→usecase→class→state
 
 ---
 
-## 🤖 EXECUTION INSTRUCTIONS FOR CLAUDE
+## 🤖 EXECUTION INSTRUCTIONS FOR CLAUDE / Claude実行指示
 
 **CRITICAL**: When a user requests to use this skill, Claude MUST follow this exact workflow.
 
-### Trigger Patterns
+### Trigger Patterns / トリガーパターン
 
 Execute this workflow when user says:
 - "uml-workflow-v3で〜を生成"
@@ -31,7 +31,7 @@ Execute this workflow when user says:
 - "token効率化ワークフローで〜"
 - Any mention of this skill by name
 
-### Quick Execution Steps
+### Quick Execution Steps / クイック実行手順
 
 ```
 1. Determine project_name from user's request
@@ -44,7 +44,7 @@ Execute this workflow when user says:
 
 **Detail**: See CLAUDE_QUICK_GUIDE.md for concise reference, or follow detailed phases below.
 
-### Execution Workflow (MUST FOLLOW)
+### Execution Workflow (MUST FOLLOW) / 実行ワークフロー
 
 Claude will execute this skill by following these phases in order:
 
@@ -59,7 +59,7 @@ Each phase is detailed below with exact commands to execute.
 
 ---
 
-## 📋 PHASE 0: Initialization
+## 📋 PHASE 0: Initialization / 初期化
 
 **Objective**: Determine project name and set up Python environment
 
@@ -102,13 +102,13 @@ If scripts are not found, inform user and suggest re-uploading the skill.
 
 ---
 
-## 📋 PHASE 1: User Dialogue
+## 📋 PHASE 1: User Dialogue / ユーザー対話
 
 **Objective**: Collect execution configuration from user
 
 Claude uses the `ask_user_input_v0` tool to ask the following questions:
 
-### Question Set
+### Question Set / 質問セット
 
 ```python
 ask_user_input_v0({
@@ -144,7 +144,7 @@ ask_user_input_v0({
 })
 ```
 
-### Follow-up Questions
+### Follow-up Questions / 追加質問
 
 Based on execution mode selection:
 
@@ -219,7 +219,7 @@ ask_user_input_v0({
 
 ---
 
-## 📋 PHASE 2: Configuration Build
+## 📋 PHASE 2: Configuration Build / 設定構築
 
 **Objective**: Create execution configuration using Python scripts
 
@@ -297,7 +297,7 @@ Claude reads this output and extracts:
 
 ---
 
-## 📋 PHASE 3: Execution Plan Display
+## 📋 PHASE 3: Execution Plan Display / 実行計画の表示
 
 **Objective**: Show the user what will happen
 
@@ -326,7 +326,7 @@ Claude then proceeds to execution automatically (no additional confirmation need
 
 ---
 
-## 📋 PHASE 4: Step-by-Step Execution
+## 📋 PHASE 4: Step-by-Step Execution / ステップ実行
 
 **Objective**: Execute each step with cache management
 
@@ -751,7 +751,7 @@ Input: All pipeline artifacts in output directory
 
 ---
 
-## 📋 PHASE 5: Completion and Presentation
+## 📋 PHASE 5: Completion and Presentation / 完了・成果物提示
 
 **Objective**: Present results to user and provide guidance
 
@@ -833,7 +833,7 @@ Cache is ready for next run! 💾
 
 ---
 
-## 🚨 ERROR HANDLING
+## 🚨 ERROR HANDLING / エラーハンドリング
 
 ### Missing Pre-requisites
 
@@ -898,7 +898,7 @@ print('Cache cleared. Please re-run workflow.')
 
 ---
 
-## 📊 TOKEN OPTIMIZATION IN ACTION
+## 📊 TOKEN OPTIMIZATION IN ACTION / トークン最適化の実例
 
 ### Example Execution Flows
 
@@ -940,7 +940,7 @@ Tokens consumed:
 
 ---
 
-## ✅ SUCCESS CRITERIA
+## ✅ SUCCESS CRITERIA / 成功基準
 
 Workflow is considered successfully complete when:
 
@@ -955,7 +955,7 @@ Workflow is considered successfully complete when:
 
 **This completes the SKILL.md implementation. Claude can now execute this workflow fully automatically.**
 
-## 🔧 Step-by-Step Execution Details
+## 🔧 Step-by-Step Execution Details / ステップ実行詳細
 
 ### Step 1: scenario-to-activity-v1
 
@@ -1321,7 +1321,7 @@ def execute_step_10(project_name, config):
     return True
 ```
 
-## 📊 Token Optimization Summary
+## 📊 Token Optimization Summary / トークン最適化まとめ
 
 ### Individual Optimizations
 
@@ -1354,7 +1354,7 @@ def execute_step_10(project_name, config):
   合計: 71,200 tokens (35%削減)
 ```
 
-## 🎯 Usage Examples
+## 🎯 Usage Examples / 使用例
 
 ### Example 1: First-Time Full Generation
 
@@ -1426,7 +1426,7 @@ Claude:
 Token削減: 約95%
 ```
 
-## ⚙️ Configuration Options
+## ⚙️ Configuration Options / 設定オプション
 
 ### Execution Modes
 
@@ -1452,7 +1452,7 @@ Token削減: 約95%
 - **ON（デフォルト）**: 包括的なテストコード生成
 - **OFF**: テスト生成スキップ
 
-## 🔍 Cache Management Commands
+## 🔍 Cache Management Commands / キャッシュ管理コマンド
 
 ### View Cache Status
 
@@ -1478,7 +1478,7 @@ from workflow_cache_helper import clear_project_cache
 clear_project_cache("order-management")
 ```
 
-## 🚨 Error Handling
+## 🚨 Error Handling / エラーハンドリング
 
 ### Missing Dependencies
 
@@ -1505,7 +1505,7 @@ clear_project_cache("order-management")
 2. 使用頻度の低いプロジェクトを整理
 ```
 
-## 📋 Best Practices
+## 📋 Best Practices / ベストプラクティス
 
 ### For Maximum Efficiency
 
@@ -1526,7 +1526,7 @@ clear_project_cache("order-management")
 2. **検証フェーズ**: バリデーションのみ（Step 6）
 3. **最終フェーズ**: コード生成（Step 8-9）
 
-## 📚 Related Files
+## 📚 Related Files / 関連ファイル
 
 このスキルは以下のPythonモジュールを利用：
 
@@ -1537,7 +1537,7 @@ clear_project_cache("order-management")
 
 これらは `/mnt/user-data/outputs/` に配置。
 
-## 🎉 Success Criteria
+## 🎉 Success Criteria / 成功基準
 
 ワークフロー実行完了時、以下が達成されていること：
 
@@ -1549,4 +1549,4 @@ clear_project_cache("order-management")
 
 ---
 
-**このスキルで、uml-workflow-v2の完全なtoken最適化版が実現されます。**
+**このスキルで、uml-workflow-v3の完全なtoken最適化版が実現されます。**

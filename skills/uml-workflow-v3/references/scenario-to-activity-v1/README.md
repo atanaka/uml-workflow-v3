@@ -1,23 +1,23 @@
 # scenario-to-activity-v1
 
-## 概要
+## 概要 / Overview
 
 業務シナリオからUMLアクティビティ図を生成するスキルです。
 
-## 主な機能
+## 主な機能 / Key Features
 
 - 業務概要と業務シナリオから自動的にアクティビティ図を生成
 - 一時的なドメインモデルを内部で管理
 - クラス図への依存なし（独立して実行可能）
 
-## 出力成果物
+## 出力成果物 / Output Artifacts
 
 1. **PlantUML Activity Diagram** (`{project}_activity.puml`)
 2. **Business Scenario Document** (`{project}_business-scenario.md`) - 業務シナリオ文書
 3. **Activity Data JSON** (`{project}_activity-data.json`) - 構造化データ
 4. **XMI Model** (`{project}_activity-model.xmi`) - UML 2.5.1標準形式
 
-## 使用方法
+## 使用方法 / Usage
 
 ```
 ユーザー: 「このシナリオからアクティビティ図を作成してください」
@@ -31,7 +31,7 @@ B2B卸売業向けの受注管理システム
 ...
 ```
 
-## 入力要件
+## 入力要件 / Input Requirements
 
 ### 必須
 - 業務概要
@@ -43,7 +43,7 @@ B2B卸売業向けの受注管理システム
 - ステークホルダー情報
 - 非機能要件
 
-## ワークフローでの位置
+## ワークフローでの位置 / Position in Workflow
 
 ```
 Step 1: scenario-to-activity-v1 ← このスキル
@@ -55,7 +55,7 @@ Step 3: usecase-to-class-v1
 Step 4: usecase-to-code-v1
 ```
 
-## バージョン
+## バージョン / Version History
 
 - **v1.0** (2026-01-24)
   - XMI出力機能追加
@@ -63,7 +63,7 @@ Step 4: usecase-to-code-v1
   - アクティビティデータJSON生成
   - 構造化されたドメインモデル管理
 
-## 標準準拠
+## 標準準拠 / Standards Compliance
 
 - UML 2.5.1 (OMG)
 - XMI 2.5.1

@@ -1,6 +1,6 @@
 # モデル修正の実践例
 
-## シナリオ
+## シナリオ / Scenario
 
 受注管理システムのレビュー後、以下の修正が必要になった:
 
@@ -11,7 +11,7 @@
 
 ---
 
-## 修正前のdomain-model.json（抜粋）
+## 修正前のdomain-model.json（抜粋）/ Before Modification (excerpt)
 
 ```json
 {
@@ -116,7 +116,7 @@
 
 ---
 
-## 修正後のdomain-model.json
+## 修正後のdomain-model.json / After Modification
 
 ```json
 {
@@ -381,7 +381,7 @@
 
 ---
 
-## 修正のサマリー
+## 修正のサマリー / Modification Summary
 
 ### 追加された機能
 
@@ -400,7 +400,7 @@
 
 ---
 
-## json-to-modelsの実行
+## json-to-modelsの実行 / Running json-to-models
 
 ```
 Claude: json-to-modelsを使って、
@@ -472,7 +472,7 @@ Order --> "0..1" Discount
 
 ---
 
-## 次のステップ: コード再生成
+## 次のステップ: コード再生成 / Next Step: Code Regeneration
 
 ```
 Claude: usecase-to-code-v1を使って、
@@ -567,7 +567,7 @@ model Discount {  // 新規
 
 ---
 
-## まとめ
+## まとめ / Summary
 
 この例では、以下の修正ワークフローを実践しました:
 

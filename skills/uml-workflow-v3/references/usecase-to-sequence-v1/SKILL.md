@@ -7,7 +7,7 @@ description: Generate UML sequence diagrams from use case specifications and dom
 
 Generate comprehensive UML sequence diagrams from use case specifications and domain models.
 
-## Overview
+## Overview / 概要
 
 This skill creates sequence diagrams that illustrate how objects interact to fulfill each use case. These diagrams are critical for:
 - Understanding runtime object behavior
@@ -29,9 +29,9 @@ This skill creates sequence diagrams that illustrate how objects interact to ful
 
 ---
 
-## Language Support ⭐ NEW!
+## Language Support / 言語サポート ⭐
 
-### Overview
+### Overview / 概要
 
 This skill generates sequence diagrams with language-appropriate messages and notes, inheriting settings from the domain model.
 
@@ -164,7 +164,7 @@ deactivate OrderService
 @enduml
 ```
 
-### Best Practices
+### Best Practices / ベストプラクティス
 
 **Recommended settings:**
 - **Japanese projects**: Messages in Japanese, method names in English
@@ -173,7 +173,7 @@ deactivate OrderService
 
 ---
 
-## Position in Workflow
+## Position in Workflow / ワークフロー内の位置
 
 ```
 Step 1: scenario-to-activity-v1
@@ -194,7 +194,7 @@ Step 4: usecase-to-code-v1 (enhanced with sequence info)
 
 ---
 
-## Input
+## Input / 入力
 
 ### Required
 
@@ -215,7 +215,7 @@ Step 4: usecase-to-code-v1 (enhanced with sequence info)
 
 ---
 
-## Workflow
+## Workflow / 処理フロー
 
 ### Step 0: Language Configuration ⭐ NEW!
 
@@ -786,7 +786,7 @@ UML 2.5.1 Sequence Diagram in XMI 2.5.1 format.
 ```markdown
 # シーケンス図ガイド: {Project Name}
 
-## 概要
+## 概要 / Overview
 
 このドキュメントは、{Project Name}のシーケンス図を説明します。
 各ユースケースのオブジェクト間相互作用を詳細に示しています。
@@ -840,7 +840,7 @@ UML 2.5.1 Sequence Diagram in XMI 2.5.1 format.
 
 ---
 
-## 実装ガイド
+## 実装ガイド / Implementation Guide
 
 ### 必要なメソッド
 
@@ -884,7 +884,7 @@ notificationService.sendOrderConfirmation(orderId);
 
 ---
 
-## Output
+## Output / 出力
 
 ### Generated Files
 
@@ -910,7 +910,7 @@ For each project:
 
 ---
 
-## Message Type Classification
+## Message Type Classification / メッセージタイプ分類
 
 ### Synchronous Messages (solid arrow →)
 - Method calls that wait for return value
@@ -933,7 +933,7 @@ For each project:
 
 ---
 
-## Control Structures
+## Control Structures / 制御構造
 
 ### alt (Alternative)
 ```plantuml
@@ -971,7 +971,7 @@ end
 
 ---
 
-## Best Practices
+## Best Practices / ベストプラクティス
 
 ### For Quality
 
@@ -997,7 +997,7 @@ end
 
 ---
 
-## Integration with Other Skills
+## Integration with Other Skills / 他スキルとの連携
 
 ### Input Dependencies
 
@@ -1025,7 +1025,7 @@ usecase-to-code-v1 (enhanced)
 
 ---
 
-## Common Patterns
+## Common Patterns / よくあるパターン
 
 ### Entity Creation Pattern
 ```plantuml
@@ -1076,7 +1076,7 @@ deactivate Entity
 
 ---
 
-## Validation Checklist
+## Validation Checklist / 確認チェックリスト
 
 Before finalizing sequence diagrams:
 
@@ -1093,7 +1093,7 @@ Before finalizing sequence diagrams:
 
 ---
 
-## Limitations
+## Limitations / 制限事項
 
 **This skill does NOT:**
 - ❌ Generate code implementations (use usecase-to-code-v1)
@@ -1109,7 +1109,7 @@ Before finalizing sequence diagrams:
 
 ---
 
-## Version History
+## Version History / バージョン履歴
 
 - **v1.0** (2026-01-30): Initial version
   - Main flow sequence generation

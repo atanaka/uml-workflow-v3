@@ -5,9 +5,23 @@ description: Generate PlantUML, XMI, and Markdown documentation from domain-mode
 
 # json-to-models
 
-## Overview
+**UML Workflow v3 ヘルパースキル / Helper Skill**
 
-ドメインモデルJSON（domain-model.json）から、PlantUML、XMI、Markdownドキュメントを再生成するスキルです。
+`domain-model.json` を編集した後に PlantUML・XMI・Markdownドキュメントを再生成します。  
+Regenerates PlantUML diagrams, XMI, and Markdown documentation after editing `domain-model.json`.
+
+**使い方 / Usage:**
+```
+「domain-model.jsonを更新したので、クラス図を再生成してください」
+"I've updated domain-model.json. Please regenerate the class diagram."
+```
+
+---
+
+## Overview / 概要
+
+ドメインモデルJSON（domain-model.json）から、PlantUML、XMI、Markdownドキュメントを再生成するスキルです。  
+A skill that regenerates PlantUML diagrams, XMI, and Markdown documentation from domain-model.json.
 
 **主な用途:**
 - モデルのレビュー後、domain-model.jsonを修正して他のフォーマットを更新
@@ -16,7 +30,7 @@ description: Generate PlantUML, XMI, and Markdown documentation from domain-mode
 
 ---
 
-## Execution Options (NEW! v1.2 ⭐)
+## Execution Options / 実行オプション (v1.2 ⭐)
 
 **CRITICAL: 実行前にXMI生成の有無を確認してパフォーマンスを最適化します。**
 
@@ -42,7 +56,7 @@ description: Generate PlantUML, XMI, and Markdown documentation from domain-mode
 
 ---
 
-## Skill Purpose
+## Skill Purpose / スキルの目的
 
 このスキルは、手動またはプログラムで編集されたdomain-model.jsonから、すべての派生成果物を再生成します。
 
@@ -59,9 +73,9 @@ Application Code (再生成)
 
 ---
 
-## Input
+## Input / 入力
 
-### Required Input
+### Required Input / 必須入力
 
 **Filename:** `{project}_domain-model.json`
 
@@ -125,9 +139,9 @@ Application Code (再生成)
 
 ---
 
-## Processing Logic
+## Processing Logic / 処理ロジック
 
-### Step 1: JSON Validation
+### Step 1: JSON Validation / JSONバリデーション
 
 ```python
 def validate_domain_model(json_data: dict) -> bool:
@@ -157,7 +171,7 @@ def validate_domain_model(json_data: dict) -> bool:
     return True
 ```
 
-### Step 2: PlantUML Generation
+### Step 2: PlantUML Generation / PlantUML生成
 
 ```python
 def generate_plantuml_from_json(domain_model: dict) -> str:
@@ -226,7 +240,7 @@ def generate_plantuml_from_json(domain_model: dict) -> str:
     return "\n".join(puml_lines)
 ```
 
-### Step 3: XMI Generation
+### Step 3: XMI Generation / XMI生成
 
 ```python
 from lxml import etree
@@ -288,7 +302,7 @@ def generate_xmi_from_json(domain_model: dict) -> str:
     return etree.tostring(xmi, pretty_print=True, encoding='unicode', xml_declaration=True)
 ```
 
-### Step 4: Markdown Documentation Generation
+### Step 4: Markdown Documentation Generation / Markdownドキュメント生成
 
 ```python
 def generate_architecture_overview_from_json(domain_model: dict) -> str:
@@ -343,7 +357,7 @@ def generate_architecture_overview_from_json(domain_model: dict) -> str:
 
 ---
 
-## Output
+## Output / 出力
 
 **生成される成果物は実行オプションに依存します。**
 
@@ -417,7 +431,7 @@ domain-model.jsonのmetadataを更新:
 
 ---
 
-## Usage Examples
+## Usage Examples / 使用例
 
 ### Example 0: 実行オプションの選択
 
@@ -542,9 +556,9 @@ Claude: json-to-modelsを実行
 
 ---
 
-## Validation Rules
+## Validation Rules / バリデーションルール
 
-### Pre-Generation Validation
+### Pre-Generation Validation / 生成前バリデーション
 
 1. **スキーマ検証**
    - 必須フィールドの存在確認
@@ -560,7 +574,7 @@ Claude: json-to-modelsを実行
    - 属性名: camelCase
    - メソッド名: camelCase
 
-### Post-Generation Validation
+### Post-Generation Validation / 生成後バリデーション
 
 1. **PlantUML構文チェック**
    - 生成されたPlantUMLがエラーなし
@@ -570,9 +584,9 @@ Claude: json-to-modelsを実行
 
 ---
 
-## Integration with Workflow
+## Integration with Workflow / ワークフローとの連携
 
-### Modification Workflow
+### Modification Workflow / 修正ワークフロー
 
 ```
 1. 初回生成
@@ -594,7 +608,7 @@ Claude: json-to-modelsを実行
    → 更新されたコード
 ```
 
-### Next Steps After Regeneration
+### Next Steps After Regeneration / 再生成後の次のステップ
 
 生成後、以下のいずれかを実行:
 
@@ -611,9 +625,9 @@ Claude: json-to-modelsを実行
 
 ---
 
-## Error Handling
+## Error Handling / エラーハンドリング
 
-### Common Errors
+### Common Errors / よくあるエラー
 
 **Error: Entity not found**
 ```
@@ -646,30 +660,30 @@ Claude: json-to-modelsを実行
 
 ---
 
-## Best Practices
+## Best Practices / ベストプラクティス
 
-### 1. バックアップ
+### 1. バックアップ / Backup
 
 JSONを編集する前に必ずバックアップ:
 ```bash
 cp domain-model.json domain-model.json.bak
 ```
 
-### 2. 段階的な修正
+### 2. 段階的な修正 / Incremental Changes
 
 大きな変更は段階的に:
 1. 属性を追加 → 再生成 → 確認
 2. リレーションを追加 → 再生成 → 確認
 3. エンティティを追加 → 再生成 → 確認
 
-### 3. バリデーション
+### 3. バリデーション / Validation
 
 修正後、必ずバリデーション:
 ```
 Claude: このdomain-model.jsonをバリデートしてください
 ```
 
-### 4. バージョン管理
+### 4. バージョン管理 / Version Control
 
 domain-model.jsonをGitで管理:
 ```bash
@@ -679,9 +693,9 @@ git commit -m "Add shippingFee attribute to Order"
 
 ---
 
-## Limitations
+## Limitations / 制限事項
 
-### 現在の制限
+### 現在の制限 / Current Limitations
 
 1. **PlantUMLの制約**
    - すべてのUML機能をサポートしない
@@ -697,7 +711,7 @@ git commit -m "Add shippingFee attribute to Order"
 
 ---
 
-## Version History
+## Version History / バージョン履歴
 
 - **v1.0** (2026-01-24)
   - 初版リリース
@@ -706,7 +720,7 @@ git commit -m "Add shippingFee attribute to Order"
 
 ---
 
-## Related Skills
+## Related Skills / 関連スキル
 
 - **usecase-to-class-v1**: domain-model.jsonの初回生成
 - **usecase-to-code-v1**: domain-model.jsonからコード生成

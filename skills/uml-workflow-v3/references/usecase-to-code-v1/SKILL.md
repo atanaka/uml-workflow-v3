@@ -7,7 +7,7 @@ description: Generate full-stack applications from use case definitions with cus
 
 Generate production-ready, full-stack applications from use case definitions with configurable technology stacks.
 
-## Overview
+## Overview / 概要
 
 This skill generates complete application code based on:
 1. Use case definition JSON (from activity-to-usecase-v1)
@@ -29,9 +29,9 @@ This skill generates complete application code based on:
 
 ---
 
-## Language Support ⭐ NEW!
+## Language Support / 言語サポート ⭐
 
-### Overview
+### Overview / 概要
 
 This skill generates code with language-appropriate comments and documentation, inheriting settings from the domain model to ensure consistency with modeling artifacts.
 
@@ -219,17 +219,17 @@ class ReceivedOrder:
 ```markdown
 # 受注管理システム
 
-## 概要
+## 概要 / Overview
 
 Eコマースサイトにおける受注・出荷管理システム。
 
-## 機能
+## 機能 / Features
 
 - 商品注文機能
 - 受注確認機能
 - 出荷管理機能
 
-## セットアップ
+## セットアップ / Setup
 
 ### 必要要件
 
@@ -248,13 +248,13 @@ npm install
 npm run db:migrate
 \`\`\`
 
-## 実行
+## 実行 / Running
 
 \`\`\`bash
 npm run dev
 \`\`\`
 
-## API仕様
+## API仕様 / API Documentation
 
 詳細は `docs/api.md` を参照してください。
 ```
@@ -263,17 +263,17 @@ npm run dev
 ```markdown
 # Order Management System
 
-## Overview
+## Overview / 概要
 
 Order and shipping management system for e-commerce platform.
 
-## Features
+## Features / 機能
 
 - Product ordering functionality
 - Order confirmation functionality
 - Shipping management functionality
 
-## Setup
+## Setup / セットアップ
 
 ### Requirements
 
@@ -292,18 +292,18 @@ npm install
 npm run db:migrate
 \`\`\`
 
-## Running
+## Running / 実行
 
 \`\`\`bash
 npm run dev
 \`\`\`
 
-## API Documentation
+## API Documentation / API仕様
 
 See `docs/api.md` for details.
 ```
 
-### Best Practices
+### Best Practices / ベストプラクティス
 
 **Recommended settings:**
 1. **Domestic projects**: `code_comment_language="ja"`
@@ -335,7 +335,7 @@ See `docs/api.md` for details.
 
 ---
 
-## Position in Workflow
+## Position in Workflow / ワークフロー内の位置
 
 ```
 Step 1: scenario-to-activity-v1
@@ -350,7 +350,7 @@ Step 4: usecase-to-code-v1 ← YOU ARE HERE
 
 ---
 
-## Input
+## Input / 入力
 
 ### Required
 
@@ -371,7 +371,7 @@ If not provided, interactive selection or defaults apply.
 
 ---
 
-## Technology Stack Configuration
+## Technology Stack Configuration / 技術スタック設定
 
 ### Configuration Format
 
@@ -479,7 +479,7 @@ deployment:
 
 ---
 
-## Workflow
+## Workflow / 処理フロー
 
 ### Step 0: Language Inheritance and Configuration ⭐ NEW!
 
@@ -1890,16 +1890,16 @@ spec:
 ```markdown
 # {Project Name}
 
-## Technology Stack
+## Technology Stack / 技術スタック
 - Backend: {language} + {framework}
 - Frontend: {frontend framework}
 - Database: {database}
 - Architecture: {architecture}
 
-## Setup
+## Setup / セットアップ
 [Installation instructions based on stack]
 
-## API Documentation
+## API Documentation / API仕様
 [Generated from use cases]
 ```
 
@@ -1910,7 +1910,7 @@ spec:
 
 ---
 
-## Output Structure
+## Output Structure / 出力構造
 
 ### Monolith
 
@@ -1995,7 +1995,7 @@ spec:
 
 ---
 
-## Technology Stack Matrix
+## Technology Stack Matrix / 技術スタックマトリクス
 
 ### Supported Combinations
 
@@ -2018,7 +2018,7 @@ spec:
 
 ---
 
-## Documentation Output
+## Documentation Output / ドキュメント出力
 
 All generated projects include comprehensive documentation.
 
@@ -2030,20 +2030,20 @@ All generated projects include comprehensive documentation.
 ```markdown
 # {Project Name}
 
-## Overview
+## Overview / 概要
 [System description from business overview]
 
-## Features
+## Features / 機能
 - [Feature 1 from use cases]
 - [Feature 2 from use cases]
 
-## Architecture
+## Architecture / アーキテクチャ
 - **Type**: Monolith / Microservices / Serverless
 - **Backend**: {Stack}
 - **Frontend**: {Stack}
 - **Database**: {Database}
 
-## Quick Start
+## Quick Start / クイックスタート
 
 ### Prerequisites
 - Node.js 18+ (or Python 3.11+, Java 17+, etc.)
@@ -2085,19 +2085,19 @@ docker-compose up
 - Backend API: http://localhost:3000
 - API Docs: http://localhost:3000/api-docs
 
-## Project Structure
+## Project Structure / プロジェクト構造
 
 [Detailed directory structure]
 
-## API Documentation
+## API Documentation / API仕様
 
 See [API-specification.md](./API-specification.md) for detailed API documentation.
 
-## Database Schema
+## Database Schema / データベーススキーマ
 
 [ERD diagram or schema description]
 
-## Development
+## Development / 開発
 
 ### Running tests
 ```bash
@@ -2116,11 +2116,11 @@ npm run format
 npm run lint
 ```
 
-## Deployment
+## Deployment / デプロイメント
 
 See [DEPLOYMENT.md](./DEPLOYMENT.md) for deployment instructions.
 
-## Technology Stack
+## Technology Stack / 技術スタック
 
 **Backend:**
 - Language: TypeScript
@@ -2139,22 +2139,22 @@ See [DEPLOYMENT.md](./DEPLOYMENT.md) for deployment instructions.
 - Cache: Redis (optional)
 - Deployment: Docker + Kubernetes
 
-## Use Cases Implemented
+## Use Cases Implemented / 実装済みユースケース
 
 - UC-001: {Use case name} ({story points} points)
 - UC-002: {Use case name} ({story points} points)
 
 Total: {total story points} story points
 
-## Domain Model
+## Domain Model / ドメインモデル
 
 See [architecture-overview.md](../architecture-overview.md) for complete domain model documentation.
 
-## Contributing
+## Contributing / コントリビュート
 
 [Contribution guidelines]
 
-## License
+## License / ライセンス
 
 [License information]
 
@@ -2175,7 +2175,7 @@ See [architecture-overview.md](../architecture-overview.md) for complete domain 
 ```markdown
 # API仕様書: {Project Name}
 
-## 概要
+## 概要 / Overview
 
 このドキュメントは {Project Name} のREST API仕様を定義します。
 
@@ -2185,7 +2185,7 @@ See [architecture-overview.md](../architecture-overview.md) for complete domain 
 
 ---
 
-## エンドポイント一覧
+## エンドポイント一覧 / API Endpoints
 
 ### 受注管理 (Orders)
 
@@ -2330,7 +2330,7 @@ Authorization: Bearer {token}
 
 ---
 
-## データモデル
+## データモデル / Data Model
 
 ### Order (受注)
 ```typescript
@@ -2357,7 +2357,7 @@ enum OrderStatus {
 
 ---
 
-## エラーハンドリング
+## エラーハンドリング / Error Handling
 
 ### エラーコード一覧
 
@@ -2372,7 +2372,7 @@ enum OrderStatus {
 
 ---
 
-## 認証とセキュリティ
+## 認証とセキュリティ / Authentication and Security
 
 ### JWT トークン取得
 ```
@@ -2405,7 +2405,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIs...
 
 ---
 
-## レート制限
+## レート制限 / Rate Limiting
 
 - 認証済みユーザー: 1000リクエスト/時
 - 未認証: 100リクエスト/時
@@ -2414,7 +2414,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIs...
 
 ---
 
-## ページネーション
+## ページネーション / Pagination
 
 リスト取得APIはページネーション対応:
 
@@ -2437,7 +2437,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIs...
 
 ---
 
-## バージョニング
+## バージョニング / Versioning
 
 APIバージョンはURLパスに含む:
 ```
@@ -2464,7 +2464,7 @@ APIバージョンはURLパスに含む:
 ```markdown
 # デプロイメントガイド: {Project Name}
 
-## 1. デプロイメント概要
+## 1. デプロイメント概要 / Deployment Overview
 
 ### サポートされる環境
 - Docker Compose (開発・テスト環境)
@@ -2475,7 +2475,7 @@ APIバージョンはURLパスに含む:
 
 ---
 
-## 2. Docker Compose デプロイメント
+## 2. Docker Compose デプロイメント / Docker Compose Deployment
 
 ### 2.1 前提条件
 - Docker 20.10+
@@ -2521,7 +2521,7 @@ services:
 
 ---
 
-## 3. Kubernetes デプロイメント
+## 3. Kubernetes デプロイメント / Kubernetes Deployment
 
 ### 3.1 前提条件
 - Kubernetes 1.25+
@@ -2578,7 +2578,7 @@ kubernetes/
 
 ---
 
-## 4. AWS デプロイメント
+## 4. AWS デプロイメント / AWS Deployment
 
 ### 4.1 ECS (Elastic Container Service)
 
@@ -2590,7 +2590,7 @@ kubernetes/
 
 ---
 
-## 5. 環境変数
+## 5. 環境変数 / Environment Variables
 
 ### Backend環境変数
 
@@ -2611,7 +2611,7 @@ kubernetes/
 
 ---
 
-## 6. データベース
+## 6. データベース / Database
 
 ### 6.1 マイグレーション実行
 
@@ -2654,7 +2654,7 @@ spec:
 
 ---
 
-## 7. モニタリングとログ
+## 7. モニタリングとログ / Monitoring and Logging
 
 ### 7.1 ヘルスチェック
 
@@ -2693,7 +2693,7 @@ kubectl logs -f deployment/backend
 
 ---
 
-## 8. スケーリング
+## 8. スケーリング / Scaling
 
 ### 8.1 水平スケーリング (Kubernetes HPA)
 
@@ -2720,7 +2720,7 @@ spec:
 
 ---
 
-## 9. セキュリティ
+## 9. セキュリティ / Security
 
 ### 9.1 SSL/TLS設定
 
@@ -2745,7 +2745,7 @@ spec:
 
 ---
 
-## 10. トラブルシューティング
+## 10. トラブルシューティング / Troubleshooting
 
 ### よくある問題
 
@@ -2774,7 +2774,7 @@ spec:
 
 ---
 
-## Best Practices
+## Best Practices / ベストプラクティス
 
 ### CRUD Generation ⭐ NEW!
 
@@ -2792,7 +2792,7 @@ spec:
 4. **Testing**: Unit test stubs for services
 5. **Documentation**: Inline comments from use cases
 
-### Architecture
+### Architecture / アーキテクチャ
 
 1. **Separation of concerns**: Domain, services, API layers
 2. **Dependency injection**: Framework-appropriate patterns
@@ -2800,7 +2800,7 @@ spec:
 4. **Logging**: Structured logging setup
 5. **Monitoring**: Health check endpoints
 
-### Deployment
+### Deployment / デプロイメント
 
 1. **Containerization**: Docker for consistency
 2. **Orchestration**: Kubernetes for microservices
@@ -2810,7 +2810,7 @@ spec:
 
 ---
 
-## Version History
+## Version History / バージョン履歴
 
 - **v1.1** (2026-02-18): Entity CRUD auto-generation ⭐
   - Step 5.5: Entity CRUD classification (Master Data, Transaction, Sub-entity, System Actor)

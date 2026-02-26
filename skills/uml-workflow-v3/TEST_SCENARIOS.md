@@ -2,7 +2,7 @@
 
 このドキュメントは、uml-workflow-v3の完全な実行フローをテストするためのシナリオです。
 
-## 🧪 Test Scenario 1: First-Time Full Workflow
+## 🧪 Test Scenario 1: First-Time Full Workflow / 初回フルワークフロー
 
 ### User Input
 ```
@@ -96,7 +96,7 @@ Claude displays:
 
 ---
 
-## 🧪 Test Scenario 2: Second Run with Cache
+## 🧪 Test Scenario 2: Second Run with Cache / キャッシュ活用2回目
 
 ### User Input
 ```
@@ -158,7 +158,7 @@ Cache used for Step 1
 
 ---
 
-## 🧪 Test Scenario 3: Models-Only Mode
+## 🧪 Test Scenario 3: Models-Only Mode / モデルのみモード
 
 ### User Input
 ```
@@ -203,7 +203,7 @@ Token savings: 65%+
 
 ---
 
-## 🧪 Test Scenario 4: Validation Only
+## 🧪 Test Scenario 4: Validation Only / バリデーションのみ
 
 ### User Input
 ```
@@ -243,7 +243,7 @@ Token consumed: ~5,000 (vs 101,000 for full)
 
 ---
 
-## 🔍 Error Handling Tests
+## 🔍 Error Handling Tests / エラーハンドリングテスト
 
 ### Test: Missing Sub-Skill
 
@@ -285,7 +285,7 @@ Expected:
 
 ---
 
-## 📊 Token Savings Verification
+## 📊 Token Savings Verification / トークン削減効果の確認
 
 ### First Run
 ```
@@ -309,7 +309,7 @@ Expected: ~5,000 tokens (95% savings)
 
 ---
 
-## ✅ Complete Test Checklist
+## ✅ Complete Test Checklist / テストチェックリスト
 
 ### Basic Functionality
 - [ ] Project name inference works

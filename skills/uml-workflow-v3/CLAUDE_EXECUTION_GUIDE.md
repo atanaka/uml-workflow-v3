@@ -2,14 +2,14 @@
 
 このドキュメントは、Claudeが uml-workflow-v3 スキルを実行する際の完全な手順書です。
 
-## 🎯 実行トリガー
+## 🎯 実行トリガー / Execution Triggers
 
 ユーザーが以下のように言ったとき、このワークフローを実行：
 - 「uml-workflow-v3で〜を生成」
 - 「uml-workflow-v3を使って〜」
 - 「token効率化ワークフローで〜」
 
-## 📋 実行手順（Claudeが従うステップ）
+## 📋 実行手順 / Execution Steps (Claude Follow)
 
 ### STEP 1: プロジェクト名の決定
 
@@ -210,7 +210,7 @@ cache_file(
 2. Token削減実績を表示
 3. 次回のキャッシュ利用を案内
 
-## 🔍 具体例：フルワークフロー実行
+## 🔍 具体例：フルワークフロー実行 / Example: Full Workflow
 
 ```
 ユーザー: 「uml-workflow-v3で受注システムを生成」
@@ -234,7 +234,7 @@ Claude:
 完成！
 ```
 
-## 🔍 具体例：キャッシュ活用（2回目）
+## 🔍 具体例：キャッシュ活用（2回目）/ Example: Cache Reuse (2nd Run)
 
 ```
 ユーザー: 「order-systemに在庫管理機能を追加」
@@ -253,7 +253,7 @@ Claude:
 Token削減: 約20-30%
 ```
 
-## ⚠️ 重要な注意事項
+## ⚠️ 重要な注意事項 / Important Notes
 
 ### Claudeがやるべきこと
 
@@ -274,7 +274,7 @@ Token削減: 約20-30%
 - サブスキルの直接呼び出し（これはClaude側の機能）
 - ユーザーとの対話（これもClaude側の機能）
 
-## 📊 フローチャート
+## 📊 フローチャート / Flowchart
 
 ```
 User Request
@@ -299,7 +299,7 @@ User Request
 [Claude] 完了サマリー表示
 ```
 
-## ✅ チェックリスト（Claudeが確認すべきこと）
+## ✅ チェックリスト / Checklist (Claude Verification)
 
 実行前：
 - [ ] プロジェクト名を決定済み

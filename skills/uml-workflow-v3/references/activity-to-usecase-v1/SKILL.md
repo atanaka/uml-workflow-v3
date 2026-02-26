@@ -7,7 +7,7 @@ description: Extract use cases from UML activity diagrams by inferring temporary
 
 Extract use cases from activity diagrams by inferring domain models during analysis.
 
-## Overview
+## Overview / 概要
 
 This skill generates use cases and inferred domain models from activity diagrams WITHOUT requiring a pre-existing class diagram. The domain model is temporary and will be formalized later by usecase-to-class-v1.
 
@@ -29,9 +29,9 @@ This skill generates use cases and inferred domain models from activity diagrams
 
 ---
 
-## Language Support ⭐ NEW!
+## Language Support / 言語サポート ⭐
 
-### Overview
+### Overview / 概要
 
 This skill supports multi-language use case generation to accommodate international teams and Japanese domestic projects. Language settings are **inherited from the activity diagram** to ensure consistency across workflow steps.
 
@@ -88,12 +88,12 @@ language_options = {
 # language="ja"
 # Use Case UC-001: 商品を注文する
 
-## ユースケース情報
+## ユースケース情報 / Use Case Information
 - **ID**: UC-001
 - **名前**: 商品を注文する
 - **主アクター**: 顧客
 
-## 主成功シナリオ
+## 主成功シナリオ / Main Success Scenario
 1. 顧客が商品カタログを確認する
 2. 顧客が注文したい商品を選択する
 
@@ -102,12 +102,12 @@ language_options = {
 # language="en"
 # Use Case UC-001: Place Order
 
-## Use Case Information
+## Use Case Information / ユースケース情報
 - **ID**: UC-001
 - **Name**: Place Order
 - **Primary Actor**: Customer
 
-## Main Success Scenario
+## Main Success Scenario / 主成功シナリオ
 1. Customer browses product catalog
 2. Customer selects desired products
 
@@ -234,7 +234,7 @@ customer --> UC001
 
 ---
 
-## Input
+## Input / 入力
 
 ### Required Files
 
@@ -255,7 +255,7 @@ This context improves domain model inference quality.
 
 ---
 
-## Workflow
+## Workflow / 処理フロー
 
 ### Step 0: Language Inheritance and Configuration ⭐ NEW!
 
@@ -607,7 +607,7 @@ Summary of all use cases with:
 
 ---
 
-## Domain Model Inference Strategies
+## Domain Model Inference Strategies / ドメインモデル推論戦略
 
 ### Strategy 1: From Entity Annotations
 
@@ -647,7 +647,7 @@ Use provided terminology:
 
 ---
 
-## Attribute Inference Patterns
+## Attribute Inference Patterns / 属性推論パターン
 
 ### Standard Attributes
 
@@ -684,7 +684,7 @@ All entities get:
 
 ---
 
-## Output
+## Output / 出力
 
 **CRITICAL: All use cases MUST be output as individual Markdown files in Cockburn format.**
 
@@ -713,7 +713,7 @@ Detailed use case descriptions following Alistair Cockburn's template.
 ```markdown
 # UC-001: 商品を注文する
 
-## ユースケース情報
+## ユースケース情報 / Use Case Information
 - **ID**: UC-001
 - **名前**: 商品を注文する
 - **スコープ**: 受注出荷システム
@@ -722,24 +722,24 @@ Detailed use case descriptions following Alistair Cockburn's template.
 - **ストーリーポイント**: 5
 - **スプリント**: 1
 
-## ステークホルダーと関心事
+## ステークホルダーと関心事 / Stakeholders and Interests
 - **顧客**: スムーズに注文を完了したい
 - **受注係**: 正確な注文情報を受け取りたい
 - **会社**: 在庫を適切に管理したい
 - **出荷係**: 明確な出荷指示を受け取りたい
 
-## 事前条件
+## 事前条件 / Preconditions
 - 顧客が商品カタログにアクセスできる
 - システムが稼働している
 - 受注係がログインしている
 
-## 成功保証（事後条件）
+## 成功保証（事後条件）/ Success Guarantee (Postconditions)
 - 注文が正しく登録されている
 - 在庫が適切に引き当てられている
 - 出荷指示が作成されている
 - 顧客に受注確認が通知されている
 
-## 主成功シナリオ
+## 主成功シナリオ / Main Success Scenario
 
 1. 顧客が商品カタログを確認する
 2. 顧客が注文したい商品を選択する
@@ -751,7 +751,7 @@ Detailed use case descriptions following Alistair Cockburn's template.
 8. システムが出荷指示を作成する
 9. システムが顧客に受注確認を送信する
 
-## 拡張（代替フロー）
+## 拡張（代替フロー）/ Extensions (Alternative Flows)
 
 **5a. 在庫不足の場合:**
 - 5a1. システムが在庫不足を通知する
@@ -769,7 +769,7 @@ Detailed use case descriptions following Alistair Cockburn's template.
 - *a2. 受注係がシステム管理者に連絡する
 - *a3. エラー解決後、中断したステップから再開
 
-## 特別要件
+## 特別要件 / Special Requirements
 
 **性能要件:**
 - 在庫確認の応答時間: 1秒以内
@@ -787,7 +787,7 @@ Detailed use case descriptions following Alistair Cockburn's template.
 - システム稼働率: 99.9%以上
 - データバックアップ: 1日1回
 
-## 技術とデータのバリエーション
+## 技術とデータのバリエーション / Technology and Data Variations
 
 **データフォーマット:**
 - 日付形式: YYYY-MM-DD
@@ -797,16 +797,16 @@ Detailed use case descriptions following Alistair Cockburn's template.
 - REST API (JSON)
 - WebSocket (リアルタイム通知)
 
-## 発生頻度
+## 発生頻度 / Frequency
 - 1日あたり平均: 50件
 - ピーク時: 100件/日
 
-## 未解決事項
+## 未解決事項 / Open Issues
 - キャンセル処理の詳細フロー
 - 返品処理との連携
 - 複数配送先への対応
 
-## 関連ユースケース
+## 関連ユースケース / Related Use Cases
 - UC-002: 受注を確認する (included)
 - UC-004: 注文をキャンセルする (related)
 
@@ -986,7 +986,7 @@ Next Step: Run usecase-to-class-v1 to formalize domain model
 
 ---
 
-## Quality Indicators
+## Quality Indicators / 品質指標
 
 ### Inference Confidence Levels
 
@@ -1015,7 +1015,7 @@ Mark confidence in JSON:
 
 ---
 
-## Integration with Workflow
+## Integration with Workflow / ワークフロー連携
 
 **Position in uml-workflow-v1:**
 
@@ -1036,7 +1036,7 @@ Step 4: usecase-to-code-v1
 
 ---
 
-## Comparison with Original Version
+## Comparison with Original Version / 旧バージョンとの比較
 
 | Feature | Original | v1 |
 |---------|----------|-----|
@@ -1048,7 +1048,7 @@ Step 4: usecase-to-code-v1
 
 ---
 
-## Best Practices
+## Best Practices / ベストプラクティス
 
 ### For Users
 
@@ -1066,7 +1066,7 @@ Step 4: usecase-to-code-v1
 
 ---
 
-## Limitations
+## Limitations / 制限事項
 
 **Inferred domain model is NOT production-ready:**
 - ❌ May miss important attributes
@@ -1079,7 +1079,7 @@ Step 4: usecase-to-code-v1
 
 ---
 
-## Example Output Structure
+## Example Output Structure / 出力構造例
 
 ```json
 {
@@ -1108,7 +1108,7 @@ Step 4: usecase-to-code-v1
 
 ---
 
-## Version History
+## Version History / バージョン履歴
 
 - **v1.0** (2026-01-22): Initial version
   - Independent domain model inference

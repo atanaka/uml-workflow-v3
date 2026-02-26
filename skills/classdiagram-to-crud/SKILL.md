@@ -3,17 +3,28 @@ name: classdiagram-to-crud
 description: Generate CRUD HTML fragments (Create/Read/Update/Delete) from UML class diagrams. Supports PlantUML, draw.io, XMI, and image inputs.
 ---
 
-# Class Diagram to CRUD HTML Generator
+# Class Diagram to CRUD HTML Generator / クラス図→CRUD HTML ジェネレーター
 
-UMLクラス図を入力として、各クラスにつきCRUD（Create / Read / Update / Delete）用のHTML画面を自動生成する。
+**UML Workflow v3 ヘルパースキル / Helper Skill**
 
-## Overview
+UMLクラス図を入力として、各クラスにつきCRUD（Create / Read / Update / Delete）用のHTML画面を自動生成します。  
+Automatically generates CRUD (Create / Read / Update / Delete) HTML screens for each class from a UML class diagram.
+
+**使い方 / Usage:**
+```
+「domain-model.jsonからCRUD HTMLを生成して」
+"Generate CRUD HTML from domain-model.json"
+```
+
+---
+
+## Overview / 概要
 
 このスキルは、クラス図に定義されたエンティティの情報（属性名、型、関連）を解析し、各エンティティにつき4つの**HTMLフラグメント**を生成する。
 
 > **フラグメントとは**: `<!DOCTYPE html>` / `<html>` / `<head>` / `<body>` を含まない、単一ルート要素のみのHTMLファイル。crud-composerなどの合成ツールが直接読み込める形式であり、インラインJSイベントハンドラ（onclick等）は使用しない。
 
-**対応する入力形式:**
+**対応する入力形式 / Supported Input Formats:**
 - PlantUML (.puml)
 - draw.io / diagrams.net (.drawio, .xml)
 - XMI (.xmi)
@@ -21,7 +32,7 @@ UMLクラス図を入力として、各クラスにつきCRUD（Create / Read / 
 - テキスト記述（自然言語やマークダウン）
 - domain-model.json（uml-workflow 系スキルの出力）
 
-**生成物:**
+**生成物 / Generated Output:**
 - 各クラスにつき4つのHTMLファイル
 - ファイル名規則: `{クラス名を小文字}_{操作}.html`
   - `x_create.html` — 新規登録フォーム
@@ -31,7 +42,7 @@ UMLクラス図を入力として、各クラスにつきCRUD（Create / Read / 
 
 ---
 
-## Position in Workflow
+## Position in Workflow / ワークフロー内の位置
 
 ```
 クラス図（任意の形式）
@@ -49,11 +60,11 @@ classdiagram-to-crud ← YOU ARE HERE
 
 ---
 
-## Input
+## Input / 入力
 
-### Required
+### Required / 必須
 
-クラス図の情報。以下のいずれかの形式で提供される:
+クラス図の情報 / Class diagram information.以下のいずれかの形式で提供される:
 
 1. **PlantUML**: `.puml` ファイル
 2. **draw.io**: `.drawio` / `.xml` ファイル
@@ -62,7 +73,7 @@ classdiagram-to-crud ← YOU ARE HERE
 5. **テキスト**: 自然言語やマークダウンによるクラス定義
 6. **domain-model.json**: uml-workflow 系スキルの出力 JSON
 
-### 入力から抽出する情報
+### 入力から抽出する情報 / Information Extracted from Input
 
 各クラスについて以下を抽出する:
 
@@ -80,9 +91,9 @@ classdiagram-to-crud ← YOU ARE HERE
 
 ---
 
-## Output
+## Output / 出力
 
-### ファイル命名規則
+### ファイル命名規則 / File Naming Convention
 
 クラス名を**小文字**に変換し、`_create`, `_read`, `_update`, `_delete` を付与する。
 
@@ -103,7 +114,7 @@ orderitem_update.html
 orderitem_delete.html
 ```
 
-### 各画面の構成
+### 各画面の構成 / Screen Structure
 
 #### Create（新規登録）
 
@@ -145,7 +156,7 @@ orderitem_delete.html
 
 ---
 
-## 型からUIコンポーネントへのマッピング
+## 型からUIコンポーネントへのマッピング / Type-to-UI Component Mapping
 
 | 属性の型 | Create/Update コンポーネント | Read 表示 |
 |----------|---------------------------|-----------|
@@ -165,7 +176,7 @@ orderitem_delete.html
 
 ---
 
-## HTML生成ルール
+## HTML Generation Rules / HTML生成ルール
 
 ### フラグメント構造（必須）
 
@@ -236,7 +247,7 @@ padding: 28px 32px;
 
 ---
 
-## Execution Steps
+## Execution Steps / 実行ステップ
 
 ### Step 1: 入力の解析
 
@@ -282,7 +293,7 @@ padding: 28px 32px;
 
 ---
 
-## Language Support
+## Language Support / 言語サポート
 
 ### 画面ラベルの言語
 
@@ -305,7 +316,7 @@ padding: 28px 32px;
 
 ---
 
-## Examples
+## Examples / 使用例
 
 ### 入力例: テキスト記述
 
@@ -334,7 +345,7 @@ orderitem_delete.html — 明細の削除確認（受注合計への影響警告
 
 ---
 
-## Best Practices
+## Best Practices / ベストプラクティス
 
 1. **フラグメント厳守**: ルート要素は必ず1つ。DOCTYPE/html/head/bodyは絶対に出力しない
 2. **インラインJS禁止**: onclick等のイベントハンドラを一切使用しない。代わりに `type="button"` や `data-confirm` 属性を使う
@@ -346,7 +357,7 @@ orderitem_delete.html — 明細の削除確認（受注合計への影響警告
 
 ---
 
-## Version History
+## Version History / バージョン履歴
 
 - **v1.1** (2026-02-22): フラグメント出力に変更
   - フルHTML文書（DOCTYPE/html/head/body）→ 単一ルート要素フラグメントに変更

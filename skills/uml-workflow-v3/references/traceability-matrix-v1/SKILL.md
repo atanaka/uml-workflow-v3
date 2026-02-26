@@ -7,7 +7,7 @@ description: Generate comprehensive traceability matrices from UML Workflow v2.3
 
 Generate end-to-end traceability matrices from UML Workflow pipeline artifacts.
 
-## Overview
+## Overview / 概要
 
 This skill reads all artifacts produced by the UML Workflow v2.3 pipeline and generates a consolidated traceability matrix that links:
 
@@ -15,20 +15,20 @@ This skill reads all artifacts produced by the UML Workflow v2.3 pipeline and ge
 
 This provides the "evidence artifact" that proves requirements are fully implemented and tested.
 
-## When to Use
+## When to Use / 使用タイミング
 
 - **After Step 9 (Test Generation)**: Full forward+backward traceability across all artifacts
 - **After Step 6 (Model Validation)**: Pre-code traceability verification (scenario→model only)
 - **On demand**: To audit coverage gaps or generate compliance documentation
 
-## Language Support
+## Language Support / 言語サポート
 
 Inherits language settings from domain-model.json or usecase-output.json.
 Supports Japanese, English, and Bilingual output.
 
 ---
 
-## Input Artifacts
+## Input Artifacts / 入力成果物
 
 The skill reads the following files from the project output directory.
 Not all files are required — the matrix adapts to what is available.
@@ -61,7 +61,7 @@ Not all files are required — the matrix adapts to what is available.
 
 ---
 
-## Output Artifacts
+## Output Artifacts / 出力成果物
 
 ### 1. Traceability Matrix JSON (Primary)
 
@@ -270,7 +270,7 @@ Structure:
 生成日時: {timestamp}
 パイプラインステップ検出数: {n}/9
 
-## 1. カバレッジサマリー
+## 1. カバレッジサマリー / Coverage Summary
 
 | 追跡レベル | 総数 | カバー済 | カバレッジ | ステータス |
 |-----------|------|---------|----------|----------|
@@ -282,7 +282,7 @@ Structure:
 | ユースケース → テスト | 8 | 7 | 87.5% | ⚠️ |
 | **End-to-End 完全追跡** | **15** | **12** | **80.0%** | ⚠️ |
 
-## 2. 完全追跡チェーン（End-to-End）
+## 2. 完全追跡チェーン / End-to-End Traceability Chain
 
 ### UC-001: 商品を注文する
 
@@ -313,7 +313,7 @@ Structure:
 
 **追跡チェーン**: シナリオ → アクティビティ → ユースケース → エンティティ → **断絶** ⚠️
 
-## 3. カバレッジギャップ一覧
+## 3. カバレッジギャップ一覧 / Coverage Gaps
 
 | ギャップID | レベル | 内容 | 推奨アクション |
 |-----------|-------|------|-------------|
@@ -321,7 +321,7 @@ Structure:
 | GAP-002 | UC→コード | UC-008 のコード未生成 | usecase-to-code-v1 を再実行 |
 | GAP-003 | UC→テスト | UC-008 のテスト未生成 | usecase-to-test-v1 を再実行 |
 
-## 4. 逆追跡マトリクス（コード→要件）
+## 4. 逆追跡マトリクス / Reverse Traceability Matrix (Code→Requirements)
 
 | コードファイル | エンティティ | ユースケース | シナリオ |
 |--------------|-----------|-----------|---------|
@@ -332,7 +332,7 @@ Structure:
 
 ---
 
-## Execution Procedure
+## Execution Procedure / 実行手順
 
 ### Step 1: Detect Available Artifacts
 
@@ -849,7 +849,7 @@ print(f"Traceability matrix Markdown saved: {md_output_path}")
 
 ---
 
-## Integration with UML Workflow v2.3
+## Integration with UML Workflow v3 / UMLワークフローとの連携
 
 ### As Step 10 (New)
 
@@ -878,7 +878,7 @@ The traceability matrix should be regenerated whenever any upstream artifact cha
 
 ---
 
-## Quality Criteria
+## Quality Criteria / 品質基準
 
 ### Minimum Acceptable Coverage
 
@@ -900,7 +900,7 @@ The traceability matrix should be regenerated whenever any upstream artifact cha
 
 ---
 
-## Output File Summary
+## Output File Summary / 出力ファイルまとめ
 
 | File | Size | Description |
 |------|------|-------------|
@@ -909,7 +909,7 @@ The traceability matrix should be regenerated whenever any upstream artifact cha
 
 ---
 
-## Limitations and Future Enhancements
+## Limitations and Future Enhancements / 制限事項と今後の拡張
 
 ### Current Limitations
 

@@ -1,10 +1,27 @@
-# Class Diagram Image to JSON Converter
+# Class Diagram Image to JSON Converter / クラス図画像→JSONコンバーター
 
-Convert visual UML class diagrams from images (JPEG, PNG, PDF) into structured domain-model.json format for uml-workflow-v2.
+**UML Workflow v3 ヘルパースキル / Helper Skill for UML Workflow v3**
 
-## Quick Start
+手描き・UMLツール出力のクラス図画像を `domain-model.json` に変換します。  
+Converts class diagram images (hand-drawn or from UML tools) into `domain-model.json`.
 
-### Basic Usage
+**使い方 / Usage:**
+```
+「この手描きのクラス図をJSONに変換してください」（画像を添付）
+"Please convert this class diagram to domain-model.json" (attach image)
+```
+
+変換後は `json-to-models` スキルで PlantUML 図を再生成するか、Step 4 以降のパイプラインを再実行してください。  
+After conversion, use the `json-to-models` skill to regenerate PlantUML diagrams, or re-run the pipeline from Step 4.
+
+---
+
+
+Convert visual UML class diagrams from images (JPEG, PNG, PDF) into structured domain-model.json format for uml-workflow-v3.
+
+## Quick Start / クイックスタート
+
+### Basic Usage / 基本的な使い方
 
 1. **Create or export class diagram**
    - Use any UML tool (Eclipse Papyrus, Draw.io, Lucidchart, etc.)
@@ -21,7 +38,7 @@ Convert visual UML class diagrams from images (JPEG, PNG, PDF) into structured d
    Claude: [Analyzes image and generates JSON]
    ```
 
-### Workflow Integration
+### Workflow Integration / ワークフロー統合
 
 #### Scenario A: Start from Visual Diagram
 ```
@@ -31,7 +48,7 @@ Claude: classdiagram-image-to-json
   ↓
 domain-model.json created
   ↓
-Continue with Step 6 (usecase-to-sequence-v1)
+Continue with Step 5 (usecase-to-sequence-v1) or later steps
 ```
 
 #### Scenario B: Refine Auto-Generated Diagram
@@ -46,10 +63,10 @@ Claude: classdiagram-image-to-json (merge mode)
   ↓
 domain-model.json updated
   ↓
-Continue with Step 6
+Continue with Step 5 or later steps
 ```
 
-## Examples
+## Examples / 使用例
 
 ### Example 1: Simple E-Commerce Model
 
@@ -232,28 +249,28 @@ Merged model saved to domain-model.json
 }
 ```
 
-## Supported UML Elements
+## Supported UML Elements / 対応UML要素
 
-### Classes
+### Classes / クラス
 - ✅ Class names
 - ✅ Stereotypes: `<<entity>>`, `<<value object>>`, `<<enumeration>>`, `<<service>>`, etc.
 - ✅ Abstract classes
 - ✅ Interfaces
 
-### Attributes
+### Attributes / 属性
 - ✅ Name and type
 - ✅ Visibility: `+` public, `-` private, `#` protected, `~` package
 - ✅ Multiplicity: `[0..1]`, `[0..*]`, etc.
 - ✅ Default values
 - ✅ Constraints: `{unique}`, `{required}`, `{id}`
 
-### Methods
+### Methods / メソッド
 - ✅ Name and return type
 - ✅ Parameters with types
 - ✅ Visibility
 - ✅ Stereotypes: `<<constructor>>`, `<<query>>`, `<<command>>`
 
-### Relationships
+### Relationships / 関係
 - ✅ Association (unidirectional/bidirectional)
 - ✅ Aggregation (hollow diamond)
 - ✅ Composition (filled diamond)
@@ -262,13 +279,13 @@ Merged model saved to domain-model.json
 - ✅ Multiplicities on both ends
 - ✅ Role names
 
-### Value Objects & Enums
+### Value Objects & Enums / 値オブジェクトと列挙型
 - ✅ Enumerations with values
 - ✅ Value objects with attributes
 
-## Best Practices
+## Best Practices / ベストプラクティス
 
-### For Creating Diagrams
+### For Creating Diagrams / 図の作成時
 
 1. **Use standard UML notation**
    - Follow UML 2.5 conventions
@@ -296,7 +313,7 @@ Merged model saved to domain-model.json
    - PDF: Ensure text is vector-based, not rasterized
    - Recommended resolution: 1200px+ width
 
-### For Merging
+### For Merging / マージ時
 
 1. **Review before merging**
    - Request to see changes first: "Show me what will change"
@@ -310,9 +327,9 @@ Merged model saved to domain-model.json
    - Existing notes and documentation are preserved
    - Custom fields in JSON are maintained
 
-## Tips for Better Results
+## Tips for Better Results / より良い結果のためのヒント
 
-### Image Quality
+### Image Quality / 画像品質
 - ✅ High resolution (1200px+)
 - ✅ Good lighting (for photos)
 - ✅ Direct screenshot (for digital diagrams)
@@ -320,7 +337,7 @@ Merged model saved to domain-model.json
 - ❌ Avoid hand-drawn sketches (unless very clear)
 - ❌ Avoid excessive compression
 
-### Diagram Clarity
+### Diagram Clarity / 図の明瞭さ
 - ✅ Clear class names
 - ✅ Typed attributes
 - ✅ Labeled relationships
@@ -328,14 +345,14 @@ Merged model saved to domain-model.json
 - ❌ Avoid tiny fonts
 - ❌ Avoid cluttered layouts
 
-### Notation
+### Notation / 記法
 - ✅ Standard UML symbols
 - ✅ Consistent style
 - ✅ Complete information
 - ❌ Avoid custom notation
 - ❌ Avoid ambiguous arrows
 
-## Troubleshooting
+## Troubleshooting / トラブルシューティング
 
 ### Problem: "Cannot read attribute types"
 
@@ -373,9 +390,9 @@ Merged model saved to domain-model.json
 - Separate overlapping elements
 - Re-export with white background
 
-## Integration with Other Skills
+## Integration with Other Skills / 他スキルとの連携
 
-### After this skill, you can use:
+### After this skill, you can use: / このスキルの後に使えるスキル
 
 1. **json-to-models**
    - Regenerate PlantUML diagrams
@@ -398,7 +415,7 @@ Merged model saved to domain-model.json
    - Generate full-stack application
    - Requires complete workflow context
 
-## Limitations
+## Limitations / 制限事項
 
 1. **Handwritten diagrams**: Accuracy depends on handwriting clarity
 2. **Complex layouts**: Crossing lines may confuse extraction
@@ -406,14 +423,14 @@ Merged model saved to domain-model.json
 4. **OCR limits**: Very small text may not be readable
 5. **Color dependency**: Relies on structural elements, not colors
 
-## Success Metrics
+## Success Metrics / 成功指標
 
 - **Extraction accuracy**: 95%+ for digital diagrams
 - **Time saved**: 80% vs. manual JSON writing
-- **Workflow integration**: Seamless Step 5.5 addition
+- **Workflow integration**: Seamless model edit helper addition
 - **User satisfaction**: Enables visual-first modeling
 
-## Future Enhancements
+## Future Enhancements / 今後の拡張予定
 
 - [ ] Support XMI import directly
 - [ ] Batch processing multiple diagrams
@@ -421,7 +438,7 @@ Merged model saved to domain-model.json
 - [ ] Version control for diagrams
 - [ ] Auto-fix common mistakes
 
-## Support
+## Support / サポート
 
 For issues or questions:
 1. Check troubleshooting section
@@ -429,12 +446,12 @@ For issues or questions:
 3. Ask Claude to explain extraction decisions
 4. Request manual review for critical models
 
-## Summary
+## Summary / まとめ
 
 This skill bridges the gap between visual modeling tools and automated code generation, enabling:
 - **Visual-first workflow**: Design in your preferred tool
 - **Flexibility**: Mix auto-generation with manual refinement  
-- **Integration**: Seamless uml-workflow-v2 pipeline
+- **Integration**: Seamless uml-workflow-v3 pipeline
 - **Productivity**: 10x faster than manual JSON creation
 
 **Result:** Best of both worlds - visual design freedom + automated code generation power.

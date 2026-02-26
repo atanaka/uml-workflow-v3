@@ -2,7 +2,7 @@
 
 **このスキル実行時にClaude が従うべき簡潔な手順**
 
-## 🚀 実行フロー（5ステップ）
+## 🚀 実行フロー（5ステップ）/ Execution Flow (5 Steps)
 
 ### 1. プロジェクト名決定
 ```
@@ -69,7 +69,7 @@ For each step in execution plan:
   Step 9: usecase-to-test-v1
 ```
 
-## 📝 具体例
+## 📝 具体例 / Examples
 
 ### ユーザー: "uml-workflow-v3で受注システムを生成"
 
@@ -98,13 +98,13 @@ Claude実行手順:
 完了！
 ```
 
-## ⚠️ 重要
+## ⚠️ 重要 / Important
 
 - **ユーザーはPythonコードを一切実行しない**
 - **すべてClaudeがbash_toolで自動実行**
 - **ユーザーは質問に答えるだけ**
 
-## 🔍 トラブルシューティング
+## 🔍 トラブルシューティング / Troubleshooting
 
 ### scripts/が見つからない場合:
 ```bash

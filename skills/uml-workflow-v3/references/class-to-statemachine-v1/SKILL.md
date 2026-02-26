@@ -7,7 +7,7 @@ description: Generate UML state machine diagrams from domain model entities with
 
 Generate comprehensive UML state machine diagrams for stateful domain entities.
 
-## Overview
+## Overview / 概要
 
 This skill creates state machine diagrams that define the lifecycle and behavior of entities with status/state attributes. These diagrams are critical for:
 - Understanding entity lifecycle management
@@ -30,7 +30,7 @@ This skill creates state machine diagrams that define the lifecycle and behavior
 
 ---
 
-## Language Support ⭐ NEW!
+## Language Support / 言語サポート ⭐
 
 Generates state machine diagrams with language-appropriate state names, transitions, and guards. Inherits settings from domain-model.json.
 
@@ -43,7 +43,7 @@ Generates state machine diagrams with language-appropriate state names, transiti
 
 ---
 
-## Position in Workflow
+## Position in Workflow / ワークフロー内の位置
 
 ```
 Step 1: scenario-to-activity-v1
@@ -65,7 +65,7 @@ Step 4: usecase-to-code-v1 (enhanced with state logic)
 
 ---
 
-## Input
+## Input / 入力
 
 ### Required
 
@@ -86,7 +86,7 @@ Step 4: usecase-to-code-v1 (enhanced with state logic)
 
 ---
 
-## Workflow
+## Workflow / 処理フロー
 
 ### Step 0: Language Configuration ⭐ NEW!
 
@@ -855,7 +855,7 @@ UML 2.5.1 State Machine in XMI 2.5.1 format.
 ```markdown
 # ステートマシン図ガイド: {Project Name}
 
-## 概要
+## 概要 / Overview
 
 このドキュメントは、{Project Name}のエンティティライフサイクルを定義するステートマシン図を説明します。
 
@@ -928,7 +928,7 @@ UML 2.5.1 State Machine in XMI 2.5.1 format.
 
 ---
 
-## 実装ガイド
+## 実装ガイド / Implementation Guide
 
 ### 状態遷移の実装
 
@@ -977,7 +977,7 @@ if (!OrderStateMachine.canTransition(OrderStatus.SHIPPED, OrderStatus.PENDING)) 
 
 ---
 
-## Output
+## Output / 出力
 
 ### Generated Files
 
@@ -1006,7 +1006,7 @@ For each project:
 
 ---
 
-## State Machine Elements
+## State Machine Elements / ステートマシン要素
 
 ### States
 - **Simple State**: Basic state with entry/exit actions
@@ -1026,7 +1026,7 @@ For each project:
 
 ---
 
-## Best Practices
+## Best Practices / ベストプラクティス
 
 ### For Quality
 
@@ -1053,7 +1053,7 @@ For each project:
 
 ---
 
-## Common Patterns
+## Common Patterns / よくあるパターン
 
 ### Linear Lifecycle
 ```
@@ -1092,7 +1092,7 @@ RETRYING --> CANCELLED --> [*]
 
 ---
 
-## Integration with Other Skills
+## Integration with Other Skills / 他スキルとの連携
 
 ### Input Dependencies
 
@@ -1122,7 +1122,7 @@ usecase-to-code-v1 (enhanced)
 
 ---
 
-## Validation Checklist
+## Validation Checklist / 確認チェックリスト
 
 Before finalizing state machines:
 
@@ -1139,7 +1139,7 @@ Before finalizing state machines:
 
 ---
 
-## Limitations
+## Limitations / 制限事項
 
 **This skill does NOT:**
 - ❌ Generate complete method implementations (use usecase-to-code-v1)
@@ -1155,7 +1155,7 @@ Before finalizing state machines:
 
 ---
 
-## Version History
+## Version History / バージョン履歴
 
 - **v1.0** (2026-01-30): Initial version
   - Stateful entity identification

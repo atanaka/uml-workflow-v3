@@ -1,6 +1,6 @@
 # UML Workflow v3 インストールガイド
 
-## クイックインストール（推奨）
+## クイックインストール（推奨）/ Quick Install (Recommended)
 
 ```bash
 # 1. アーカイブを展開
@@ -15,7 +15,7 @@ ls /mnt/skills/user/uml-workflow-v3/ /mnt/skills/user/usecase-md-to-json/ /mnt/s
 
 5ディレクトリが `/mnt/skills/user/` にインストールされます。
 
-## パッケージ構成
+## パッケージ構成 / Package Contents
 
 ### オーケストレーター（パイプライン内蔵）
 - **uml-workflow-v3** — 10ステップのワークフロー全体制御
@@ -43,7 +43,7 @@ ls /mnt/skills/user/uml-workflow-v3/ /mnt/skills/user/usecase-md-to-json/ /mnt/s
 - **json-to-models** — domain-model.json直接編集後に図/ドキュメント再生成
 - **classdiagram-to-crud** — クラス図からCRUD画面フラグメント生成
 
-## インストール後のディレクトリ構造
+## インストール後のディレクトリ構造 / Directory Structure After Install
 
 ```
 /mnt/skills/user/
@@ -60,7 +60,7 @@ ls /mnt/skills/user/uml-workflow-v3/ /mnt/skills/user/usecase-md-to-json/ /mnt/s
 └── classdiagram-to-crud/
 ```
 
-## 使い方
+## 使い方 / Usage
 
 ```
 # フルワークフロー実行
@@ -77,7 +77,7 @@ ls /mnt/skills/user/uml-workflow-v3/ /mnt/skills/user/usecase-md-to-json/ /mnt/s
 「uml-workflowのStep 3〜6を実行してください」
 ```
 
-## アップデート
+## アップデート / Updates
 
 既存インストールがある場合、install.sh は差分更新（上書き）を行います。
 既存の作業ファイル（`/mnt/user-data/outputs/` 配下）には影響しません。
