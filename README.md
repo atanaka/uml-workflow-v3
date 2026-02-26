@@ -72,6 +72,7 @@ Scenario:
 Employees submit expense requests, and their managers approve or reject them.
 The accounting department processes the approved application.
 ```
+Claude automatically recognizes the skill and executes the 10 steps while asking questions interactively.
 
 新しい会話を開き、以下のように入力してください：
 
