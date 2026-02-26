@@ -1,4 +1,4 @@
-# UML Workflow v3 - Claude Execution Guide
+# UML Workflow v2 Enhanced - Claude Execution Guide
 
 このドキュメントは、Claudeが uml-workflow-v3 スキルを実行する際の完全な手順書です。
 

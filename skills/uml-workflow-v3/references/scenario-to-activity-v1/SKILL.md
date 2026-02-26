@@ -53,12 +53,12 @@ language_options = {
     "include_japanese_name": True,   # Always include japanese_name attribute
     "documentation_lang": "auto",    # auto | ja | en (follows language)
     "diagram_comments": "auto",      # auto | ja | en (follows language)
-    "inherit_from_workflow": True    # Inherit from uml-workflow-v3
+    "inherit_from_workflow": True    # Inherit from uml-workflow-v2
 }
 ```
 
 **When inherited from workflow:**
-- `inherit_from_workflow=True`: Use language setting from uml-workflow-v3
+- `inherit_from_workflow=True`: Use language setting from uml-workflow-v2
 - Ensures consistency across all workflow steps
 
 ### Output Language Control

@@ -1,261 +1,256 @@
-# AI-Assisted UML Workflow v3 - Complete Package
+# UML Workflow v3
 
-ビジネスシナリオから本番品質のフルスタックアプリケーションを自動生成する、Claude用スキルパッケージです。
+**ビジネスシナリオから本番品質のアプリケーションを自動生成する Claude AI スキル**
+
+*An AI-powered Claude Skill that transforms business scenarios into production-ready applications through a 10-step UML pipeline.*
 
 ---
 
-## 🎯 このパッケージでできること
+## Overview / 概要
 
-自然言語で書いたビジネスシナリオを入力するだけで、以下を自動生成します：
+UML Workflow v3 は、Claude AI の [Skills](https://docs.claude.com/en/docs/claude-ai/skills) 機能を活用した、モデルベースシステムエンジニアリング（MBSE）ワークフローです。自然言語で記述されたビジネスシナリオを入力として、UML図の生成からコード・テストの自動生成まで、10ステップのパイプラインを一貫して実行します。
+
+### What it does / できること
 
 ```
 ビジネスシナリオ（自然言語）
-  ↓ 自動生成
-  ├── UMLモデル一式
-  │     ├── アクティビティ図
-  │     ├── ユースケース図 + 仕様書
-  │     ├── クラス図（ドメインモデル）
-  │     ├── ステートマシン図
-  │     └── シーケンス図
-  ├── バリデーションレポート
-  ├── セキュリティ設計書（OWASP準拠）
-  ├── フルスタックアプリケーションコード
-  │     ├── Backend（TypeScript/Python/Java/Go）
-  │     └── Frontend（React/Vue）
-  └── テストコード（Unit / Integration / E2E）
+    ↓
+┌─────────────────────────────────────────────────┐
+│  Step  1: シナリオ → アクティビティ図             │
+│  Step  2: アクティビティ図 → ユースケース抽出     │
+│  Step  3: ユースケース → クラス図（ドメインモデル）│
+│  Step  4: クラス図 → ステートマシン図             │
+│  Step  5: ユースケース → シーケンス図             │
+│  Step  6: モデル横断バリデーション                 │
+│  Step  7: OWASP準拠セキュリティ設計               │
+│  Step  8: フルスタックコード生成                   │
+│  Step  9: テストコード生成                         │
+│  Step 10: トレーサビリティマトリクス               │
+└─────────────────────────────────────────────────┘
+    ↓
+本番品質のアプリケーション + 完全なUMLドキュメント
 ```
 
-**最大75%のトークン削減**を実現するキャッシュシステム・段階的実行・XMI最適化を搭載しています。
+### Key Features / 主な特長
+
+- **10-Step Pipeline** — シナリオからコード・テストまで一気通貫
+- **Bilingual Output** — 日本語・英語の両方に対応（コメント・ドキュメント）
+- **Caching System** — 中間成果物を自動キャッシュ、再実行時のトークン消費を最大75%削減
+- **Flexible Execution** — フル実行、途中再開、単一ステップ実行など複数モード
+- **Security-First** — OWASP Top 10準拠のセキュリティ設計を自動生成
+- **Full Traceability** — 要件→モデル→コード→テストの追跡マトリクス
 
 ---
 
-## 📁 パッケージ構成
+## Quick Start / クイックスタート
+
+### Prerequisites / 前提条件
+
+- Claude.ai の **Pro** / **Max** / **Team** / **Enterprise** プラン
+- 「Code execution and file creation」が **有効**
+
+### Installation / インストール
+
+1. [Releases](../../releases) から `uml-workflow-v3-all-skills.zip` をダウンロード
+2. ZIP を解凍すると **5つの ZIP ファイル** が出現
+3. Claude.ai → **Settings** → **Capabilities** → **Skills** セクション
+4. 「**Upload skill**」で各 ZIP を1つずつアップロード（5回）
+5. 各スキルの**トグルを ON** にする
+
+> 詳細は [docs/INSTALLATION_GUIDE.md](docs/INSTALLATION_GUIDE.md) を参照
+
+### First Run / 最初の実行
+
+新しい会話を開き、以下のように入力してください：
 
 ```
-uml-workflow-v3/              ← メインオーケストレーター
-└── （詳細は下記）
+uml-workflow-v3を使って、以下のビジネスシナリオからアプリケーションを生成してください。
 
-skills/                       ← 関連スキル12件（全量収録）
-  ├── [メインスキル 9件]
-  │   ├── scenario-to-activity-v1/
-  │   ├── activity-to-usecase-v1/
-  │   ├── usecase-to-class-v1/
-  │   ├── class-to-statemachine-v1/
-  │   ├── usecase-to-sequence-v1/
-  │   ├── model-validator-v1/
-  │   ├── security-design-v1/
-  │   ├── usecase-to-code-v1/
-  │   └── usecase-to-test-v1/
-  └── [オプションスキル 3件]
-      ├── json-to-models/
-      ├── usecase-md-to-json/
-      └── classdiagram-image-to-json/
+シナリオ：
+従業員が経費申請を提出し、上長が承認・却下する。
+経理部門が承認済み申請を精算処理する。
+```
+
+Claude が自動的にスキルを認識し、対話的に質問しながら10ステップを実行します。
+
+---
+
+## Architecture / アーキテクチャ
+
+### Skill Composition / スキル構成
+
+```
+uml-workflow-v3 (メインオーケストレーター)
+├── references/ (内蔵パイプラインスキル ×10)
+│   ├── scenario-to-activity-v1      Step 1
+│   ├── activity-to-usecase-v1       Step 2
+│   ├── usecase-to-class-v1          Step 3
+│   ├── class-to-statemachine-v1     Step 4
+│   ├── usecase-to-sequence-v1       Step 5
+│   ├── model-validator-v1           Step 6
+│   ├── security-design-v1           Step 7
+│   ├── usecase-to-code-v1           Step 8
+│   ├── usecase-to-test-v1           Step 9
+│   └── traceability-matrix-v1       Step 10
+└── scripts/ (実行エンジン)
+
+usecase-md-to-json       ← UC仕様 Markdown→JSON変換
+classdiagram-image-to-json ← 手描きクラス図取込
+json-to-models           ← JSON→PlantUML/XMI再生成
+classdiagram-to-crud     ← クラス図→CRUD HTML生成
+```
+
+メインスキルが10個のパイプラインスキルを `references/` に内蔵し、残り4つは独立したヘルパースキルとして動作します。
+
+### Token Efficiency / トークン効率
+
+references 方式により、Claude の `available_skills` カタログに露出するスキルを16→5に削減（69%減）。必要なスキルだけが実行時に動的にロードされます。
+
+| 実行シナリオ | Token削減率 |
+|-------------|-----------|
+| 初回フル実行 | 0%（基準） |
+| 機能追加（Step 2から再開） | 20-30% |
+| モデル調整（Step 3から） | 30-40% |
+| モデルのみ（Step 1-7） | 30-35% |
+| バリデーションのみ | ~95% |
+| 最適組合せ（Step 3＋モデルのみ） | ~75% |
+
+---
+
+## Execution Modes / 実行モード
+
+### 1. Full Workflow / フルワークフロー
+
+```
+「uml-workflow-v3で{プロジェクト名}を生成して」
+```
+
+全10ステップを実行。初回のプロジェクト生成に使用。
+
+### 2. Resume from Step / 途中から再開
+
+```
+「uml-workflowをStep 5から再開してください」
+```
+
+指定ステップ以前はキャッシュから復元し、指定ステップ以降を再実行。
+
+### 3. Model Only / モデルのみ
+
+```
+「{プロジェクト名}のモデルのみ生成して」
+```
+
+Step 1-7 を実行し、コード生成（Step 8-9）をスキップ。設計フェーズに最適。
+
+### 4. Single Step / 単一ステップ
+
+```
+「uml-workflowのStep 6（モデル検証）を実行してください」
+```
+
+特定のステップのみを実行。バリデーションや特定図の再生成に使用。
+
+### 5. Edit Helpers / モデル修正ツール
+
+```
+「この手描きのクラス図を取り込んでください」（画像添付）
+「ユースケース仕様のMarkdownを修正したので、JSONに反映して」
+```
+
+ヘルパースキルを使った中間成果物の手動修正。
+
+---
+
+## Output Files / 出力ファイル
+
+ワークフロー実行後、以下のファイルが生成されます：
+
+```
+{project-name}_activity-data.json       ← アクティビティ図データ
+{project-name}_activity.puml            ← PlantUML アクティビティ図
+{project-name}_usecase-output.json      ← ユースケース定義
+{project-name}_usecase-diagram.puml     ← PlantUML ユースケース図
+usecase-specifications/                 ← 個別UC仕様（Cockburn形式）
+  ├── UC-001_*.md
+  └── UC-002_*.md
+{project-name}_domain-model.json        ← ドメインモデル（Single Source of Truth）
+{project-name}_class.puml               ← PlantUML クラス図
+{project-name}_statemachine.puml        ← PlantUML ステートマシン図
+{project-name}_sequence.puml            ← PlantUML シーケンス図
+{project-name}_validation-report.md     ← バリデーションレポート
+{project-name}_security-config.json     ← セキュリティ設計
+{project-name}_traceability-matrix.json ← トレーサビリティマトリクス
+{project-name}/                         ← 生成アプリケーション
+  ├── backend/
+  ├── frontend/
+  ├── tests/
+  ├── docker-compose.yml
+  └── README.md
 ```
 
 ---
 
-## 🚀 セットアップ手順（初めての方）
+## Skill Files / スキルファイル一覧
 
-### 必要なもの
+| # | Skill ZIP | Size | Role |
+|---|-----------|------|------|
+| 1 | `uml-workflow-v3.zip` | 154KB | Main orchestrator + 10 pipeline skills |
+| 2 | `usecase-md-to-json.zip` | 11KB | UC spec Markdown → JSON converter |
+| 3 | `classdiagram-image-to-json.zip` | 15KB | Hand-drawn class diagram → JSON |
+| 4 | `json-to-models.zip` | 12KB | JSON → PlantUML/XMI regeneration |
+| 5 | `classdiagram-to-crud.zip` | 6KB | Class diagram → CRUD HTML fragments |
 
-- Claude.ai アカウント（Pro または Team プラン推奨）
-- このパッケージのZIPファイル
-
-### Step 1: スキルフォルダを準備する
-
-ZIPを展開すると以下の構成になります：
-
-```
-uml-workflow-v3-release/
-├── README.md              ← このファイル
-├── uml-workflow-v3/       ← メインオーケストレーター
-└── skills/                ← 関連スキル12件
-```
-
-### Step 2: Claude にスキルをアップロードする
-
-Claude.ai の **Skills** 機能を使って、以下のフォルダをすべてアップロードします。
-
-**アップロード順序（推奨）:**
-
-まず関連スキルを先にアップロードしてください：
-
-```
-skills/scenario-to-activity-v1/
-skills/activity-to-usecase-v1/
-skills/usecase-to-class-v1/
-skills/class-to-statemachine-v1/
-skills/usecase-to-sequence-v1/
-skills/model-validator-v1/
-skills/security-design-v1/
-skills/usecase-to-code-v1/
-skills/usecase-to-test-v1/
-skills/json-to-models/
-skills/usecase-md-to-json/
-skills/classdiagram-image-to-json/
-```
-
-次にメインオーケストレーターをアップロードします：
-
-```
-uml-workflow-v3/
-```
-
-### Step 3: 動作確認
-
-Claudeとの会話で以下のように話しかけてください：
-
-```
-「uml-workflow-v3が使えるか確認して」
-```
-
-正常に認識されたら、以下で実行できます：
-
-```
-「uml-workflow-v3で受注管理システムを生成して」
-```
+> `uml-workflow-v3.zip` のみで10ステップパイプラインは動作します。残り4つはモデル手動修正時の補助ツールです。
 
 ---
 
-## 💬 使い方
+## Version History / バージョン履歴
 
-### 基本的な使い方
-
-```
-あなた: 「uml-workflow-v3で[システム名]を生成して」
-
-Claude: いくつか確認させてください。
-  1. キャッシュを使用しますか？ → はい（推奨）
-  2. 実行モードは？ → フルワークフロー
-  3. XMI生成は？ → いいえ（推奨・40%高速化）
-  4. テスト生成は？ → はい
-  5. バックエンドは？ → TypeScript + Express
-  6. フロントエンドは？ → React + TypeScript
-  7. アーキテクチャは？ → モノリス
-
-Claude: [Step 1〜9 を自動実行]
-  ✅ アクティビティ図
-  ✅ ユースケース
-  ✅ クラス図
-  ✅ ステートマシン図
-  ✅ シーケンス図
-  ✅ バリデーション
-  ✅ セキュリティ設計
-  ✅ アプリケーションコード
-  ✅ テストコード
-```
-
-### 途中から再実行する場合
-
-```
-「uml-workflow-v3で[プロジェクト名]のStep 3から再開して」
-```
-
-### モデルだけ生成する場合（コード生成なし）
-
-```
-「uml-workflow-v3でモデルのみ生成して」
-```
-
-### バリデーションだけ実行する場合
-
-```
-「uml-workflow-v3でバリデーションのみ実行して」
-```
-
----
-
-## 📋 スキル一覧と役割
-
-### メインスキル（Step 1〜9）
-
-| Step | スキル名 | 入力 | 出力 |
-|------|---------|------|------|
-| 1 | scenario-to-activity-v1 | ビジネスシナリオ（自然言語） | アクティビティ図 |
-| 2 | activity-to-usecase-v1 | アクティビティ図 | ユースケース図・仕様書 |
-| 3 | usecase-to-class-v1 | ユースケース | クラス図・ドメインモデル |
-| 4 | class-to-statemachine-v1 | クラス図 | ステートマシン図 |
-| 5 | usecase-to-sequence-v1 | ユースケース・クラス図 | シーケンス図 |
-| 6 | model-validator-v1 | 全モデル | バリデーションレポート |
-| 7 | security-design-v1 | ドメインモデル・ユースケース | セキュリティ設計書 |
-| 8 | usecase-to-code-v1 | ドメインモデル・ユースケース | フルスタックアプリ |
-| 9 | usecase-to-test-v1 | ドメインモデル・ユースケース | テストコード |
-
-### オプションスキル
-
-| スキル名 | 使う場面 |
+| Version | Changes |
 |---------|---------|
-| json-to-models | domain-model.json を手動編集後、PlantUML/XMIを再生成したい場合 |
-| usecase-md-to-json | ユースケース仕様（Markdown）を手動編集後、JSONに反映したい場合 |
-| classdiagram-image-to-json | 手描き・ツール作成のクラス図画像をワークフローに取り込みたい場合 |
+| **v3.0.0** | 10-step pipeline (traceability追加), references化, description 200文字対応, Claude.ai Skills対応 |
+| v2.0.0 | 9-step pipeline, キャッシュシステム, XMI最適化, セキュリティ設計 |
+| v1.0.0 | 4-step basic pipeline (scenario→usecase→class→code) |
+
+詳細は [CHANGELOG.md](CHANGELOG.md) を参照。
 
 ---
 
-## ⚙️ 対応技術スタック
+## Documentation / ドキュメント
 
-**バックエンド**
-- TypeScript + Express（推奨・軽量）
-- TypeScript + NestJS（大規模向け）
-- Python + FastAPI
-- Java + Spring Boot
-
-**フロントエンド**
-- React + TypeScript + Vite + Tailwind CSS（推奨）
-- Vue 3 + TypeScript + Vite
-
-**アーキテクチャ**
-- モノリス（推奨・シンプル）
-- マイクロサービス
-- サーバーレス
-
-**対応言語**
-- 日本語・英語・バイリンガル（自動検出）
+| Document | Description |
+|----------|-------------|
+| [INSTALLATION_GUIDE.md](docs/INSTALLATION_GUIDE.md) | インストール手順（日本語） |
+| [INSTALLATION_GUIDE_EN.md](docs/INSTALLATION_GUIDE_EN.md) | Installation guide (English) |
+| [CHANGELOG.md](CHANGELOG.md) | 変更履歴 |
+| [examples/expense-report.md](examples/expense-report.md) | 経費申請システムのサンプルシナリオ |
 
 ---
 
-## 🔧 トラブルシューティング
+## Requirements / 動作環境
 
-### スキルが認識されない
-
-```
-「uml-workflow-v3のSKILL.mdを確認して」
-```
-と伝えて、Claudeにスキルの読み込みを確認させてください。
-
-### スクリプトが見つからない
-
-`uml-workflow-v3/scripts/` にPythonファイルが5つ存在することを確認してください：
-- `run_workflow.py`
-- `workflow_cache_helper.py`
-- `execution_mode_manager.py`
-- `unified_workflow_executor.py`
-- `interactive_workflow_executor.py`
-
-### 途中でエラーが発生した場合
-
-```
-「uml-workflow-v3で[プロジェクト名]のStep [N]から再開して」
-```
-キャッシュが保存されているため、エラーが発生したステップから再実行できます。
+| Item | Requirement |
+|------|-------------|
+| Platform | Claude.ai (Web / Desktop / Mobile) |
+| Plan | Pro / Max / Team / Enterprise |
+| Feature | Code execution and file creation: **ON** |
+| Skills | 5 ZIPs uploaded via Settings > Capabilities |
 
 ---
 
-## 📚 詳細ドキュメント
+## License
 
-| ファイル | 内容 |
-|---------|------|
-| `uml-workflow-v3/README.md` | オーケストレーターの詳細説明 |
-| `uml-workflow-v3/INSTALL.md` | インストールの詳細手順 |
-| `uml-workflow-v3/SKILL.md` | Claude実行仕様（技術者向け） |
-| `uml-workflow-v3/CHANGELOG.md` | バージョン履歴 |
-| `skills/[スキル名]/README.md` | 各スキルの個別説明 |
+MIT License — see [LICENSE](LICENSE) for details.
 
 ---
 
-## 🌐 GitHub
+## Contributing / コントリビューション
 
-https://github.com/atanaka/uml-workflow-v3
+Issues and Pull Requests are welcome. See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 
 ---
 
-*このパッケージは Claude + MBSE（モデルベースシステムズエンジニアリング）の統合を目的として開発されました。*
+## Acknowledgments
+
+Built with [Claude AI Skills](https://docs.claude.com/en/docs/claude-ai/skills) by [Anthropic](https://www.anthropic.com/).

@@ -1,6 +1,6 @@
 ---
 name: usecase-md-to-json
-description: Convert Markdown use case specifications (Cockburn format) to structured JSON format AND regenerate PlantUML use case diagram. Parses individual .md files from usecase-specifications/ directory and generates or updates usecase-output.json and usecase-diagram.puml. Use when you have modified Markdown use case files and need to reflect changes in both JSON and diagram for downstream processing.
+description: Convert Markdown use case specs (Cockburn format) to JSON and regenerate PlantUML diagrams. Use after manually editing UC markdown files.
 ---
 
 # Use Case Markdown to JSON and Diagram Converter

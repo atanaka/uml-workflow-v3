@@ -1,6 +1,6 @@
 ---
 name: usecase-to-code-v1
-description: Generate full-stack applications from use case definitions with customizable technology stacks and multi-language support (Japanese/English code comments). Supports multiple deployment architectures (monolith, microservices, serverless), frameworks (Express, NestJS, FastAPI, Spring Boot), and programming languages (TypeScript, Python, Java, Go). References domain model JSON (Single Source of Truth) for high-quality, type-safe code generation. When security-config.json (from security-design-v1) is present, automatically generates security infrastructure code: JWT auth middleware, RBAC authorization, AES-256-GCM encryption utility, AuditLogger, rate limiting, CORS, and helmet setup — all wired into the Express app. Inherits language settings for code comments and documentation. Auto-generates full CRUD (Create, Read, Update, Delete) + List pages for ALL entities including master data management and system actor management.
+description: Generate full-stack applications from use case definitions with customizable technology stacks and multi-language support (Japanese/English code comments). Supports multiple deployment architectures (monolith, microservices, serverless), frameworks (Express, NestJS, FastAPI, Spring Boot), and programming languages (TypeScript, Python, Java, Go). References domain model JSON (Single Source of Truth) for high-quality, type-safe code generation. Inherits language settings for code comments and documentation. Auto-generates full CRUD (Create, Read, Update, Delete) + List pages for ALL entities including master data management and system actor management.
 ---
 
 # Use Case to Code Generator v1
@@ -26,7 +26,6 @@ This skill generates complete application code based on:
 - ✅ **Entity classification (Master/Transaction/SubEntity/SystemActor)** ⭐ v1.1!
 - ✅ **Shared UI components (DataTable, Pagination, SearchBar)** ⭐ v1.1!
 - ✅ **Auto-generated sidebar navigation** ⭐ v1.1!
-- ✅ **Security infrastructure from security-config.json (JWT, RBAC, Encrypt, Audit, Rate Limit)** ⭐ v1.2!
 
 ---
 
@@ -345,19 +344,8 @@ Step 2: activity-to-usecase-v1
   ↓
 Step 3: usecase-to-class-v1
   ↓ Domain model JSON (REQUIRED - SSOT)
-Step 4: class-to-statemachine-v1
-  ↓
-Step 5: usecase-to-sequence-v1
-  ↓
-Step 6: model-validator-v1
-  ↓
-Step 7: security-design-v1  ← security-config.json generated here
-  ↓
-Step 8: usecase-to-code-v1 ← YOU ARE HERE
-         Inputs: usecase-output.json + domain-model.json
-                 + security-config.json (Step 7 output) ⭐ v1.2
-  ↓ Production code (business logic + security infrastructure)
-Step 9: usecase-to-test-v1
+Step 4: usecase-to-code-v1 ← YOU ARE HERE
+  ↓ Production code
 ```
 
 ---
@@ -378,24 +366,7 @@ Step 9: usecase-to-test-v1
 
 ### Optional
 
-**3. Security configuration:** `{project-name}_security-config.json` ⭐ v1.2!
-- Source: output of security-design-v1 (Step 7)
-- If present: **Step 3.5 (Security Infrastructure)** is automatically executed
-- Drives generation of: auth middleware, RBAC, encryption util, AuditLogger, rate limiting, CORS, helmet
-- All generated security code is wired into the Express app entry point
-
-**Expected security-config.json fields used by code generation:**
-```json
-{
-  "auth":       { "type": "JWT", "accessTokenExpiry": "1h", "passwordHash": "bcrypt:12" },
-  "encryption": { "algorithm": "AES-256-GCM", "fields": ["Entity.field", ...] },
-  "rateLimit":  { "login": { "max": 5, "windowMs": 60000 }, ... },
-  "cors":       { "allowedOrigins": ["https://..."] },
-  "audit":      { "retention": "7years", "table": "audit_logs" }
-}
-```
-
-**4. Technology stack specification:**
+**3. Technology stack specification:**
 If not provided, interactive selection or defaults apply.
 
 ---
@@ -654,7 +625,7 @@ Please run: usecase-to-class-v1 first.
 >
 > このスキルは2つの方法で呼び出される。**重複質問は厳禁**。
 >
-> **Case A: uml-workflow-v2-enhanced の Step 8 から呼び出された場合**
+> **Case A: uml-workflow-v3 の Step 8 から呼び出された場合**
 > - テックスタックは Phase 1 のユーザー対話で既に収集済み
 > - `backend_framework`, `frontend_framework`, `architecture` の値が渡されている
 > - **ここで再度ユーザーに質問してはならない（バグになる）**
@@ -663,7 +634,7 @@ Please run: usecase-to-class-v1 first.
 > 判定基準（いずれかを満たせば Case A）:
 > - 呼び出しコンテキストに `backend_framework`, `frontend_framework`, `architecture` が含まれる
 > - `security-config.json` が `domain-model.json` と一緒に参照されている
-> - プロンプト文脈に `uml-workflow-v2-enhanced` または `Step 8` の記述がある
+> - プロンプト文脈に `uml-workflow-v3` または `Step 8` の記述がある
 >
 > **Case B: 単体で直接呼び出された場合**
 > - `ask_user_input_v0` ツールで以下を質問する（workflow Phase 1 と同じ質問セット）:
@@ -757,266 +728,6 @@ Proceed with code generation? (yes/no)
 - tsconfig.json / pyproject.toml / etc.
 - Docker files
 - CI/CD configs
-
----
-
-### Step 3.5: Generate Security Infrastructure ⭐ v1.2 (security-config.jsonが存在する場合のみ実行)
-
-**前提チェック:**
-```bash
-if [ -f "{project}_security-config.json" ]; then
-    echo "✅ security-config.json found — executing Step 3.5"
-else
-    echo "⏭️  security-config.json not found — skipping Step 3.5"
-fi
-```
-
-**security-config.jsonを読み込み、以下のファイルを順番に生成する。**  
-生成したファイルはすべて `backend/src/infrastructure/` または `backend/src/presentation/middleware/` に配置し、最後に `app.ts`（エントリポイント）へ自動的に組み込む。
-
----
-
-#### 3.5a. 暗号化ユーティリティ（`encryption.fields` セクションより）
-
-**生成ファイル:** `backend/src/infrastructure/crypto.ts`
-
-`encryption.algorithm` が `AES-256-GCM` の場合：
-```typescript
-// backend/src/infrastructure/crypto.ts
-import crypto from 'crypto';
-
-const ALGORITHM = 'aes-256-gcm';
-const KEY = crypto.scryptSync(
-  process.env.ENCRYPTION_KEY!,
-  process.env.ENCRYPTION_SALT ?? 'default-salt',
-  32,
-);
-
-/** PIIフィールドを AES-256-GCM で暗号化する */
-export function encrypt(plaintext: string): string {
-  const iv = crypto.randomBytes(12);
-  const cipher = crypto.createCipheriv(ALGORITHM, KEY, iv);
-  const encrypted = Buffer.concat([cipher.update(plaintext, 'utf8'), cipher.final()]);
-  const authTag = cipher.getAuthTag();
-  return Buffer.concat([iv, authTag, encrypted]).toString('base64');
-}
-
-/** AES-256-GCM 暗号文を復号する */
-export function decrypt(ciphertext: string): string {
-  const buf = Buffer.from(ciphertext, 'base64');
-  const iv      = buf.subarray(0, 12);
-  const authTag = buf.subarray(12, 28);
-  const data    = buf.subarray(28);
-  const decipher = crypto.createDecipheriv(ALGORITHM, KEY, iv);
-  decipher.setAuthTag(authTag);
-  return decipher.update(data) + decipher.final('utf8');
-}
-
-/**
- * 暗号化対象フィールド一覧（security-config.encryption.fields より自動導出）
- * 例: ["Customer.email", "Customer.address", "Customer.phone"]
- */
-export const ENCRYPTED_FIELDS: string[] = {ENCRYPTED_FIELDS_FROM_CONFIG};
-```
-
-> **Note**: `security-config.encryption.fields` の各フィールド名を `ENCRYPTED_FIELDS` 配列としてハードコードすること。  
-> Prismaの `beforeCreate` / `beforeUpdate` フックや Service 層でこの配列を参照して自動暗号化する実装を推奨する。
-
----
-
-#### 3.5b. 認証ミドルウェア（`auth` セクションより）
-
-**生成ファイル:** `backend/src/presentation/middleware/auth.ts`
-
-`auth.type` が `JWT` の場合：
-```typescript
-// backend/src/presentation/middleware/auth.ts
-import { Request, Response, NextFunction } from 'express';
-import jwt from 'jsonwebtoken';
-
-export interface JwtPayload {
-  userId: string;
-  customerId: string;
-  role: string;
-}
-
-declare global {
-  namespace Express { interface Request { user?: JwtPayload; } }
-}
-
-/** JWT Bearer トークンを検証する認証ミドルウェア */
-export function authenticate(req: Request, res: Response, next: NextFunction): void {
-  const header = req.headers.authorization;
-  if (!header?.startsWith('Bearer ')) {
-    res.status(401).json({ error: '認証が必要です' });
-    return;
-  }
-  try {
-    req.user = jwt.verify(header.slice(7), process.env.JWT_SECRET!) as JwtPayload;
-    next();
-  } catch {
-    res.status(401).json({ error: 'トークンが無効または期限切れです' });
-  }
-}
-
-/** ロールベースのアクセス制御ミドルウェア */
-export function authorize(roles: string[]) {
-  return (req: Request, res: Response, next: NextFunction): void => {
-    if (!req.user || !roles.includes(req.user.role)) {
-      res.status(403).json({ error: 'アクセス権限がありません' });
-      return;
-    }
-    next();
-  };
-}
-```
-
----
-
-#### 3.5c. 監査ログ（`audit` セクションより）
-
-**生成ファイル:** `backend/src/infrastructure/AuditLogger.ts`
-
-`audit.table` の値（例: `audit_logs`）をターゲットテーブルとして使用：
-```typescript
-// backend/src/infrastructure/AuditLogger.ts
-import { PrismaClient } from '@prisma/client';
-
-const prisma = new PrismaClient();
-
-export interface AuditEntry {
-  userId?: string;
-  userRole?: string;
-  action: string;
-  resource?: string;
-  resourceId?: string;
-  ipAddress?: string;
-  userAgent?: string;
-  result: 'success' | 'failure';
-  details?: Record<string, unknown>;
-}
-
-/**
- * 監査ログを audit_logs テーブルに記録する
- * retention: {RETENTION_FROM_CONFIG} — パーティションポリシーで自動削除
- */
-export class AuditLogger {
-  static async log(entry: AuditEntry): Promise<void> {
-    try {
-      await (prisma as any)['{AUDIT_TABLE_FROM_CONFIG}'].create({
-        data: { ...entry, createdAt: new Date() },
-      });
-    } catch (err) {
-      // 監査ログの失敗はアプリケーションを止めない
-      console.error('[AuditLogger] Failed to write audit log:', err);
-    }
-  }
-}
-
-/** Express ミドルウェア: リクエスト完了後に監査ログを記録 */
-export function auditMiddleware(action: string, resource: string) {
-  return (req: any, res: any, next: any) => {
-    const originalEnd = res.end.bind(res);
-    res.end = (...args: any[]) => {
-      AuditLogger.log({
-        userId:     req.user?.userId,
-        userRole:   req.user?.role,
-        action,
-        resource,
-        resourceId: req.params?.id,
-        ipAddress:  req.ip,
-        userAgent:  req.headers['user-agent'],
-        result:     res.statusCode < 400 ? 'success' : 'failure',
-        details:    res.statusCode >= 400 ? { statusCode: res.statusCode } : undefined,
-      });
-      return originalEnd(...args);
-    };
-    next();
-  };
-}
-```
-
-> **Note**: `{AUDIT_TABLE_FROM_CONFIG}` は `security-config.audit.table` の値（例: `auditLog`）に置換すること。  
-> Prismaモデル名はキャメルケース（`audit_logs` → `auditLog`）に変換する。
-
----
-
-#### 3.5d. app.ts への自動組み込み（全セクションより）
-
-**既存の `app.ts` を以下のパターンで更新する（新規の場合は生成する）:**
-
-```typescript
-// backend/src/app.ts — security-config.json から自動生成されたセキュリティ設定
-import express from 'express';
-import helmet from 'helmet';
-import cors from 'cors';
-import rateLimit from 'express-rate-limit';
-
-const app = express();
-
-// ── セキュリティヘッダー（OWASP A05対策） ──────────────────────────────
-app.use(helmet({
-  contentSecurityPolicy: { directives: { defaultSrc: ["'self'"] } },
-  hsts: { maxAge: 31536000 },  // security-config.tls.hsts = true
-}));
-
-// ── CORS（security-config.cors.allowedOrigins より） ──────────────────
-app.use(cors({
-  origin: {ALLOWED_ORIGINS_FROM_CONFIG},   // security-config.cors.allowedOrigins
-  credentials: true,
-}));
-
-app.use(express.json({ limit: '10mb' }));
-
-// ── レート制限（security-config.rateLimit より自動生成） ───────────────
-// {RATE_LIMIT_BLOCKS_FROM_CONFIG}
-// 例:
-// app.use('/api/auth/login', rateLimit({ windowMs: 60000, max: 5 }));
-// app.use('/api/orders',     rateLimit({ windowMs: 3600000, max: 60 }));
-// app.use('/api/products',   rateLimit({ windowMs: 60000, max: 300 }));
-
-// ── ルーティング ──────────────────────────────────────────────────────
-// (Step 7 で生成したルートを mount)
-
-export default app;
-```
-
-> **実装ルール:**  
-> - `security-config.rateLimit` の全エントリをループして `app.use(path, rateLimit({...}))` を生成すること  
-> - `security-config.cors.allowedOrigins` を配列として CORS origin に設定すること  
-> - `tls.hsts: true` の場合は `helmet({ hsts: { maxAge: 31536000, includeSubDomains: true } })` を設定すること
-
----
-
-#### 3.5e. .env.example へのセキュリティ変数追加
-
-**Step 9 の `.env.example` に以下を追記する（security-config.jsonが存在する場合）:**
-
-```env
-# ── Security (auto-generated from security-config.json) ──────────────
-JWT_SECRET=change-me-in-production-min-32-chars
-JWT_ACCESS_EXPIRY=1h        # security-config.auth.accessTokenExpiry
-JWT_REFRESH_EXPIRY=7d       # security-config.auth.refreshTokenExpiry
-ENCRYPTION_KEY=change-me-in-production-32bytes
-ENCRYPTION_SALT=change-me-salt
-ALLOWED_ORIGIN=https://app.example.com  # security-config.cors.allowedOrigins[0]
-```
-
----
-
-#### 3.5f. 完了チェックリスト
-
-Step 3.5 を完了と宣言する前に以下を確認すること：
-
-| ファイル | security-config セクション | 確認 |
-|---------|--------------------------|------|
-| `infrastructure/crypto.ts` | `encryption` | ✅ |
-| `middleware/auth.ts` | `auth` | ✅ |
-| `infrastructure/AuditLogger.ts` | `audit` | ✅ |
-| `app.ts` — helmet | `tls` | ✅ |
-| `app.ts` — CORS | `cors` | ✅ |
-| `app.ts` — rate limiting（全エントリ） | `rateLimit` | ✅ |
-| `.env.example` — セキュリティ変数 | 全セクション | ✅ |
 
 ---
 
@@ -2120,14 +1831,6 @@ const items = ref<OrderItem[]>([]);
 DATABASE_URL=postgresql://user:pass@localhost:5432/db
 PORT=3000
 NODE_ENV=development
-
-# ── Security (auto-generated from security-config.json when present) ──
-JWT_SECRET=change-me-in-production-min-32-chars
-JWT_ACCESS_EXPIRY=1h
-JWT_REFRESH_EXPIRY=7d
-ENCRYPTION_KEY=change-me-in-production-32bytes
-ENCRYPTION_SALT=change-me-salt
-ALLOWED_ORIGIN=https://app.example.com
 ```
 
 **9b. Docker configuration:**
@@ -2218,38 +1921,44 @@ spec:
 ├── backend/
 │   ├── package.json (or requirements.txt, pom.xml)
 │   ├── tsconfig.json (or pyproject.toml, etc.)
-│   ├── .env.example           # includes security vars when security-config present ⭐ v1.2
+│   ├── .env.example
 │   ├── prisma/schema.prisma (or equivalent)
 │   └── src/
-│       ├── infrastructure/
-│       │   ├── crypto.ts      # AES-256-GCM encrypt/decrypt ⭐ v1.2
-│       │   └── AuditLogger.ts # Audit log writer + middleware ⭐ v1.2
-│       ├── presentation/
-│       │   └── middleware/
-│       │       └── auth.ts    # JWT authenticate + authorize(roles) ⭐ v1.2
-│       ├── app.ts             # helmet + CORS + rateLimit wired in ⭐ v1.2
 │       ├── types/
-│       │   ├── index.ts
-│       │   ├── pagination.ts
-│       │   └── dto/
+│       │   ├── index.ts             # Shared types
+│       │   ├── pagination.ts        # PaginatedResult, ListParams ⭐
+│       │   └── dto/                 # Create/Update DTOs per entity ⭐
 │       ├── domain/
 │       ├── services/
-│       │   ├── customer.service.ts
-│       │   ├── product.service.ts
-│       │   └── order.service.ts
-│       └── api/
-│           ├── customers.ts
-│           ├── products.ts
-│           └── orders.ts
+│       │   ├── customer.service.ts  # Full CRUD ⭐
+│       │   ├── product.service.ts   # Full CRUD ⭐
+│       │   ├── shipping-staff.service.ts  # Full CRUD ⭐
+│       │   ├── order.service.ts     # CRUD + use-case logic
+│       │   └── shipment.service.ts  # CRUD + use-case logic
+│       ├── api/
+│       │   ├── customers.ts         # CRUD endpoints ⭐
+│       │   ├── products.ts          # CRUD endpoints ⭐
+│       │   ├── shipping-staffs.ts   # CRUD endpoints ⭐
+│       │   ├── orders.ts            # CRUD + use-case endpoints
+│       │   └── shipments.ts         # CRUD + use-case endpoints
+│       └── index.ts
 └── frontend/
     ├── package.json
-    ├── vite.config.ts
+    ├── vite.config.ts (or webpack.config.js)
     └── src/
-        ├── api/client.ts
-        ├── components/shared/
+        ├── api/
+        │   └── client.ts            # API client with ALL entity CRUD ⭐
+        ├── components/
+        │   └── shared/              # DataTable, Pagination, SearchBar, etc. ⭐
         ├── pages/
+        │   ├── DashboardPage.tsx     # Overview dashboard ⭐
+        │   ├── customers/            # List, Detail, Form pages ⭐
+        │   ├── products/             # List, Detail, Form pages ⭐
+        │   ├── shipping-staffs/      # List, Detail, Form pages ⭐
+        │   ├── orders/               # List, Detail, Form pages
+        │   └── shipments/            # List, Detail, Form pages
         ├── types/
-        └── App.tsx
+        └── App.tsx                   # Routes + Sidebar navigation ⭐
 ```
 
 ### Microservices

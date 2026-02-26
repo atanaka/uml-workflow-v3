@@ -23,7 +23,7 @@ def run_workflow(
     project_name: str,
     use_cache: str = "yes",  # "yes", "no", "clear"
     execution_mode: str = "full",  # "full", "resume", "models_only", "validate_only"
-    start_step: int = 1,  # 1-9
+    start_step: int = 1,  # 1-10
     generate_xmi: bool = False,
     generate_tests: bool = True,
     run_security: bool = True,
@@ -43,7 +43,7 @@ def run_workflow(
     """
     
     print("=" * 80)
-    print(f"UML Workflow v3 - Execution")
+    print(f"UML Workflow v2 Enhanced - Execution")
     print(f"Project: {project_name}")
     print("=" * 80)
     
@@ -90,6 +90,7 @@ def run_workflow(
             7: SkillStep.SECURITY_DESIGN,
             8: SkillStep.USECASE_TO_CODE,
             9: SkillStep.USECASE_TO_TEST,
+            10: SkillStep.TRACEABILITY_MATRIX,
         }
         config = ExecutionPlanner.create_resume_from(
             start_step=step_map.get(start_step, SkillStep.SCENARIO_TO_ACTIVITY),
@@ -218,7 +219,7 @@ def run_workflow(
 if __name__ == "__main__":
     import argparse
     
-    parser = argparse.ArgumentParser(description='Execute UML Workflow v3')
+    parser = argparse.ArgumentParser(description='Execute UML Workflow v2 Enhanced')
     parser.add_argument('project_name', help='Project name')
     parser.add_argument('--cache', default='yes', choices=['yes', 'no', 'clear'],
                        help='Cache usage (default: yes)')

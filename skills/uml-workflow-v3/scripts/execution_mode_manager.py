@@ -17,7 +17,7 @@ class ExecutionMode(Enum):
     PARTIAL = "partial"                # 部分実行（開始と終了を指定）
 
 class SkillStep(Enum):
-    """ワークフローのステップ定義（9ステップ）"""
+    """ワークフローのステップ定義（10ステップ）"""
     SCENARIO_TO_ACTIVITY = "scenario-to-activity-v1"
     ACTIVITY_TO_USECASE = "activity-to-usecase-v1"
     USECASE_TO_CLASS = "usecase-to-class-v1"
@@ -27,6 +27,7 @@ class SkillStep(Enum):
     SECURITY_DESIGN = "security-design-v1"
     USECASE_TO_CODE = "usecase-to-code-v1"
     USECASE_TO_TEST = "usecase-to-test-v1"
+    TRACEABILITY_MATRIX = "traceability-matrix-v1"
     JSON_TO_MODELS = "json-to-models"
 
     @staticmethod
@@ -42,6 +43,7 @@ class SkillStep(Enum):
             SkillStep.SECURITY_DESIGN,           # 7
             SkillStep.USECASE_TO_CODE,           # 8
             SkillStep.USECASE_TO_TEST,           # 9
+            SkillStep.TRACEABILITY_MATRIX,       # 10
         ]
         try:
             return order.index(step) + 1
@@ -58,7 +60,7 @@ class SkillStep(Enum):
 
     @staticmethod
     def get_default_workflow() -> List['SkillStep']:
-        """デフォルトのワークフロー順序（9ステップ）"""
+        """デフォルトのワークフロー順序（10ステップ）"""
         return [
             SkillStep.SCENARIO_TO_ACTIVITY,      # 1
             SkillStep.ACTIVITY_TO_USECASE,       # 2
@@ -69,6 +71,7 @@ class SkillStep(Enum):
             SkillStep.SECURITY_DESIGN,           # 7
             SkillStep.USECASE_TO_CODE,           # 8
             SkillStep.USECASE_TO_TEST,           # 9
+            SkillStep.TRACEABILITY_MATRIX,       # 10
         ]
 
 @dataclass

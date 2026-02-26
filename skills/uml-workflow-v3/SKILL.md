@@ -1,9 +1,9 @@
 ---
-name: uml-workflow-v2-enhanced
-description: Token-efficient 9-step UML workflow with intelligent caching, staged execution, XMI optimization, and security design. Automatically manages cache, supports resume from any step, and defaults to XMI-off for 40% performance boost. Generates full-stack applications from business scenarios through activity diagrams, use cases, class diagrams, state machines, sequence diagrams, model validation, security design, code generation, and test generation.
+name: uml-workflow-v3
+description: 10-step UML workflow: scenario→activity→usecase→class→state→sequence→validation→security→code→test→traceability. Caching, resume, single-step modes.
 ---
 
-# UML Workflow v2 Enhanced - Token-Optimized Edition
+# UML Workflow v3
 
 完全統合されたtoken効率化UMLワークフロー。キャッシュ管理・段階的実行・XMI最適化をすべて自動化。
 
@@ -26,8 +26,8 @@ description: Token-efficient 9-step UML workflow with intelligent caching, stage
 ### Trigger Patterns
 
 Execute this workflow when user says:
-- "uml-workflow-v2-enhancedで〜を生成"
-- "uml-workflow-v2-enhancedを使って〜"
+- "uml-workflow-v3で〜を生成"
+- "uml-workflow-v3を使って〜"
 - "token効率化ワークフローで〜"
 - Any mention of this skill by name
 
@@ -84,12 +84,12 @@ User: "generate an inventory system"
 Claude executes the following bash command to verify Python scripts are accessible:
 
 ```bash
-ls -la /mnt/skills/user/uml-workflow-v2-enhanced/scripts/
+ls -la /mnt/skills/user/uml-workflow-v3/scripts/
 ```
 
 If the directory doesn't exist, try fallback:
 ```bash
-ls -la /mnt/user-data/outputs/uml-workflow-v2-enhanced-complete/scripts/
+ls -la /mnt/user-data/outputs/uml-workflow-v3-complete/scripts/
 ```
 
 **Expected output**: 4 Python files should be listed
@@ -126,7 +126,7 @@ ask_user_input_v0({
             "question": "実行モードを選択してください",
             "type": "single_select",
             "options": [
-                "フルワークフロー（全9ステップ実行）",
+                "フルワークフロー（全10ステップ実行）",
                 "指定ステップから再開",
                 "モデルのみ生成（コード生成なし）",
                 "バリデーションのみ実行"
@@ -162,7 +162,9 @@ ask_user_input_v0({
             "Step 6: モデルバリデーション",
             "Step 7: セキュリティ設計",
             "Step 8: コード生成",
-            "Step 9: テスト生成"
+            "Step 9: テスト生成",
+            "Step 10: トレーサビリティマトリクス",
+            "Step 10: トレーサビリティマトリクス"
         ]
     }]
 })
@@ -256,7 +258,7 @@ test_flag = "--no-tests" # if user selected "いいえ"
 Claude executes the run_workflow.py script using bash_tool:
 
 ```bash
-python3 /mnt/skills/user/uml-workflow-v2-enhanced/scripts/run_workflow.py \
+python3 /mnt/skills/user/uml-workflow-v3/scripts/run_workflow.py \
   {project_name} \
   --cache {cache_param} \
   --mode {mode_param} \
@@ -267,15 +269,15 @@ python3 /mnt/skills/user/uml-workflow-v2-enhanced/scripts/run_workflow.py \
 
 **Example**:
 ```bash
-python3 /mnt/skills/user/uml-workflow-v2-enhanced/scripts/run_workflow.py \
+python3 /mnt/skills/user/uml-workflow-v3/scripts/run_workflow.py \
   order-system \
   --cache yes \
   --mode full
 ```
 
-**Important**: If the scripts directory is not found at `/mnt/skills/user/uml-workflow-v2-enhanced/scripts/`, try the fallback location:
+**Important**: If the scripts directory is not found at `/mnt/skills/user/uml-workflow-v3/scripts/`, try the fallback location:
 ```bash
-python3 /mnt/user-data/outputs/uml-workflow-v2-enhanced-complete/scripts/run_workflow.py \
+python3 /mnt/user-data/outputs/uml-workflow-v3-complete/scripts/run_workflow.py \
   {project_name} ...
 ```
 
@@ -370,11 +372,14 @@ for step_name in workflow_steps:
     cache_step_outputs(step_name, project_name)
 ```
 
+> **Sub-skill reference**: Each step's full implementation is in its SKILL.md under `references/`.
+> Before executing a step, Claude MUST read: `view /mnt/skills/user/uml-workflow-v3/references/{skill-name}/SKILL.md`
+
 #### Step 1: scenario-to-activity-v1
 
 **Execution**:
 
-Claude calls the scenario-to-activity-v1 skill:
+Claude reads `references/scenario-to-activity-v1/SKILL.md`, then executes:
 
 ```
 Input: User's business scenario (from initial request)
@@ -394,7 +399,7 @@ Output directory: /mnt/user-data/outputs
 ```bash
 python3 -c "
 import sys
-sys.path.append('/mnt/skills/user/uml-workflow-v2-enhanced/scripts')
+sys.path.append('/mnt/skills/user/uml-workflow-v3/scripts')
 from workflow_cache_helper import cache_file
 
 cache_file('{project_name}', 'scenario_to_activity', 'activity-data',
@@ -414,7 +419,7 @@ if [ ! -f "/mnt/user-data/outputs/{project_name}_activity-data.json" ]; then
     # Try to restore from cache
     python3 -c "
 import sys
-sys.path.append('/mnt/skills/user/uml-workflow-v2-enhanced/scripts')
+sys.path.append('/mnt/skills/user/uml-workflow-v3/scripts')
 from unified_workflow_executor import UnifiedWorkflowExecutor
 executor = UnifiedWorkflowExecutor('{project_name}')
 from execution_mode_manager import SkillStep
@@ -425,7 +430,7 @@ fi
 
 **Execution**:
 
-Claude calls activity-to-usecase-v1:
+Claude reads `references/activity-to-usecase-v1/SKILL.md`, then executes:
 
 ```
 Input: {project_name}_activity-data.json
@@ -443,7 +448,7 @@ Generate XMI: {config.generate_xmi}
 ```bash
 python3 -c "
 import sys
-sys.path.append('/mnt/skills/user/uml-workflow-v2-enhanced/scripts')
+sys.path.append('/mnt/skills/user/uml-workflow-v3/scripts')
 from workflow_cache_helper import cache_file
 
 cache_file('{project_name}', 'activity_to_usecase', 'usecase-output',
@@ -463,7 +468,7 @@ cache_file('{project_name}', 'activity_to_usecase', 'usecase-diagram',
 
 **Execution**:
 
-Claude calls usecase-to-class-v1:
+Claude reads `references/usecase-to-class-v1/SKILL.md`, then executes:
 
 ```
 Input: {project_name}_usecase-output.json
@@ -482,7 +487,7 @@ Generate XMI: {config.generate_xmi}
 ```bash
 python3 -c "
 import sys
-sys.path.append('/mnt/skills/user/uml-workflow-v2-enhanced/scripts')
+sys.path.append('/mnt/skills/user/uml-workflow-v3/scripts')
 from workflow_cache_helper import cache_file
 
 cache_file('{project_name}', 'usecase_to_class', 'domain-model',
@@ -502,7 +507,7 @@ cache_file('{project_name}', 'usecase_to_class', 'class-puml',
 
 **Execution**:
 
-Claude calls class-to-statemachine-v1:
+Claude reads `references/class-to-statemachine-v1/SKILL.md`, then executes:
 
 ```
 Input: {project_name}_domain-model.json
@@ -518,7 +523,7 @@ Language: Inherit from domain model
 ```bash
 python3 -c "
 import sys
-sys.path.append('/mnt/skills/user/uml-workflow-v2-enhanced/scripts')
+sys.path.append('/mnt/skills/user/uml-workflow-v3/scripts')
 from workflow_cache_helper import cache_file
 
 cache_file('{project_name}', 'class_to_statemachine', 'statemachine-puml',
@@ -536,7 +541,7 @@ cache_file('{project_name}', 'class_to_statemachine', 'statemachine-puml',
 
 **Execution**:
 
-Claude calls usecase-to-sequence-v1:
+Claude reads `references/usecase-to-sequence-v1/SKILL.md`, then executes:
 
 ```
 Input: {project_name}_usecase-output.json
@@ -553,7 +558,7 @@ Language: Inherit from use cases
 ```bash
 python3 -c "
 import sys
-sys.path.append('/mnt/skills/user/uml-workflow-v2-enhanced/scripts')
+sys.path.append('/mnt/skills/user/uml-workflow-v3/scripts')
 from workflow_cache_helper import cache_file
 
 cache_file('{project_name}', 'usecase_to_sequence', 'sequence-puml',
@@ -571,7 +576,7 @@ cache_file('{project_name}', 'usecase_to_sequence', 'sequence-puml',
 
 **Execution**:
 
-Claude calls model-validator-v1:
+Claude reads `references/model-validator-v1/SKILL.md`, then executes:
 
 ```
 Input: All generated models
@@ -587,7 +592,7 @@ Language: Inherit from models
 ```bash
 python3 -c "
 import sys
-sys.path.append('/mnt/skills/user/uml-workflow-v2-enhanced/scripts')
+sys.path.append('/mnt/skills/user/uml-workflow-v3/scripts')
 from workflow_cache_helper import cache_file
 
 cache_file('{project_name}', 'model_validator', 'validation-report',
@@ -605,7 +610,7 @@ cache_file('{project_name}', 'model_validator', 'validation-report',
 
 **Execution**:
 
-Claude calls security-design-v1:
+Claude reads `references/security-design-v1/SKILL.md`, then executes:
 
 ```
 Input: {project_name}_domain-model.json
@@ -623,7 +628,7 @@ Language: Inherit from models
 ```bash
 python3 -c "
 import sys
-sys.path.append('/mnt/skills/user/uml-workflow-v2-enhanced/scripts')
+sys.path.append('/mnt/skills/user/uml-workflow-v3/scripts')
 from workflow_cache_helper import cache_file
 
 cache_file('{project_name}', 'security_design', 'security-design',
@@ -655,13 +660,11 @@ cache_file('{project_name}', 'security_design', 'security-config',
 >
 > このワークフローでは Phase 1（起動時）でユーザーから `backend_framework`, `frontend_framework`, `architecture`, テスト要否 を収集している。**Step 8 でユーザーに再度質問してはならない**。usecase-to-code-v1 の Step 2 はすでに決定済みの値を使用する（Case A）。
 
-Claude calls usecase-to-code-v1 with the tech stack already selected in Phase 1:
+Claude reads `references/usecase-to-code-v1/SKILL.md`, then executes with the tech stack already selected in Phase 1:
 
 ```
 Input: {project_name}_domain-model.json
        {project_name}_usecase-output.json
-       {project_name}_security-config.json   ← Step 7 出力。存在する場合は必ず渡す。
-                                                Step 3.5 のセキュリティインフラ生成が自動実行される。
 Tech stack: {phase1_selected_stack}   ← Phase 1 の選択値をそのまま渡す
 Architecture: {phase1_architecture}
 ```
@@ -685,11 +688,6 @@ find /home/claude/{project_name}/frontend/src -type f | sort
 **Expected Outputs**:
 - Complete application in `{project_name}/` directory
   - `backend/` — ドメイン・サービス・ルート
-  - `backend/src/infrastructure/crypto.ts` — AES-256-GCM暗号化ユーティリティ ⭐ security-config.jsonがある場合
-  - `backend/src/infrastructure/AuditLogger.ts` — 監査ログ ⭐ security-config.jsonがある場合
-  - `backend/src/presentation/middleware/auth.ts` — JWT認証・RBAC認可 ⭐ security-config.jsonがある場合
-  - `backend/src/app.ts` — helmet / CORS / rateLimit 組み込み済み ⭐ security-config.jsonがある場合
-  - `backend/.env.example` — セキュリティ変数（JWT_SECRET, ENCRYPTION_KEY等）含む
   - `frontend/` — UI コンポーネント・ページ・API クライアント
   - `README.md`
   - `docker-compose.yml`
@@ -706,28 +704,50 @@ find /home/claude/{project_name}/frontend/src -type f | sort
 
 **Execution**:
 
-Claude calls usecase-to-test-v1:
+Claude reads `references/usecase-to-test-v1/SKILL.md`, then executes:
 
 ```
 Input: {project_name}_domain-model.json
        {project_name}_usecase-output.json
-       {project_name}_security-config.json   ← Step 7 出力。存在する場合は必ず渡す。
-                                                tests/security/ 以下の6ファイルが自動生成される。
 Test frameworks: Jest/Vitest/Playwright/Cypress (auto-selected based on tech stack)
 ```
 
 **Expected Outputs**:
-- Unit tests — ドメインエンティティ・ビジネスルール
-- Integration tests — ユースケース・APIエンドポイント
-- E2E tests — クリティカルユーザーフロー
-- Security tests ⭐ security-config.jsonがある場合
-  - `tests/security/auth.test.ts` — JWT認証・トークン有効期限
-  - `tests/security/authorization.test.ts` — ロール×エンドポイント全組み合わせ
-  - `tests/security/rate-limit.test.ts` — レート制限
-  - `tests/security/encryption.test.ts` — AES-256-GCM暗号化
-  - `tests/security/audit.test.ts` — 監査ログ記録
-  - `tests/security/headers.test.ts` — HTTPセキュリティヘッダー・CORS
+- Unit tests
+- Integration tests
+- E2E tests
 - Test documentation
+
+---
+
+#### Step 10: traceability-matrix-v1
+
+**Pre-requisites Check**:
+
+```bash
+# Needs: usecase-output.json (required)
+# Recommended: domain-model.json, security-config.json, src/, tests/
+```
+
+**Execution**:
+
+Claude reads `references/traceability-matrix-v1/SKILL.md`, then executes:
+
+```
+Input: All pipeline artifacts in output directory
+       {project_name}_usecase-output.json (required)
+       usecase-specifications/UC-*.md (required)
+       {project_name}_domain-model.json (recommended)
+       {project_name}_security-config.json (recommended)
+       src/ directory (if code generated)
+       tests/ directory (if tests generated)
+```
+
+**Expected Outputs**:
+- `{project_name}_traceability-matrix.json` (machine-readable full matrix)
+- `{project_name}_traceability-matrix.md` (human-readable report with gap analysis)
+
+**Note**: This step reads all previously generated artifacts. It does not participate in caching since it aggregates from other cached outputs.
 
 ---
 
@@ -797,7 +817,7 @@ Claude informs the user:
 💡 For your next execution:
 
 1. To add features:
-   "uml-workflow-v2-enhancedで{project_name}に{新機能}を追加"
+   "uml-workflow-v3で{project_name}に{新機能}を追加"
    → Will use cache for unchanged steps (~30% token savings)
 
 2. To regenerate models only:
@@ -885,7 +905,7 @@ print('Cache cleared. Please re-run workflow.')
 #### First Run (No Cache)
 
 ```
-User: "uml-workflow-v2-enhancedで受注システムを生成"
+User: "uml-workflow-v3で受注システムを生成"
 
 Tokens consumed:
   - XMI OFF: 83,000 tokens (18% savings vs baseline)
@@ -952,6 +972,7 @@ def execute_step_1(project_name, config, business_scenario):
     # このスキルは内部でjson-to-modelsを呼び出すため
     
     """
+    # Read: references/scenario-to-activity-v1/SKILL.md
     Claude calls scenario-to-activity-v1 with:
     - Input: business_scenario
     - Language: auto-detect or user-specified
@@ -993,6 +1014,7 @@ def execute_step_2(project_name, config):
     print(f"📝 アクティビティ図からユースケースを抽出...")
     
     """
+    # Read: references/activity-to-usecase-v1/SKILL.md
     Claude calls activity-to-usecase-v1 with:
     - Input: {project_name}_activity-data.json
     - XMI generation: config.generate_xmi
@@ -1046,6 +1068,7 @@ def execute_step_3(project_name, config):
     print(f"📝 ユースケースからクラス図を生成...")
     
     """
+    # Read: references/usecase-to-class-v1/SKILL.md
     Claude calls usecase-to-class-v1 with:
     - Input: {project_name}_usecase-output.json
     - Original scenario: {project_name}_activity-data.json
@@ -1088,6 +1111,7 @@ def execute_step_4(project_name, config):
     print(f"📝 ステータス属性を持つエンティティのステートマシン図を生成...")
     
     """
+    # Read: references/class-to-statemachine-v1/SKILL.md
     Claude calls class-to-statemachine-v1 with:
     - Input: {project_name}_domain-model.json
     - Language: inherit from domain model
@@ -1117,6 +1141,7 @@ def execute_step_5(project_name, config):
     print(f"📝 各ユースケースのシーケンス図を生成...")
     
     """
+    # Read: references/usecase-to-sequence-v1/SKILL.md
     Claude calls usecase-to-sequence-v1 with:
     - Input: {project_name}_usecase-output.json, {project_name}_domain-model.json
     - Language: inherit from use cases
@@ -1139,6 +1164,7 @@ def execute_step_6(project_name, config):
     print(f"🔍 UMLモデルの検証を実行...")
     
     """
+    # Read: references/model-validator-v1/SKILL.md
     Claude calls model-validator-v1 with:
     - Input: all generated models in /mnt/user-data/outputs/{project_name}_*
     - Language: inherit from models
@@ -1178,6 +1204,7 @@ def execute_step_7(project_name, config):
     print(f"🔒 セキュリティ設計を生成...")
     
     """
+    # Read: references/security-design-v1/SKILL.md
     Claude calls security-design-v1 with:
     - Input: {project_name}_domain-model.json, {project_name}_usecase-output.json
     - Validation report: {project_name}_validation-report.md (optional)
@@ -1223,17 +1250,15 @@ def execute_step_8(project_name, config):
     tech_stack = select_tech_stack()  # ユーザーに確認
     
     """
+    # Read: references/usecase-to-code-v1/SKILL.md
     Claude calls usecase-to-code-v1 with:
     - Input: {project_name}_domain-model.json, {project_name}_usecase-output.json
-    - Security config: {project_name}_security-config.json (if available)
-      → triggers Step 3.5: crypto.ts, AuditLogger.ts, auth.ts, helmet/CORS/rateLimit in app.ts
     - Tech stack: selected by user or default
     - Architecture: monolith/microservices/serverless
     
     Output:
     - Complete application in {project_name}/ directory
     - Backend + Frontend + Infrastructure
-    - Security infrastructure (when security-config.json present)
     - Docker configuration
     - Documentation
     """
@@ -1255,6 +1280,7 @@ def execute_step_9(project_name, config):
     print(f"🧪 テストコードを生成...")
     
     """
+    # Read: references/usecase-to-test-v1/SKILL.md
     Claude calls usecase-to-test-v1 with:
     - Input: {project_name}_domain-model.json, {project_name}_usecase-output.json
     - Security config: {project_name}_security-config.json (if available)
@@ -1268,6 +1294,30 @@ def execute_step_9(project_name, config):
     """
     
     print(f"✅ Step 9 完了 - テスト生成")
+    return True
+```
+
+### Step 10: traceability-matrix-v1
+
+```python
+def execute_step_10(project_name, config):
+    """Step 10: トレーサビリティマトリクス生成"""
+    
+    print(f"📊 トレーサビリティマトリクスを生成...")
+    
+    """
+    # Read: references/traceability-matrix-v1/SKILL.md
+    Claude calls traceability-matrix-v1 with:
+    - Input: All artifacts in project output directory
+    - Required: {project_name}_usecase-output.json, usecase-specifications/UC-*.md
+    - Recommended: domain-model.json, security-config.json, src/, tests/
+    
+    Output:
+    - {project_name}_traceability-matrix.json
+    - {project_name}_traceability-matrix.md
+    """
+    
+    print(f"✅ Step 10 完了 - トレーサビリティマトリクス生成")
     return True
 ```
 
@@ -1380,7 +1430,7 @@ Token削減: 約95%
 
 ### Execution Modes
 
-1. **フルワークフロー**: すべてのステップを実行（9ステップ）
+1. **フルワークフロー**: すべてのステップを実行（10ステップ）
 2. **指定ステップから再開**: Step 1-9から開始点を選択
 3. **モデルのみ生成**: Step 1-7（コード生成なし）
 4. **単一スキル**: 1つのステップのみ実行

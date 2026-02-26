@@ -1,4 +1,4 @@
-# UML Workflow v3 - README
+# UML Workflow v2 Enhanced - README
 
 Token効率化を極めたUMLワークフロー統合スキル
 

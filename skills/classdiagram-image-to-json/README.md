@@ -1,6 +1,6 @@
 # Class Diagram Image to JSON Converter
 
-Convert visual UML class diagrams from images (JPEG, PNG, PDF) into structured domain-model.json format for uml-workflow-v3.
+Convert visual UML class diagrams from images (JPEG, PNG, PDF) into structured domain-model.json format for uml-workflow-v2.
 
 ## Quick Start
 
@@ -434,7 +434,7 @@ For issues or questions:
 This skill bridges the gap between visual modeling tools and automated code generation, enabling:
 - **Visual-first workflow**: Design in your preferred tool
 - **Flexibility**: Mix auto-generation with manual refinement  
-- **Integration**: Seamless uml-workflow-v3 pipeline
+- **Integration**: Seamless uml-workflow-v2 pipeline
 - **Productivity**: 10x faster than manual JSON creation
 
 **Result:** Best of both worlds - visual design freedom + automated code generation power.
