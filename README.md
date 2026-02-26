@@ -13,22 +13,22 @@ UML Workflow v3 は、Claude AI の [Skills](https://docs.claude.com/en/docs/cla
 ### What it does / できること
 
 ```
-ビジネスシナリオ（自然言語）
+Business Scenario (text) / ビジネスシナリオ（自然言語）
     ↓
 ┌─────────────────────────────────────────────────┐
-│  Step  1: シナリオ → アクティビティ図             │
-│  Step  2: アクティビティ図 → ユースケース抽出     │
-│  Step  3: ユースケース → クラス図（ドメインモデル）│
-│  Step  4: クラス図 → ステートマシン図             │
-│  Step  5: ユースケース → シーケンス図             │
-│  Step  6: モデル横断バリデーション                 │
-│  Step  7: OWASP準拠セキュリティ設計               │
-│  Step  8: フルスタックコード生成                   │
-│  Step  9: テストコード生成                         │
-│  Step 10: トレーサビリティマトリクス               │
+│  Step  1: シナリオ → アクティビティ図             │ scenario to activity diagram
+│  Step  2: アクティビティ図 → ユースケース抽出     │ activity diagram to usecases
+│  Step  3: ユースケース → クラス図（ドメインモデル）│ usecases to class diagram (domain model)
+│  Step  4: クラス図 → ステートマシン図             │ class diagram to statemachine diagrams
+│  Step  5: ユースケース → シーケンス図             │ usecases to sequence diagrams
+│  Step  6: モデル横断バリデーション                 │ model-validation
+│  Step  7: OWASP準拠セキュリティ設計               │ security-design
+│  Step  8: フルスタックコード生成                   │ full-stack code generation
+│  Step  9: テストコード生成                         │ test code generation
+│  Step 10: トレーサビリティマトリクス               │ traceability matrix generation
 └─────────────────────────────────────────────────┘
     ↓
-本番品質のアプリケーション + 完全なUMLドキュメント
+Quality Code with UML documentation / 本番品質のアプリケーション + 完全なUMLドキュメント
 ```
 
 ### Key Features / 主な特長
