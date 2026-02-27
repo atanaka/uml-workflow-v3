@@ -1,51 +1,35 @@
 ---
 name: classdiagram-image-to-json
-description: Convert hand-drawn or tool-created UML class diagram images (JPEG/PNG/PDF) to domain-model.json with Japanese/English OCR support.
+description: Convert hand-drawn or modeling tool-created UML class diagrams (JPEG, PNG, PDF) into domain-model.json format with multi-language OCR support (Japanese/English text recognition). Enables modelers to create/edit class diagrams visually and integrate them into the UML workflow. Supports merging with existing models. Automatically detects and processes Japanese entity names.
 ---
 
-# Class Diagram Image to JSON Converter / クラス図画像→JSONコンバーター
+# Class Diagram Image to JSON Converter
 
-**UML Workflow v3 ヘルパースキル / Helper Skill**
+Convert visual UML class diagrams (from images or PDFs) into structured domain-model.json format for integration with uml-workflow-v2.
 
-クラス図の画像（手描き・UMLツール出力）を `domain-model.json` に変換します。  
-Converts class diagram images (hand-drawn or from UML tools) into `domain-model.json`.
+## Overview
 
-**使い方 / Usage:**
-```
-「この手描きのクラス図をJSONに変換してください」（画像を添付）
-"Please convert this class diagram to domain-model.json" (attach image)
-```
-
-変換後は Step 4（ステートマシン図）以降のパイプラインを再実行してください。  
-After conversion, re-run the pipeline from Step 4 (state machine) or later.
-
----
-
-Convert visual UML class diagrams (from images or PDFs) into structured domain-model.json format for integration with uml-workflow-v3.
-
-## Overview / 概要
-
-This skill enables modelers to: / このスキルにより、モデラーは以下が可能になります：
+This skill enables modelers to:
 1. Create or edit UML class diagrams using their preferred modeling tool (Eclipse Papyrus, Draw.io, Lucidchart, etc.)
 2. Export the diagram as an image (JPEG, PNG) or PDF
 3. Convert it to domain-model.json format
 4. Integrate with the UML workflow pipeline
 
-### Key Features / 主な機能
+### Key Features
 
 - **Multi-format support**: JPEG, PNG, PDF
 - **Comprehensive extraction**: Classes, attributes, methods, relationships
 - **Merge capability**: Update existing domain-model.json or create new
 - **Validation**: Ensures JSON structure compliance
-- **UML workflow integration**: Seamless integration as model edit helper
+- **UML workflow integration**: Seamless Step 5.5 addition
 - **Multi-language OCR**: Japanese and English text recognition ⭐ NEW!
 - **Automatic japanese_name generation**: Detected Japanese names preserved ⭐ NEW!
 
 ---
 
-## Language Support / 言語サポート ⭐
+## Language Support ⭐ NEW!
 
-### Overview / 概要
+### Overview
 
 Recognizes both Japanese and English text in class diagrams using advanced OCR. Automatically generates appropriate entity names and japanese_name attributes.
 
@@ -54,7 +38,7 @@ Recognizes both Japanese and English text in class diagrams using advanced OCR. 
 - **English**: Latin characters
 - **Mixed**: Japanese + English in same diagram
 
-### OCR Processing / OCR処理
+### OCR Processing
 
 **When Japanese text detected:**
 ```json
@@ -78,9 +62,9 @@ Recognizes both Japanese and English text in class diagrams using advanced OCR. 
 
 ---
 
-## When to Use This Skill / このスキルを使う場面
+## When to Use This Skill
 
-### Primary Use Cases / 主なユースケース
+### Primary Use Cases
 
 1. **Manual class diagram creation**
    - User prefers visual modeling tools over code
@@ -89,18 +73,18 @@ Recognizes both Japanese and English text in class diagrams using advanced OCR. 
 
 2. **Model refinement workflow**
    - Auto-generated class diagram needs visual editing
-   - After Step 3 (usecase-to-class-v1), refine diagram manually
+   - After Step 5 (usecase-to-class-v1), refine diagram manually
    - Re-import refined diagram to update JSON
 
 3. **Legacy model migration**
    - Existing class diagrams from previous projects
-   - Need to convert to uml-workflow-v3 format
+   - Need to convert to uml-workflow-v2 format
 
 4. **Educational scenarios**
    - Students learn by drawing diagrams
    - Convert hand-drawn sketches to formal models
 
-### Trigger Patterns / トリガーパターン
+### Trigger Patterns
 
 Use this skill when user says:
 - "I've created a class diagram in [tool], can you convert it to JSON?"
@@ -110,27 +94,27 @@ Use this skill when user says:
 
 ---
 
-## Workflow Integration / ワークフロー統合
+## Workflow Integration
 
-### Position in uml-workflow-v3 / ワークフロー内の位置
+### Position in uml-workflow-v2
 
 ```
 Step 5: usecase-to-class-v1
   ↓ (generates domain-model.json automatically)
-Edit Helper: classdiagram-image-to-json (OPTIONAL)
+Step 5.5: classdiagram-image-to-json ⭐ (OPTIONAL)
   ↓ (if user wants to manually edit and re-import)
 Step 6: usecase-to-sequence-v1
   ↓ (continues normal workflow)
 ```
 
-### Integration Patterns / 統合パターン
+### Integration Patterns
 
 **Pattern A: Replace Step 5**
 ```
 User provides class diagram directly
   ↓ classdiagram-image-to-json
 domain-model.json created
-  ↓ Continue to Step 5 or later
+  ↓ Continue to Step 6
 ```
 
 **Pattern B: Refine after Step 5**
@@ -140,7 +124,7 @@ Step 5: Auto-generate domain-model.json
 User uploads refined diagram
   ↓ classdiagram-image-to-json (merge mode)
 domain-model.json updated
-  ↓ Continue to Step 5 or later
+  ↓ Continue to Step 6
 ```
 
 **Pattern C: Start from existing diagram**
@@ -148,14 +132,14 @@ domain-model.json updated
 User has legacy class diagram
   ↓ classdiagram-image-to-json
 domain-model.json created
-  ↓ Start workflow from Step 4 or later
+  ↓ Start workflow from Step 6
 ```
 
 ---
 
-## Execution Process / 実行プロセス
+## Execution Process
 
-### Step 1: Input Validation / 入力バリデーション
+### Step 1: Input Validation
 
 1. **Confirm file is uploaded**
    - Check file exists in /mnt/user-data/uploads
@@ -166,7 +150,7 @@ domain-model.json created
    - Check for text clarity
    - Warn if quality is poor
 
-### Step 2: Diagram Analysis / 図の解析
+### Step 2: Diagram Analysis
 
 Extract the following UML elements:
 
@@ -212,7 +196,7 @@ For each relationship:
 - Direction: unidirectional, bidirectional
 ```
 
-### Step 3: JSON Structure Generation / JSON生成
+### Step 3: JSON Structure Generation
 
 #### 3.1 Standard domain-model.json Format
 
@@ -340,7 +324,7 @@ Preserve metadata:
   - Custom annotations
 ```
 
-### Step 5: Validation / バリデーション
+### Step 5: Validation
 
 Check JSON structure:
 1. Valid JSON syntax
@@ -349,7 +333,7 @@ Check JSON structure:
 4. Relationship references valid
 5. No circular generalization
 
-### Step 6: Output Generation / 出力生成
+### Step 6: Output Generation
 
 1. **Save JSON**
    ```bash
@@ -369,7 +353,7 @@ Check JSON structure:
 
 ---
 
-## Detailed Analysis Guidelines / 詳細解析ガイドライン
+## Detailed Analysis Guidelines
 
 ### Image Reading Best Practices
 
@@ -425,7 +409,7 @@ Check JSON structure:
 
 ---
 
-## Error Handling / エラーハンドリング
+## Error Handling
 
 ### Common Issues
 
@@ -463,7 +447,7 @@ If JSON validation fails:
 
 ---
 
-## Examples / 使用例
+## Examples
 
 ### Example 1: Simple Domain Model
 
@@ -556,7 +540,7 @@ Preserved:
 
 ---
 
-## Integration with json-to-models / json-to-modelsとの連携
+## Integration with json-to-models
 
 After generating domain-model.json, optionally call json-to-models to:
 1. Generate PlantUML diagrams
@@ -570,7 +554,7 @@ python /home/claude/json_to_models.py
 
 ---
 
-## Best Practices / ベストプラクティス
+## Best Practices
 
 ### For Users
 
@@ -618,7 +602,7 @@ python /home/claude/json_to_models.py
 
 ---
 
-## Advanced Features / 高度な機能
+## Advanced Features
 
 ### Handling Complex Diagrams
 
@@ -701,7 +685,7 @@ If diagram includes OCL constraints:
 
 ---
 
-## Troubleshooting / トラブルシューティング
+## Troubleshooting
 
 ### Issue: Cannot read text from image
 
@@ -741,7 +725,7 @@ If diagram includes OCL constraints:
 
 ---
 
-## Success Metrics / 成功指標
+## Success Metrics
 
 **Quality indicators:**
 - 100% of classes extracted correctly
@@ -757,7 +741,7 @@ If diagram includes OCL constraints:
 
 ---
 
-## Limitations / 制限事項
+## Limitations
 
 1. **Handwritten diagrams**: May have lower accuracy
 2. **Complex layouts**: Crossing lines may confuse extraction
@@ -766,7 +750,7 @@ If diagram includes OCL constraints:
 
 ---
 
-## Future Enhancements / 今後の拡張
+## Future Enhancements
 
 1. **Support more formats**: XMI, MDJ (StarUML), VSDX (Visio)
 2. **Interactive refinement**: Web interface for corrections
@@ -776,9 +760,9 @@ If diagram includes OCL constraints:
 
 ---
 
-## Summary / まとめ
+## Summary
 
-This skill bridges visual modeling and the uml-workflow-v3 pipeline, enabling: / このスキルはビジュアルモデリングとuml-workflow-v3パイプラインを繋ぎ、以下を実現します：
+This skill bridges visual modeling and the uml-workflow-v2 pipeline, enabling:
 - Modelers to work in their preferred tools
 - Manual refinement of auto-generated diagrams
 - Integration of legacy class diagrams

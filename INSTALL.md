@@ -1,0 +1,113 @@
+# Installation Guide / インストールガイド
+
+## 📦 Package Overview / パッケージ概要
+
+This package contains **13 skills** (1 orchestrator + 9 core + 3 optional). All skills are included — no additional downloads required.
+
+このパッケージには**13スキル**（オーケストレーター1 + コア9 + オプション3）が含まれています。追加ダウンロードは不要です。
+
+---
+
+## 🚀 Installation / インストール手順
+
+### Step 1: Download / ダウンロード
+
+Download or clone this repository.
+
+### Step 2: Upload to Claude.ai / Claude.aiにアップロード
+
+1. Open [claude.ai](https://claude.ai)
+2. Go to **Settings → Skills**
+3. Upload each skill folder:
+
+**Required (10 folders):**
+
+| # | Folder to Upload | Description |
+|---|-----------------|-------------|
+| 1 | `uml-workflow-v3/` | Main orchestrator |
+| 2 | `skills/scenario-to-activity-v1/` | Scenario → Activity diagram |
+| 3 | `skills/activity-to-usecase-v1/` | Activity → Use cases |
+| 4 | `skills/usecase-to-class-v1/` | Use cases → Class diagram |
+| 5 | `skills/class-to-statemachine-v1/` | Class → State machines |
+| 6 | `skills/usecase-to-sequence-v1/` | Use cases → Sequence diagrams |
+| 7 | `skills/model-validator-v1/` | Model validation |
+| 8 | `skills/security-design-v1/` | Security design |
+| 9 | `skills/usecase-to-code-v1/` | Code generation |
+| 10 | `skills/usecase-to-test-v1/` | Test generation |
+
+**Optional (3 folders):**
+
+| # | Folder to Upload | Description |
+|---|-----------------|-------------|
+| 11 | `skills/json-to-models/` | Regenerate models from JSON |
+| 12 | `skills/usecase-md-to-json/` | Markdown → JSON conversion |
+| 13 | `skills/classdiagram-image-to-json/` | Image → JSON conversion |
+
+> ⚠️ Upload the **entire folder** (not individual files). Each folder must include its `SKILL.md` and any `templates/` subdirectory.
+
+### Step 3: Verify / 確認
+
+Start a new conversation and type:
+
+```
+uml-workflow-v3で簡単なTodoアプリを生成して
+```
+
+If Claude responds with configuration questions, installation is successful!
+
+---
+
+## ⚙️ How It Works / 動作の仕組み
+
+### 2-Phase Execution / 2フェーズ実行
+
+Full workflow execution is automatically split into two conversations to prevent context window exhaustion:
+
+1. **Phase A** (Steps 1-7): Modeling & Validation → All artifacts cached
+2. **Phase B** (Steps 8-10): Code Generation → Uses cached artifacts from Phase A
+
+After Phase A completes, Claude will instruct you to start a new conversation for Phase B.
+
+### Execution Modes / 実行モード
+
+| Mode | Command Example |
+|------|----------------|
+| Full workflow | `uml-workflow-v3で受注管理システムを生成` |
+| Models only | `uml-workflow-v3で在庫管理のモデルのみ生成` |
+| Resume from step | `uml-workflow-v3でproject-nameのStep 8から再開` |
+| Validation only | `uml-workflow-v3でproject-nameのバリデーションのみ` |
+
+---
+
+## 🔧 Troubleshooting / トラブルシューティング
+
+### "Scripts not found"
+
+Ensure `uml-workflow-v3/scripts/` contains these 5 Python files:
+- `run_workflow.py`
+- `workflow_cache_helper.py`
+- `execution_mode_manager.py`
+- `unified_workflow_executor.py`
+- `interactive_workflow_executor.py`
+
+### Workflow stops mid-execution
+
+Use cache-based resume:
+```
+uml-workflow-v3で[project-name]のStep [N]から再開して
+```
+
+### Phase B fails to find cached artifacts
+
+Ensure Phase A completed successfully and all artifacts were cached. Re-run Phase A if needed.
+
+---
+
+## 📋 Upgrading from v2-enhanced / v2-enhancedからの移行
+
+If you previously used `uml-workflow-v2-enhanced`:
+
+1. **Remove** `uml-workflow-v2-enhanced` from Claude.ai Skills
+2. **Upload** `uml-workflow-v3/` as the replacement
+3. **Replace** `usecase-to-code-v1/` with the new version (includes `templates/` folder)
+4. Existing cached artifacts remain compatible
