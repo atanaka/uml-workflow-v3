@@ -7,7 +7,7 @@ description: Generate comprehensive test code from use case specifications and d
 
 Generate comprehensive, production-ready test suites from use case specifications and domain models.
 
-## Overview
+## Overview / 概要
 
 This skill automatically generates test code that validates:
 - Business logic correctness
@@ -28,7 +28,7 @@ This skill automatically generates test code that validates:
 
 ---
 
-## Language Support ⭐ NEW!
+## Language Support / 言語サポート ⭐
 
 Generates test code with language-appropriate descriptions. Code identifiers remain in English, but test descriptions (describe/it blocks) follow the configured language.
 
@@ -40,7 +40,7 @@ Generates test code with language-appropriate descriptions. Code identifiers rem
 
 ---
 
-## Position in Workflow
+## Position in Workflow / ワークフロー内の位置
 
 ```
 Step 1: scenario-to-activity-v1
@@ -58,7 +58,7 @@ Step 6: security-design-v1
 
 ---
 
-## Input
+## Input / 入力
 
 ### Required
 
@@ -75,7 +75,7 @@ Step 6: security-design-v1
 
 ---
 
-## Test Generation Strategy
+## Test Generation Strategy / テスト生成戦略
 
 ### 1. Unit Tests (Domain Layer)
 
@@ -101,7 +101,7 @@ Generate tests for critical user flows:
 
 ---
 
-## Output
+## Output / 出力
 
 ### Generated Files
 
@@ -125,7 +125,7 @@ Generate tests for critical user flows:
 
 ---
 
-## Usage Example
+## Usage Example / 使用例
 
 ```bash
 # Generate tests for B2B EC Platform
@@ -141,7 +141,7 @@ usecase-to-test-v1 --project b2b-ec-platform
 
 ---
 
-## Test Coverage Matrix
+## Test Coverage Matrix / テストカバレッジマトリクス
 
 | Layer | Unit | Integration | E2E |
 |-------|------|-------------|-----|

@@ -7,7 +7,7 @@ description: Generate formal UML class diagrams from use case definitions and or
 
 Create formal, comprehensive UML class diagrams by consolidating use case definitions with original business requirements.
 
-## Overview
+## Overview / 概要
 
 This skill generates the **formal class diagram** that serves as the authoritative domain model for code generation. It consolidates:
 1. All use cases from activity-to-usecase-v1
@@ -26,9 +26,9 @@ This skill generates the **formal class diagram** that serves as the authoritati
 
 ---
 
-## Language Support ⭐ NEW!
+## Language Support / 言語サポート ⭐
 
-### Overview
+### Overview / 概要
 
 This skill generates formal class diagrams with multi-language support, inheriting settings from use case specifications to maintain consistency across the workflow.
 
@@ -201,7 +201,7 @@ end note
 # language="ja"
 # アーキテクチャ概要: 受注管理システム
 
-## ドメインモデル
+## ドメインモデル / Domain Model
 
 ### エンティティ一覧
 
@@ -213,7 +213,7 @@ end note
 # language="en"
 # Architecture Overview: Order Management System
 
-## Domain Model
+## Domain Model / ドメインモデル
 
 ### Entity List
 
@@ -246,7 +246,7 @@ Entity that manages information about products for sale.
 
 ---
 
-## Position in Workflow
+## Position in Workflow / ワークフロー内の位置
 
 ```
 Step 1: scenario-to-activity-v1
@@ -264,7 +264,7 @@ Step 4: usecase-to-code-v1
 
 ---
 
-## Input
+## Input / 入力
 
 ### Required
 
@@ -288,7 +288,7 @@ Step 4: usecase-to-code-v1
 
 ---
 
-## Workflow
+## Workflow / 処理フロー
 
 ### Step 0: Language Inheritance and Configuration ⭐ NEW!
 
@@ -649,7 +649,7 @@ end note
 
 ---
 
-## Output
+## Output / 出力
 
 ### 1. PlantUML Class Diagram
 
@@ -826,7 +826,7 @@ Comprehensive architecture documentation in Markdown format.
 ```markdown
 # アーキテクチャ概要: {System Name}
 
-## 1. システム概要
+## 1. システム概要 / System Overview
 
 ### 目的
 [システムが解決する課題と提供する価値]
@@ -840,7 +840,7 @@ Comprehensive architecture documentation in Markdown format.
 
 ---
 
-## 2. ドメインモデル
+## 2. ドメインモデル / Domain Model
 
 ### 2.1 ドメインエンティティ
 
@@ -895,7 +895,7 @@ Comprehensive architecture documentation in Markdown format.
 
 ---
 
-## 3. アーキテクチャパターン
+## 3. アーキテクチャパターン / Architecture Patterns
 
 ### 3.1 レイヤーアーキテクチャ
 
@@ -929,7 +929,7 @@ Comprehensive architecture documentation in Markdown format.
 
 ---
 
-## 4. データモデル
+## 4. データモデル / Data Model
 
 ### 4.1 エンティティ関係図 (ERD)
 
@@ -956,7 +956,7 @@ Product ||--|| Inventory : has
 
 ---
 
-## 5. ビジネスルールと制約
+## 5. ビジネスルールと制約 / Business Rules and Constraints
 
 ### 5.1 在庫管理ルール
 - 在庫引当は受注確定時に実施
@@ -970,7 +970,7 @@ Product ||--|| Inventory : has
 
 ---
 
-## 6. 非機能要件
+## 6. 非機能要件 / Non-Functional Requirements
 
 ### 6.1 性能要件
 - 在庫確認: 1秒以内
@@ -989,7 +989,7 @@ Product ||--|| Inventory : has
 
 ---
 
-## 7. 技術スタック
+## 7. 技術スタック / Technology Stack
 
 ### バックエンド
 - 言語: TypeScript
@@ -1005,7 +1005,7 @@ Product ||--|| Inventory : has
 
 ---
 
-## 8. デプロイメントアーキテクチャ
+## 8. デプロイメントアーキテクチャ / Deployment Architecture
 
 ### 開発環境
 - Docker Compose
@@ -1018,7 +1018,7 @@ Product ||--|| Inventory : has
 
 ---
 
-## 9. 今後の拡張性
+## 9. 今後の拡張性 / Future Extensibility
 
 ### フェーズ2機能候補
 - 複数配送先対応
@@ -1157,7 +1157,7 @@ Next: Use usecase-to-code-v1 for code generation.
 
 ---
 
-## Information Consolidation Strategy
+## Information Consolidation Strategy / 情報統合戦略
 
 ### Priority Order
 
@@ -1183,7 +1183,7 @@ Inferred model says: "status: string"
 
 ---
 
-## Entity Attribute Patterns
+## Entity Attribute Patterns / エンティティ属性パターン
 
 ### Mandatory Attributes (All Entities)
 
@@ -1216,7 +1216,7 @@ Inferred model says: "status: string"
 
 ---
 
-## Relationship Patterns
+## Relationship Patterns / リレーションシップパターン
 
 ### Composition (Strong)
 
@@ -1248,7 +1248,7 @@ Inferred model says: "status: string"
 
 ---
 
-## Best Practices
+## Best Practices / ベストプラクティス
 
 ### For Quality
 
@@ -1274,7 +1274,7 @@ Inferred model says: "status: string"
 
 ---
 
-## Common Pitfalls
+## Common Pitfalls / よくある落とし穴
 
 ### ❌ Don't
 
@@ -1294,7 +1294,7 @@ Inferred model says: "status: string"
 
 ---
 
-## Integration with Workflow
+## Integration with Workflow / ワークフロー連携
 
 **What feeds into this step:**
 - Use case JSON (required)
@@ -1311,7 +1311,7 @@ Inferred model says: "status: string"
 
 ---
 
-## Version History
+## Version History / バージョン履歴
 
 - **v1.0** (2026-01-22): Initial version
   - Consolidates use cases + original scenario

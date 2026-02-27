@@ -7,7 +7,7 @@ description: Generate UML activity diagrams from comprehensive business scenario
 
 Transform comprehensive business scenarios into UML activity diagrams with internally-managed temporary domain models.
 
-## Overview
+## Overview / 概要
 
 This skill generates activity diagrams by analyzing business scenarios and creating a temporary domain model during the process. Unlike the original version, it does NOT require a pre-existing class diagram, making it more flexible for early-stage analysis.
 
@@ -21,9 +21,9 @@ This skill generates activity diagrams by analyzing business scenarios and creat
 
 ---
 
-## Language Support ⭐ NEW!
+## Language Support / 言語サポート ⭐
 
-### Overview
+### Overview / 概要
 
 This skill supports multi-language input and output to accommodate international teams and Japanese domestic projects.
 
@@ -53,12 +53,12 @@ language_options = {
     "include_japanese_name": True,   # Always include japanese_name attribute
     "documentation_lang": "auto",    # auto | ja | en (follows language)
     "diagram_comments": "auto",      # auto | ja | en (follows language)
-    "inherit_from_workflow": True    # Inherit from uml-workflow-v2
+    "inherit_from_workflow": True    # Inherit from uml-workflow-v3
 }
 ```
 
 **When inherited from workflow:**
-- `inherit_from_workflow=True`: Use language setting from uml-workflow-v2
+- `inherit_from_workflow=True`: Use language setting from uml-workflow-v3
 - Ensures consistency across all workflow steps
 
 ### Output Language Control
@@ -138,7 +138,7 @@ end note
 
 ---
 
-## Input Format
+## Input Format / 入力形式
 
 ### Required Information
 
@@ -219,7 +219,7 @@ Performance, security, and other quality attributes.
 
 ---
 
-## Workflow
+## Workflow / 処理フロー
 
 ### Step 0: Language Detection and Configuration ⭐ NEW!
 
@@ -412,7 +412,7 @@ stop
 
 ---
 
-## Output Format
+## Output Format / 出力形式
 
 ### 1. PlantUML Activity Diagram
 
@@ -438,25 +438,25 @@ Structured documentation of the input business scenario in Markdown format.
 ```markdown
 # 業務シナリオ文書: {System Name}
 
-## 業務概要
+## 業務概要 / Business Overview
 [業務の目的、対象ユーザー、解決する課題]
 
-## 業務シナリオ
+## 業務シナリオ / Business Scenarios
 [ステップバイステップの詳細フロー]
 
-## ビジネスルール
+## ビジネスルール / Business Rules
 [制約条件、検証ルール、業務ロジック]
 
-## 用語集
+## 用語集 / Glossary
 [ドメイン固有用語の定義]
 
-## ステークホルダー情報
+## ステークホルダー情報 / Stakeholder Information
 [アクターと役割の説明]
 
-## 非機能要件
+## 非機能要件 / Non-Functional Requirements
 [性能、セキュリティ、可用性等]
 
-## 生成情報
+## 生成情報 / Generation Information
 - 生成日時: [timestamp]
 - 生成ツール: scenario-to-activity-v1
 ```
@@ -641,7 +641,7 @@ Business Rules: 3
 
 ---
 
-## Project Naming
+## Project Naming / プロジェクト命名
 
 **Determine project name:**
 1. User-specified: Explicitly provided in request
@@ -653,7 +653,7 @@ Business Rules: 3
 
 ---
 
-## Example Usage
+## Example Usage / 使用例
 
 ### Example 1: Minimal Input (Required Only)
 
@@ -707,7 +707,7 @@ B2B卸売業向け受注出荷システム
 
 ---
 
-## Best Practices
+## Best Practices / ベストプラクティス
 
 ### For Users
 
@@ -726,7 +726,7 @@ B2B卸売業向け受注出荷システム
 
 ---
 
-## Limitations
+## Limitations / 制限事項
 
 **What this skill does NOT do:**
 - ❌ Create permanent domain model (that's usecase-to-class-v1's job)
@@ -741,7 +741,7 @@ B2B卸売業向け受注出荷システム
 
 ---
 
-## Integration with Workflow
+## Integration with Workflow / ワークフロー連携
 
 **Position in uml-workflow-v1:**
 ```
@@ -761,7 +761,7 @@ Step 4: usecase-to-code-v1
 
 ---
 
-## Output Naming Convention
+## Output Naming Convention / 出力命名規則
 
 **With project name:**
 `{project-name}_activity.puml`
@@ -771,7 +771,7 @@ Step 4: usecase-to-code-v1
 
 ---
 
-## Version History
+## Version History / バージョン履歴
 
 - **v1.0** (2026-01-22): Initial version
   - Independent of class diagram

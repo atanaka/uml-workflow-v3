@@ -7,7 +7,7 @@ description: Generate comprehensive security design documents from domain models
 
 Generate production-grade security architecture and design documents from UML workflow artifacts.
 
-## Overview
+## Overview / 概要
 
 This skill analyzes domain models and use case specifications to generate:
 1. **Security Design Document** - Comprehensive security architecture and policies
@@ -30,9 +30,9 @@ This skill analyzes domain models and use case specifications to generate:
 
 ---
 
-## Language Support
+## Language Support / 言語サポート
 
-### Overview
+### Overview / 概要
 
 This skill generates security design documents in multiple languages, inheriting settings from the domain model for consistency with project documentation.
 
@@ -92,7 +92,7 @@ language_options = {
 **作成日:** 2026-02-16
 **バージョン:** 1.0
 
-## 1. 認証設計
+## 1. 認証設計 / Authentication Design
 
 ### 1.1 認証方式
 JWT (JSON Web Token) ベースの認証を採用します。
@@ -124,7 +124,7 @@ JWT (JSON Web Token) ベースの認証を採用します。
 **Date:** 2026-02-16
 **Version:** 1.0
 
-## 1. Authentication Design
+## 1. Authentication Design / 認証設計
 
 ### 1.1 Authentication Method
 JWT (JSON Web Token) based authentication is adopted.
@@ -159,7 +159,7 @@ JWT (JSON Web Token) based authentication is adopted.
 
 ---
 
-## Position in Workflow
+## Position in Workflow / ワークフロー内の位置
 
 ```
 Step 1: scenario-to-activity-v1
@@ -189,7 +189,7 @@ Step 9: usecase-to-test-v1 (uses security-config.json for security tests)
 
 ---
 
-## Input
+## Input / 入力
 
 ### Required Models
 
@@ -212,7 +212,7 @@ Step 9: usecase-to-test-v1 (uses security-config.json for security tests)
 
 ---
 
-## Output
+## Output / 出力
 
 ### 1. Security Design Document
 
@@ -376,7 +376,7 @@ Structured configuration consumed by usecase-to-code-v1 and usecase-to-test-v1:
 
 ---
 
-## Security Design Workflow
+## Security Design Workflow / セキュリティ設計フロー
 
 ### Step 0: Language Configuration
 
@@ -1099,7 +1099,7 @@ with open(f"{output_dir}/{project}_security-config.json", "w") as f:
 
 ---
 
-## Integration with usecase-to-code-v1
+## Integration with usecase-to-code-v1 / コード生成との連携
 
 The `security-config.json` is designed to be consumed by code generation:
 
@@ -1144,7 +1144,7 @@ generate_audit_middleware(audit_config["events"])
 
 ---
 
-## Integration with usecase-to-test-v1
+## Integration with usecase-to-test-v1 / テスト生成との連携
 
 The `security-config.json` is also consumed by test generation:
 
@@ -1189,7 +1189,7 @@ security_tests.extend([
 
 ---
 
-## Execution Summary
+## Execution Summary / 実行サマリー
 
 ### Token Estimates
 
@@ -1216,7 +1216,7 @@ security_tests.extend([
 
 ---
 
-## Error Handling
+## Error Handling / エラーハンドリング
 
 ### Missing Domain Model
 ```
@@ -1244,7 +1244,7 @@ security_tests.extend([
 
 ---
 
-## Best Practices
+## Best Practices / ベストプラクティス
 
 ### For Maximum Security
 1. **Always run security design** before code generation
@@ -1267,7 +1267,7 @@ security_tests.extend([
 
 ---
 
-## Success Criteria
+## Success Criteria / 成功基準
 
 Security design is complete when:
 

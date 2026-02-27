@@ -7,7 +7,7 @@ description: Generate full-stack applications from use case definitions with cus
 
 Generate production-ready, full-stack applications from use case definitions with configurable technology stacks.
 
-## Overview
+## Overview / 概要
 
 This skill generates complete application code based on:
 1. Use case definition JSON (from activity-to-usecase-v1)
@@ -30,7 +30,7 @@ This skill generates complete application code based on:
 ---
 
 
-## Language Support ⭐ NEW!
+## Language Support / 言語サポート ⭐
 
 This skill supports bilingual code generation (Japanese/English).
 
@@ -43,7 +43,7 @@ This skill supports bilingual code generation (Japanese/English).
 
 > ⚠️ Only read templates/language-examples.md when executing this step. Do NOT preload.
 
-## Position in Workflow
+## Position in Workflow / ワークフロー内の位置
 
 ```
 Step 1: scenario-to-activity-v1
@@ -58,7 +58,7 @@ Step 4: usecase-to-code-v1 ← YOU ARE HERE
 
 ---
 
-## Input
+## Input / 入力
 
 ### Required
 
@@ -79,7 +79,7 @@ If not provided, interactive selection or defaults apply.
 
 ---
 
-## Technology Stack Configuration
+## Technology Stack Configuration / 技術スタック設定
 
 ### Configuration Format
 
@@ -187,7 +187,7 @@ deployment:
 
 ---
 
-## Workflow
+## Workflow / 処理フロー
 
 ### Step 0: Language Inheritance and Configuration ⭐ NEW!
 
@@ -1598,16 +1598,16 @@ spec:
 ```markdown
 # {Project Name}
 
-## Technology Stack
+## Technology Stack / 技術スタック
 - Backend: {language} + {framework}
 - Frontend: {frontend framework}
 - Database: {database}
 - Architecture: {architecture}
 
-## Setup
+## Setup / セットアップ
 [Installation instructions based on stack]
 
-## API Documentation
+## API Documentation / API仕様
 [Generated from use cases]
 ```
 
@@ -1626,7 +1626,7 @@ For output directory structure and documentation templates (README, API docs, de
 
 > ⚠️ Only read templates/doc-templates.md AFTER code generation is complete, when generating documentation files.
 
-## Best Practices
+## Best Practices / ベストプラクティス
 
 ### CRUD Generation ⭐ NEW!
 
@@ -1644,7 +1644,7 @@ For output directory structure and documentation templates (README, API docs, de
 4. **Testing**: Unit test stubs for services
 5. **Documentation**: Inline comments from use cases
 
-### Architecture
+### Architecture / アーキテクチャ
 
 1. **Separation of concerns**: Domain, services, API layers
 2. **Dependency injection**: Framework-appropriate patterns
@@ -1652,7 +1652,7 @@ For output directory structure and documentation templates (README, API docs, de
 4. **Logging**: Structured logging setup
 5. **Monitoring**: Health check endpoints
 
-### Deployment
+### Deployment / デプロイメント
 
 1. **Containerization**: Docker for consistency
 2. **Orchestration**: Kubernetes for microservices
@@ -1662,7 +1662,7 @@ For output directory structure and documentation templates (README, API docs, de
 
 ---
 
-## Version History
+## Version History / バージョン履歴
 
 - **v1.1** (2026-02-18): Entity CRUD auto-generation ⭐
   - Step 5.5: Entity CRUD classification (Master Data, Transaction, Sub-entity, System Actor)
