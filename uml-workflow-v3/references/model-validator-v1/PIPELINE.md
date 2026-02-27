@@ -1,7 +1,3 @@
----
-name: model-validator-v1
-description: Validate consistency, completeness, and correctness of UML v1 models with multi-language validation reports (Japanese/English/Bilingual). Performs cross-model validation, business rule compliance checks, traceability verification, and quality assessments. Identifies gaps, conflicts, and potential issues before code generation. Inherits language settings for report generation. Use after all modeling steps to ensure production-ready quality.
----
 
 # Model Validator v1
 

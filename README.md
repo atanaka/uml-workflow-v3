@@ -135,7 +135,6 @@ uml-workflow-v3 (メインオーケストレーター / Main Orchestrator)
 │   ├── model-validator-v1           Step 6
 │   ├── security-design-v1           Step 7
 │   ├── usecase-to-code-v1           Step 8
-│   │   └── templates/               ← オンデマンド読込 / Lazy-loaded
 │   ├── usecase-to-test-v1           Step 9
 │   └── traceability-matrix-v1       Step 10
 └── scripts/ (実行エンジン / Execution engine)
@@ -306,8 +305,7 @@ uml-workflow-v3-release/
 │   │   ├── model-validator-v1/
 │   │   ├── security-design-v1/
 │   │   ├── usecase-to-code-v1/
-│   │   │   ├── PIPELINE.md
-│   │   │   └── templates/                ← オンデマンド読込 / Lazy-loaded
+│   │   │   └── PIPELINE.md
 │   │   ├── usecase-to-test-v1/
 │   │   └── traceability-matrix-v1/
 │   └── scripts/                           ← Python実行エンジン / Execution engine

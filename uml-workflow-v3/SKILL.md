@@ -753,7 +753,7 @@ ls /mnt/user-data/outputs/{project_name}_usecase-output.json
 > そこから backend_framework, frontend_framework, architecture を読み取る。
 > **Step 8 でユーザーに再度質問してはならない**。
 
-Claude reads `references/usecase-to-code-v1/PIPELINE.md` (core workflow only — ~14K tokens), then executes:
+Claude reads `references/usecase-to-code-v1/PIPELINE.md`, then executes:
 
 ```
 Input: {project_name}_domain-model.json
@@ -762,10 +762,6 @@ Input: {project_name}_domain-model.json
 Tech stack: {phase1_selected_stack}
 Architecture: {phase1_architecture}
 ```
-
-**⚠️ SELECTIVE TEMPLATE LOADING — Do NOT preload all templates**:
-- `templates/language-examples.md` → Read ONLY when generating code comments
-- `templates/doc-templates.md` → Read ONLY when generating README/API docs (Step 10 in PIPELINE)
 
 **⚠️ フロントエンド生成の必須確認（最重要）**
 

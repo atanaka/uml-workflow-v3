@@ -1,7 +1,3 @@
----
-name: security-design-v1
-description: Generate comprehensive security design documents from domain models and use case specifications with multi-language support (Japanese/English/Bilingual). Defines authentication, authorization, data protection, API security, OWASP Top 10 countermeasures, role-permission matrices, and audit logging. Produces structured security-config.json for downstream code generation. Inherits language settings for document generation. Use after model-validator-v1 and before usecase-to-code-v1.
----
 
 # Security Design v1
 

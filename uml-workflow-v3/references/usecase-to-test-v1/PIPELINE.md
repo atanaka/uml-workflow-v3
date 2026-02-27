@@ -1,7 +1,3 @@
----
-name: usecase-to-test-v1
-description: Generate comprehensive test code from use case specifications and domain models with multi-language test descriptions (Japanese/English). Creates unit tests, integration tests, and E2E tests with business rule validation. Supports Jest, Vitest, Playwright, and Cypress frameworks. Inherits language settings for test case descriptions. Use after code generation to ensure complete test coverage.
----
 
 # Use Case to Test Code Generator v1
 

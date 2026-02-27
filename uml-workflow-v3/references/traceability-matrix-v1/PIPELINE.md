@@ -1,7 +1,3 @@
----
-name: traceability-matrix-v1
-description: Generate comprehensive traceability matrices from UML Workflow v2.3 artifacts. Reads all pipeline outputs (activity diagrams, use cases, domain models, state machines, sequence diagrams, security configs, generated code, and tests) to produce a consolidated forward/backward traceability matrix in both JSON and Markdown formats. Ensures 100% requirement-to-test coverage visibility. Use after code and test generation as the final quality assurance step, or after model validation for pre-code traceability verification.
----
 
 # Traceability Matrix Generator v1
 

@@ -1,7 +1,3 @@
----
-name: usecase-to-class-v1
-description: Generate formal UML class diagrams from use case definitions and original business requirements with multi-language support (Japanese/English/Bilingual). Consolidates inferred domain models from use cases with initial scenario information to create comprehensive, production-quality class diagrams. Inherits language settings from use cases. Use after use case extraction to formalize the domain model for code generation.
----
 
 # Use Case to Class Diagram Generator v1
 
