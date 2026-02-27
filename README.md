@@ -63,19 +63,61 @@ Production-Ready Application + Full UML Documentation + Traceable Evidence
 
 ### Prerequisites / 前提条件
 
-- Claude.ai の **Pro** / **Max** / **Team** / **Enterprise** プラン / Claude.ai **Pro**, **Max**, **Team**, or **Enterprise** plan
-- 「Code execution and file creation」が **有効** / "Code execution and file creation" feature **enabled**
-- Claude Code の方が途切れずに進めやすそうです （skillの置き方に注意）/ Claude Code may be a better choice than Claude.ai (chat mode). Skills setup for Claude Code is different from the chat. 
+- Claude.ai の **Pro** / **Max** / **Team** / **Enterprise** プラン、または Claude Code / Claude.ai **Pro**, **Max**, **Team**, or **Enterprise** plan, or Claude Code
+- Claude.ai の場合：「Code execution and file creation」が **有効** / For Claude.ai: "Code execution and file creation" feature **enabled**
+- Claude Code の場合：Node.js 18+ がインストール済み / For Claude Code: Node.js 18+ installed
 
 ### Installation / インストール
 
+#### Option A: Claude.ai（Web / Desktop / Mobile）
+
 1. [Releases](../../releases) から最新版ZIPをダウンロード / Download the latest ZIP from [Releases](../../releases)
 2. ZIP を解凍 / Extract the ZIP
-3. Claude.ai → **Settings** → **Capabilities** → **Skills** セクションを開く / Open Claude.ai → **Settings** → **Capabilities** → **Skills**
+3. Claude.ai → **Customize** → **Skills** セクションを開く / Open Claude.ai → **Customize** → **Skills**
 4. 「**Upload skill**」で `uml-workflow-v3/` フォルダをアップロード / Click "**Upload skill**" and upload the `uml-workflow-v3/` folder
 5. スキルの**トグルを ON** にする / Toggle the skill **ON**
 
-> これ1つで全10ステップのパイプラインが動作します。詳細は [INSTALL.md](INSTALL.md) を参照。 / This single skill runs the full 10-step pipeline. See [INSTALL.md](INSTALL.md) for details.
+> これ1つで全10ステップのパイプラインが動作します。/ This single skill runs the full 10-step pipeline.
+
+#### Option B: Claude Code（CLI）⭐ 推奨 / Recommended
+
+Claude Code ではコンテキストウィンドウの管理が効率的で、`--continue` による再開も可能なため、Step 8 のような大量ファイル生成でも途切れにくくなります。 / Claude Code handles context more efficiently and supports `--continue` for resuming, making it more robust for large code generation steps like Step 8.
+
+**グローバルインストール（全プロジェクト共通）/ Global install (all projects):**
+
+```bash
+# リポジトリをクローン / Clone the repository
+git clone https://github.com/atanaka/uml-workflow-v3.git
+
+# メインオーケストレーターをコピー / Copy main orchestrator
+cp -r uml-workflow-v3/uml-workflow-v3 ~/.claude/skills/uml-workflow-v3
+
+# （任意）スタンドアロンスキルもコピー / (Optional) Copy standalone skills
+cp -r uml-workflow-v3/skills/* ~/.claude/skills/
+```
+
+**プロジェクト固有インストール / Project-specific install:**
+
+```bash
+# プロジェクトルートで実行 / Run at project root
+mkdir -p .claude/skills
+cp -r /path/to/uml-workflow-v3/uml-workflow-v3 .claude/skills/uml-workflow-v3
+
+# （任意）スタンドアロンスキルもコピー / (Optional) Copy standalone skills
+cp -r /path/to/uml-workflow-v3/skills/* .claude/skills/
+```
+
+**動作確認 / Verify installation:**
+
+```bash
+claude
+# Claude Code 内で以下を入力 / Type in Claude Code:
+> uml-workflow-v3が使えるか確認して
+```
+
+> 💡 Claude Code は `~/.claude/skills/` と `.claude/skills/` を自動スキャンします。SKILL.md のフロントマター（name, description）でスキルが自動検出されます。 / Claude Code auto-scans `~/.claude/skills/` and `.claude/skills/`. Skills are auto-discovered via SKILL.md frontmatter (name, description).
+
+詳細は [INSTALL.md](INSTALL.md) を参照。 / See [INSTALL.md](INSTALL.md) for details.
 
 ### First Run / 最初の実行
 
@@ -361,10 +403,12 @@ uml-workflow-v3-release/
 
 | Item / 項目 | Requirement / 要件 |
 |-------------|-------------------|
-| Platform / プラットフォーム | Claude.ai (Web / Desktop / Mobile) |
+| Platform / プラットフォーム | Claude.ai (Web / Desktop / Mobile) **or** Claude Code (CLI) |
 | Plan / プラン | Pro / Max / Team / Enterprise |
-| Feature / 機能 | Code execution and file creation: **ON** |
-| Skills / スキル | `uml-workflow-v3/` uploaded via Settings > Capabilities（+ 13 optional standalone skills） |
+| Feature / 機能 | Code execution and file creation: **ON**（Claude.ai の場合 / for Claude.ai） |
+| Skills / スキル | Claude.ai: `uml-workflow-v3/` uploaded via Customize > Skills |
+| | Claude Code: `uml-workflow-v3/` copied to `~/.claude/skills/` or `.claude/skills/` |
+| Optional / オプション | + 13 standalone skills for independent use / 個別利用向けスタンドアロンスキル13個 |
 
 ---
 
