@@ -7,7 +7,7 @@
 **ビジネスシナリオから本番品質のアプリケーションを自動生成する Claude AI スキル**  
 **A Claude AI Skill that transforms business scenarios into production-ready applications via a 10-step UML pipeline.**
 
-## Coming Soon! - Commercial support from a new company / 新会社（準備中）による商用サポート
+## Coming Soon! - Commercial support from a new company / 新会社による商用サポート
 
 ---
 
@@ -71,10 +71,10 @@ Production-Ready Application + Full UML Documentation + Traceable Evidence
 1. [Releases](../../releases) から最新版ZIPをダウンロード / Download the latest ZIP from [Releases](../../releases)
 2. ZIP を解凍 / Extract the ZIP
 3. Claude.ai → **Settings** → **Capabilities** → **Skills** セクションを開く / Open Claude.ai → **Settings** → **Capabilities** → **Skills**
-4. 「**Upload skill**」で各スキルフォルダをアップロード / Click "**Upload skill**" and upload each skill folder
-5. 各スキルの**トグルを ON** にする / Toggle each skill **ON**
+4. 「**Upload skill**」で `uml-workflow-v3/` フォルダをアップロード / Click "**Upload skill**" and upload the `uml-workflow-v3/` folder
+5. スキルの**トグルを ON** にする / Toggle the skill **ON**
 
-> 詳細は [INSTALL.md](INSTALL.md) を参照 / See [INSTALL.md](INSTALL.md) for details
+> これ1つで全10ステップのパイプラインが動作します。詳細は [INSTALL.md](INSTALL.md) を参照。 / This single skill runs the full 10-step pipeline. See [INSTALL.md](INSTALL.md) for details.
 
 ### First Run / 最初の実行
 
@@ -254,11 +254,20 @@ usecase-specifications/                 ← Step 2: 個別UC仕様（Cockburn形
 
 ## Skill Files / スキルファイル一覧
 
-### Required / 必須（10フォルダ / 10 folders）
+### Required / 必須（1フォルダ / 1 folder）
 
 | # | Skill Folder | Role / 役割 |
 |---|-------------|------------|
 | 1 | `uml-workflow-v3/` | メインオーケストレーター＋10パイプラインスキル内蔵 / Main orchestrator + 10 built-in pipeline skills |
+
+> `uml-workflow-v3/` のみで10ステップパイプラインは動作します。 / This single skill runs the full 10-step pipeline.
+
+### Optional — Standalone Skills / オプション — スタンドアロンスキル（13フォルダ / 13 folders）
+
+個別利用（単一ステップ実行、モデル手動修正など）向け。フルワークフローには不要。 / For independent use (single-step execution, manual model editing). Not required for the full workflow.
+
+| # | Skill Folder | Role / 役割 |
+|---|-------------|------------|
 | 2 | `skills/scenario-to-activity-v1/` | シナリオ → アクティビティ図 / Scenario → Activity diagram |
 | 3 | `skills/activity-to-usecase-v1/` | アクティビティ図 → ユースケース / Activity → Use cases |
 | 4 | `skills/usecase-to-class-v1/` | ユースケース → クラス図 / Use cases → Class diagram |
@@ -268,17 +277,10 @@ usecase-specifications/                 ← Step 2: 個別UC仕様（Cockburn形
 | 8 | `skills/security-design-v1/` | OWASP準拠セキュリティ設計 / Security design |
 | 9 | `skills/usecase-to-code-v1/` | フルスタックコード生成 / Full-stack code generation |
 | 10 | `skills/usecase-to-test-v1/` | テストコード生成 / Test code generation |
-
-### Optional / オプション（4フォルダ / 4 folders）
-
-| # | Skill Folder | Role / 役割 |
-|---|-------------|------------|
 | 11 | `skills/json-to-models/` | JSON → PlantUML/XMI 再生成 / JSON → PlantUML/XMI regeneration |
 | 12 | `skills/usecase-md-to-json/` | UC仕様 Markdown → JSON変換 / UC spec Markdown → JSON converter |
 | 13 | `skills/classdiagram-image-to-json/` | 手描きクラス図 → JSON取込 / Hand-drawn class diagram → JSON |
 | 14 | `skills/classdiagram-to-crud/` | クラス図 → CRUD HTML生成 / Class diagram → CRUD HTML fragments |
-
-> `uml-workflow-v3/` のみで10ステップパイプラインは動作します。残り4つはモデル手動修正時の補助ツールです。 / `uml-workflow-v3/` alone is sufficient to run the full 10-step pipeline. The other 4 are optional helper tools for manual model editing.
 
 ---
 
@@ -361,7 +363,7 @@ uml-workflow-v3-release/
 | Platform / プラットフォーム | Claude.ai (Web / Desktop / Mobile) |
 | Plan / プラン | Pro / Max / Team / Enterprise |
 | Feature / 機能 | Code execution and file creation: **ON** |
-| Skills / スキル | 10 folders uploaded via Settings > Capabilities（+ 4 optional） |
+| Skills / スキル | `uml-workflow-v3/` uploaded via Settings > Capabilities（+ 13 optional standalone skills） |
 
 ---
 

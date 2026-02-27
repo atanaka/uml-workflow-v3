@@ -18,31 +18,35 @@ Download or clone this repository.
 
 1. Open [claude.ai](https://claude.ai)
 2. Go to **Settings → Skills**
-3. Upload each skill folder:
+3. Upload skill folders:
 
-**Required (10 folders):**
-
-| # | Folder to Upload | Description |
-|---|-----------------|-------------|
-| 1 | `uml-workflow-v3/` | Main orchestrator |
-| 2 | `skills/scenario-to-activity-v1/` | Scenario → Activity diagram |
-| 3 | `skills/activity-to-usecase-v1/` | Activity → Use cases |
-| 4 | `skills/usecase-to-class-v1/` | Use cases → Class diagram |
-| 5 | `skills/class-to-statemachine-v1/` | Class → State machines |
-| 6 | `skills/usecase-to-sequence-v1/` | Use cases → Sequence diagrams |
-| 7 | `skills/model-validator-v1/` | Model validation |
-| 8 | `skills/security-design-v1/` | Security design |
-| 9 | `skills/usecase-to-code-v1/` | Code generation |
-| 10 | `skills/usecase-to-test-v1/` | Test generation |
-
-**Optional (4 folders):**
+**Required (1 folder) / 必須（1フォルダ）:**
 
 | # | Folder to Upload | Description |
 |---|-----------------|-------------|
-| 11 | `skills/json-to-models/` | Regenerate models from JSON |
-| 12 | `skills/usecase-md-to-json/` | Markdown → JSON conversion |
-| 13 | `skills/classdiagram-image-to-json/` | Image → JSON conversion |
-| 14 | `skills/classdiagram-to-crud/` | Class diagram → CRUD HTML fragments |
+| 1 | `uml-workflow-v3/` | Main orchestrator（10ステップパイプライン内蔵）/ Main orchestrator (all 10 pipeline steps built-in) |
+
+> `uml-workflow-v3/` alone is sufficient to run the full 10-step pipeline. / これ1つで全10ステップが動作します。
+
+**Optional — standalone skills (13 folders) / オプション — スタンドアロンスキル（13フォルダ）:**
+
+以下は個別利用（単一ステップ実行、モデル手動修正など）向けです。フルワークフローには不要です。 / These are for independent use (single-step execution, manual model editing, etc.). Not required for the full workflow.
+
+| # | Folder to Upload | Description |
+|---|-----------------|-------------|
+| 2 | `skills/scenario-to-activity-v1/` | シナリオ → アクティビティ図 |
+| 3 | `skills/activity-to-usecase-v1/` | アクティビティ図 → ユースケース |
+| 4 | `skills/usecase-to-class-v1/` | ユースケース → クラス図 |
+| 5 | `skills/class-to-statemachine-v1/` | クラス図 → ステートマシン図 |
+| 6 | `skills/usecase-to-sequence-v1/` | ユースケース → シーケンス図 |
+| 7 | `skills/model-validator-v1/` | モデル横断バリデーション |
+| 8 | `skills/security-design-v1/` | OWASP準拠セキュリティ設計 |
+| 9 | `skills/usecase-to-code-v1/` | フルスタックコード生成 |
+| 10 | `skills/usecase-to-test-v1/` | テストコード生成 |
+| 11 | `skills/json-to-models/` | JSON → PlantUML/XMI 再生成 |
+| 12 | `skills/usecase-md-to-json/` | UC仕様 Markdown → JSON変換 |
+| 13 | `skills/classdiagram-image-to-json/` | 手描きクラス図 → JSON取込 |
+| 14 | `skills/classdiagram-to-crud/` | クラス図 → CRUD HTML生成 |
 
 > ⚠️ Upload the **entire folder** (not individual files). Each folder must include its `SKILL.md` and any `templates/` subdirectory.
 >
