@@ -2,9 +2,9 @@
 
 ## 📦 Package Overview / パッケージ概要
 
-This package contains **13 skills** (1 orchestrator + 9 core + 3 optional). All skills are included — no additional downloads required.
+This package contains **14 skills** (1 orchestrator + 9 core + 4 optional). All skills are included — no additional downloads required.
 
-このパッケージには**13スキル**（オーケストレーター1 + コア9 + オプション3）が含まれています。追加ダウンロードは不要です。
+このパッケージには**14スキル**（オーケストレーター1 + コア9 + オプション4）が含まれています。追加ダウンロードは不要です。
 
 ---
 
@@ -35,15 +35,20 @@ Download or clone this repository.
 | 9 | `skills/usecase-to-code-v1/` | Code generation |
 | 10 | `skills/usecase-to-test-v1/` | Test generation |
 
-**Optional (3 folders):**
+**Optional (4 folders):**
 
 | # | Folder to Upload | Description |
 |---|-----------------|-------------|
 | 11 | `skills/json-to-models/` | Regenerate models from JSON |
 | 12 | `skills/usecase-md-to-json/` | Markdown → JSON conversion |
 | 13 | `skills/classdiagram-image-to-json/` | Image → JSON conversion |
+| 14 | `skills/classdiagram-to-crud/` | Class diagram → CRUD HTML fragments |
 
 > ⚠️ Upload the **entire folder** (not individual files). Each folder must include its `SKILL.md` and any `templates/` subdirectory.
+>
+> ⚠️ **既存スキルの更新時は「置き換え」ではなく「削除→新規アップロード」を推奨します。** Claude.ai の「スキルを置き換え」機能は Internal server error になる場合があります。必ず既存スキルを削除してから新規アップロードしてください。
+>
+> ⚠️ **When updating existing skills, use "Delete → Upload new" instead of "Replace".** The "Replace skill" feature in Claude.ai may cause Internal server errors. Always delete the existing skill first, then upload the new version.
 
 ### Step 3: Verify / 確認
 
@@ -81,6 +86,16 @@ After Phase A completes, Claude will instruct you to start a new conversation fo
 
 ## 🔧 Troubleshooting / トラブルシューティング
 
+### "Internal server error" on skill upload / スキルアップロード時のエラー
+
+The "Replace skill" feature in Claude.ai may cause this error. Use the following workaround:
+
+Claude.ai の「スキルを置き換え」機能でこのエラーが発生することがあります。以下の手順で回避してください：
+
+1. Go to **Settings → Skills** / **Settings → Skills** を開く
+2. **Delete** the existing skill / 既存スキルを**削除**
+3. **Upload** the new version as a fresh skill / 新版を**新規アップロード**
+
 ### "Scripts not found"
 
 Ensure `uml-workflow-v3/scripts/` contains these 5 Python files:
@@ -107,7 +122,10 @@ Ensure Phase A completed successfully and all artifacts were cached. Re-run Phas
 
 If you previously used `uml-workflow-v2-enhanced`:
 
-1. **Remove** `uml-workflow-v2-enhanced` from Claude.ai Skills
-2. **Upload** `uml-workflow-v3/` as the replacement
-3. **Replace** `usecase-to-code-v1/` with the new version (includes `templates/` folder)
-4. Existing cached artifacts remain compatible
+1. **Delete** `uml-workflow-v2-enhanced` from Claude.ai Skills / Claude.ai Skills から削除
+2. **Delete** the old `usecase-to-code-v1` / 古い `usecase-to-code-v1` を削除
+3. **Upload** `uml-workflow-v3/` as the new orchestrator / 新オーケストレーターをアップロード
+4. **Upload** `skills/usecase-to-code-v1/` (new version with `templates/`) / 新版をアップロード
+5. Existing cached artifacts remain compatible / 既存キャッシュは互換性あり
+
+> ⚠️ Do NOT use "Replace skill". Always delete first, then upload new. / 「スキルを置き換え」は使わず、必ず削除→新規アップロードしてください。
