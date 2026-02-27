@@ -65,6 +65,7 @@ Production-Ready Application + Full UML Documentation + Traceable Evidence
 
 - Claude.ai の **Pro** / **Max** / **Team** / **Enterprise** プラン / Claude.ai **Pro**, **Max**, **Team**, or **Enterprise** plan
 - 「Code execution and file creation」が **有効** / "Code execution and file creation" feature **enabled**
+- Claude Code の方が途切れずに進めやすそうです （skillの置き方に注意）/ Claude Code may be a better choice than Claude.ai (chat mode). Skills setup for Claude Code is different from the chat. 
 
 ### Installation / インストール
 
