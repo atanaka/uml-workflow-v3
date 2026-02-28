@@ -63,9 +63,16 @@ Claude Code handles context more efficiently and supports `--continue` for resum
 
 ### A-1. Download / ダウンロード
 
+**方法1: Git Clone**
+
 ```bash
 git clone https://github.com/atanaka/uml-workflow-v3.git
 ```
+
+**方法2: Release ZIP**
+
+[Releases](../../releases) から最新版ZIPをダウンロードし、解凍します。  
+Download the latest ZIP from [Releases](../../releases) and extract it.
 
 ### A-2. Install / インストール
 
@@ -107,10 +114,21 @@ claude
 
 ### A-4. Update / 更新
 
+**Git Clone で入手した場合:**
+
 ```bash
 cd uml-workflow-v3
 git pull origin main
+```
 
+**Release ZIP で入手した場合:**
+
+[Releases](../../releases) から最新版ZIPをダウンロードし、解凍して既存フォルダを上書きします。  
+Download the latest ZIP from [Releases](../../releases), extract, and overwrite the existing folder.
+
+**インストール先へ反映 / Apply to install location:**
+
+```bash
 # グローバルの場合 / For global install:
 cp -r uml-workflow-v3 ~/.claude/skills/uml-workflow-v3
 
