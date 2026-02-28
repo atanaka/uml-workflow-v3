@@ -1,7 +1,7 @@
 # UML Workflow v3 / UMLワークフロー v3
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Claude Skills](https://img.shields.io/badge/Claude-Skills-blueviolet)](https://claude.ai)
+[![Claude Skills](https://img.shields.io/badge/Claude-Agent_Skills-blueviolet)](https://docs.claude.com/en/docs/agents-and-tools/agent-skills/overview)
 [![Skills Count](https://img.shields.io/badge/Skills-14-green)]()
 
 **ビジネスシナリオから本番品質のアプリケーションを自動生成する Claude AI スキル**  
@@ -13,9 +13,9 @@
 
 ## Overview / 概要
 
-UML Workflow v3 は、Claude AI の [Skills](https://docs.claude.com/en/docs/claude-ai/skills) 機能を活用した、モデルベースシステムエンジニアリング（MBSE）ワークフローです。自然言語で記述されたビジネスシナリオを入力として、UML図の生成からコード・テストの自動生成まで、10ステップのパイプラインを一貫して実行します。
+UML Workflow v3 は、Claude AI の [Agent Skills](https://docs.claude.com/en/docs/agents-and-tools/agent-skills/overview) 機能を活用した、モデルベースシステムエンジニアリング（MBSE）ワークフローです。自然言語で記述されたビジネスシナリオを入力として、UML図の生成からコード・テストの自動生成まで、10ステップのパイプラインを一貫して実行します。
 
-UML Workflow v3 is a Model-Based Systems Engineering (MBSE) workflow powered by Claude AI Skills. It takes a natural-language business scenario as input and runs a complete 10-step pipeline — from UML diagram generation through full-stack code and test automation.
+UML Workflow v3 is a Model-Based Systems Engineering (MBSE) workflow powered by Claude AI [Agent Skills](https://docs.claude.com/en/docs/agents-and-tools/agent-skills/overview). It takes a natural-language business scenario as input and runs a complete 10-step pipeline — from UML diagram generation through full-stack code and test automation.
 
 ### What it does / できること
 
@@ -69,17 +69,17 @@ Production-Ready Application + Full UML Documentation + Traceable Evidence
 
 ### Installation / インストール
 
-#### Option A: Claude.ai（Web / Desktop / Mobile）
+> **📖 公式ドキュメント / Official Documentation**
+>
+> カスタムスキルの配置方法はプラットフォームごとに異なり、**プラットフォーム間で自動同期されません**。詳細は Anthropic 公式ドキュメントを参照してください。 / Custom Skills installation differs by platform and **does not sync across platforms**. See the official Anthropic documentation:
+>
+> | Topic / トピック | Link |
+> |---|---|
+> | スキルの概要・プラットフォーム差異 / Skills overview & platform differences | [Agent Skills Overview](https://docs.claude.com/en/docs/agents-and-tools/agent-skills/overview) |
+> | Claude Code でのスキル配置 / Skills in Claude Code | [Extend Claude with Skills (Claude Code)](https://docs.claude.com/en/docs/claude-code/skills) |
+> | SKILL.md の書き方・命名規則 / SKILL.md authoring & naming | [Skill Authoring Best Practices](https://docs.claude.com/en/docs/agents-and-tools/agent-skills/best-practices) |
 
-1. [Releases](../../releases) から最新版ZIPをダウンロード / Download the latest ZIP from [Releases](../../releases)
-2. ZIP を解凍 / Extract the ZIP
-3. Claude.ai → **Customize** → **Skills** セクションを開く / Open Claude.ai → **Customize** → **Skills**
-4. 「**Upload skill**」で `uml-workflow-v3/` フォルダをアップロード / Click "**Upload skill**" and upload the `uml-workflow-v3/` folder
-5. スキルの**トグルを ON** にする / Toggle the skill **ON**
-
-> これ1つで全10ステップのパイプラインが動作します。/ This single skill runs the full 10-step pipeline.
-
-#### Option B: Claude Code（CLI）⭐ 推奨 / Recommended
+#### Option A: Claude Code（CLI）⭐ 推奨 / Recommended
 
 Claude Code ではコンテキストウィンドウの管理が効率的で、`--continue` による再開も可能なため、Step 8 のような大量ファイル生成でも途切れにくくなります。 / Claude Code handles context more efficiently and supports `--continue` for resuming, making it more robust for large code generation steps like Step 8.
 
@@ -115,7 +115,23 @@ claude
 > uml-workflow-v3が使えるか確認して
 ```
 
-> 💡 Claude Code は `~/.claude/skills/` と `.claude/skills/` を自動スキャンします。SKILL.md のフロントマター（name, description）でスキルが自動検出されます。 / Claude Code auto-scans `~/.claude/skills/` and `.claude/skills/`. Skills are auto-discovered via SKILL.md frontmatter (name, description).
+> 💡 Claude Code は `~/.claude/skills/`（個人用）と `.claude/skills/`（プロジェクト用）を自動スキャンします。SKILL.md のフロントマター（name, description）でスキルが自動検出されます。詳細は [Extend Claude with Skills](https://docs.claude.com/en/docs/claude-code/skills) を参照。
+>
+> 💡 Claude Code auto-scans `~/.claude/skills/` (personal) and `.claude/skills/` (project). Skills are auto-discovered via SKILL.md frontmatter (name, description). See [Extend Claude with Skills](https://docs.claude.com/en/docs/claude-code/skills) for details.
+
+#### Option B: Claude.ai（Web / Desktop / Mobile）
+
+1. [Releases](../../releases) から最新版ZIPをダウンロード / Download the latest ZIP from [Releases](../../releases)
+2. ZIP を解凍 / Extract the ZIP
+3. Claude.ai → **Customize** → **Skills** セクションを開く / Open Claude.ai → **Customize** → **Skills**
+4. 「**Upload skill**」で `uml-workflow-v3/` フォルダをアップロード / Click "**Upload skill**" and upload the `uml-workflow-v3/` folder
+5. スキルの**トグルを ON** にする / Toggle the skill **ON**
+
+> これ1つで全10ステップのパイプラインが動作します。/ This single skill runs the full 10-step pipeline.
+>
+> ⚠️ Claude.ai ではネットワークアクセスの制限やランタイム環境の差異があります。詳細は [Agent Skills Overview — Runtime environments](https://docs.claude.com/en/docs/agents-and-tools/agent-skills/overview) を参照。
+>
+> ⚠️ Claude.ai has network access limitations and different runtime environments. See [Agent Skills Overview — Runtime environments](https://docs.claude.com/en/docs/agents-and-tools/agent-skills/overview) for details.
 
 詳細は [INSTALL.md](INSTALL.md) を参照。 / See [INSTALL.md](INSTALL.md) for details.
 
@@ -406,8 +422,8 @@ uml-workflow-v3-release/
 | Platform / プラットフォーム | Claude.ai (Web / Desktop / Mobile) **or** Claude Code (CLI) |
 | Plan / プラン | Pro / Max / Team / Enterprise |
 | Feature / 機能 | Code execution and file creation: **ON**（Claude.ai の場合 / for Claude.ai） |
-| Skills / スキル | Claude.ai: `uml-workflow-v3/` uploaded via Customize > Skills |
-| | Claude Code: `uml-workflow-v3/` copied to `~/.claude/skills/` or `.claude/skills/` |
+| Skills / スキル | Claude.ai: `uml-workflow-v3/` uploaded via Customize > Skills ([手順](https://docs.claude.com/en/docs/agents-and-tools/agent-skills/overview)) |
+| | Claude Code: `uml-workflow-v3/` copied to `~/.claude/skills/` or `.claude/skills/` ([手順](https://docs.claude.com/en/docs/claude-code/skills)) |
 | Optional / オプション | + 13 standalone skills for independent use / 個別利用向けスタンドアロンスキル13個 |
 
 ---
@@ -427,6 +443,6 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines. / ガイドラインは [
 
 ## Acknowledgments / 謝辞
 
-Built with [Claude AI Skills](https://docs.claude.com/en/docs/claude-ai/skills) by [Anthropic](https://www.anthropic.com/). / [Anthropic](https://www.anthropic.com/) の [Claude AI Skills](https://docs.claude.com/en/docs/claude-ai/skills) を活用して構築。
+Built with [Claude AI Agent Skills](https://docs.claude.com/en/docs/agents-and-tools/agent-skills/overview) by [Anthropic](https://www.anthropic.com/). / [Anthropic](https://www.anthropic.com/) の [Claude AI Agent Skills](https://docs.claude.com/en/docs/agents-and-tools/agent-skills/overview) を活用して構築。
 
 Methodology based on: **RM-ODP** / **UML 2.5** / **MBSE** / **OWASP Top 10**
