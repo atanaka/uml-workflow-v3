@@ -167,6 +167,21 @@ ask_user_input_v0({
         }
     ]
 })
+
+# XMI=はい を選択した場合のみ、続けて形式を質問する
+if xmi_selected == "はい":
+    ask_user_input_v0({
+        "questions": [
+            {
+                "question": "XMI形式を選択してください",
+                "type": "single_select",
+                "options": [
+                    "OMG標準 UML 2.5.1（Papyrus / Enterprise Architect / MagicDraw向け）",
+                    "Eclipse/EMF形式（Sirius / Xtext / Capella / Eclipse UML2向け）"
+                ]
+            }
+        ]
+    })
 ```
 
 ### Follow-up Questions / 追加質問
@@ -270,8 +285,9 @@ start_step = 3  # if user selected "Step 3: ユースケース → クラス図"
 # ... up to step 9
 
 # XMI generation
-xmi_flag = ""        # if user selected "いいえ（推奨）"
-xmi_flag = "--xmi"   # if user selected "はい"
+xmi_flag = ""            # if user selected "いいえ（推奨）"
+xmi_flag = "--xmi-omg"   # if user selected "はい" → "OMG標準 UML 2.5.1"
+xmi_flag = "--xmi-emf"   # if user selected "はい" → "Eclipse/EMF形式"
 
 # Test generation
 test_flag = ""          # if user selected "はい（推奨）"
@@ -288,7 +304,7 @@ python3 /mnt/skills/user/uml-workflow-v3/scripts/run_workflow.py \
   --cache {cache_param} \
   --mode {mode_param} \
   [--start-step {start_step}] \
-  [{xmi_flag}] \
+  [--xmi-omg | --xmi-emf] \
   [{test_flag}]
 ```
 
@@ -334,7 +350,7 @@ Execution Plan - {project_name}
 ========================================
 Mode: {execution_mode}
 Cache: {enabled/disabled}
-XMI Generation: {enabled/disabled}
+XMI Generation: {disabled | OMG標準 UML 2.5.1 | Eclipse/EMF形式}
 
 Phase A (Modeling - Steps 1-7):
   🟢 Step 1: scenario-to-activity-v1
