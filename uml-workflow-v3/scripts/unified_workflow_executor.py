@@ -17,7 +17,7 @@ if current_dir not in sys.path:
 
 # フォールバック
 sys.path.append('/mnt/skills/user/uml-workflow-v3/scripts')
-sys.path.append('/mnt/user-data/outputs')
+sys.path.append(str(Path.home() / ".uml-workflow-cache"))  # フォールバック（直接参照不要）
 
 from execution_mode_manager import (
     ExecutionConfig,
@@ -41,7 +41,7 @@ class UnifiedWorkflowExecutor:
         self.project_name = project_name
         self.execution_config: Optional[ExecutionConfig] = None
         self.use_cache = True
-        self.output_dir = Path("/mnt/user-data/outputs")
+        self.output_dir = Path(os.environ.get("UML_WORKFLOW_OUTPUT_DIR", "/mnt/user-data/outputs"))
         
     def set_execution_config(self, config: ExecutionConfig):
         """実行設定をセット"""
