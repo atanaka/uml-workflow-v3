@@ -3,6 +3,7 @@ name: activity-to-usecase-v1
 description: Extract use cases from UML activity diagrams by inferring temporary domain models with multi-language support (Japanese/English/Bilingual). Generates sprint-sized use cases with estimated story points and structured JSON output for downstream code generation. Does not require pre-existing class diagrams. Inherits language settings from activity diagram or auto-detects. Use when converting activity diagrams into implementable user stories and domain specifications.
 ---
 
+
 # Activity Diagram to Use Case Extractor v1
 
 Extract use cases from activity diagrams by inferring domain models during analysis.

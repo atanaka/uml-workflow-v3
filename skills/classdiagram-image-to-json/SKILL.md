@@ -5,7 +5,7 @@ description: Convert hand-drawn or modeling tool-created UML class diagrams (JPE
 
 # Class Diagram Image to JSON Converter
 
-Convert visual UML class diagrams (from images or PDFs) into structured domain-model.json format for integration with uml-workflow-v2.
+Convert visual UML class diagrams (from images or PDFs) into structured domain-model.json format for integration with uml-workflow-v3.
 
 ## Overview
 
@@ -78,7 +78,7 @@ Recognizes both Japanese and English text in class diagrams using advanced OCR. 
 
 3. **Legacy model migration**
    - Existing class diagrams from previous projects
-   - Need to convert to uml-workflow-v2 format
+   - Need to convert to uml-workflow-v3 format
 
 4. **Educational scenarios**
    - Students learn by drawing diagrams
@@ -96,7 +96,7 @@ Use this skill when user says:
 
 ## Workflow Integration
 
-### Position in uml-workflow-v2
+### Position in uml-workflow-v3
 
 ```
 Step 5: usecase-to-class-v1
@@ -762,7 +762,7 @@ If diagram includes OCL constraints:
 
 ## Summary
 
-This skill bridges visual modeling and the uml-workflow-v2 pipeline, enabling:
+This skill bridges visual modeling and the uml-workflow-v3 pipeline, enabling:
 - Modelers to work in their preferred tools
 - Manual refinement of auto-generated diagrams
 - Integration of legacy class diagrams

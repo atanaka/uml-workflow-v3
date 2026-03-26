@@ -3,6 +3,7 @@ name: usecase-to-sequence-v1
 description: Generate UML sequence diagrams from use case specifications and domain models with multi-language support (Japanese/English/Bilingual). Creates detailed object interaction diagrams for each use case, showing message flows, lifelines, and control logic. Inherits language settings for diagram messages and notes. Essential for understanding runtime behavior and implementing business logic correctly. Use after usecase-to-class-v1 to visualize object collaborations.
 ---
 
+
 # Use Case to Sequence Diagram Generator v1
 
 Generate comprehensive UML sequence diagrams from use case specifications and domain models.

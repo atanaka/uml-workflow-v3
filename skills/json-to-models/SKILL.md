@@ -18,16 +18,12 @@ description: Generate PlantUML, XMI, and Markdown documentation from domain-mode
 
 ## Execution Options (NEW! v1.2 ⭐)
 
-**CRITICAL: 実行前にXMI生成の有無・形式を確認してパフォーマンスを最適化します。**
+**CRITICAL: 実行前にXMI生成の有無を確認してパフォーマンスを最適化します。**
 
 ```
-質問1: XMIファイルを生成しますか？
+質問: XMIファイルを生成しますか？
   はい (デフォルト): PlantUML + XMI + Markdown を生成
   いいえ: PlantUML + Markdown のみ生成（約40%高速化）
-
-質問2（XMI=はいの場合のみ）: XMI形式を選択してください
-  OMG標準 UML 2.5.1: Papyrus / Enterprise Architect / MagicDraw向け
-  Eclipse/EMF形式: Sirius / Xtext / Capella / Eclipse UML2向け
 ```
 
 **Performance Impact:**
@@ -39,15 +35,10 @@ description: Generate PlantUML, XMI, and Markdown documentation from domain-mode
 - UMLツールを使用しない
 - 反復的なモデル修正中
 
-**When to enable XMI (OMG標準 UML 2.5.1)**:
-- Papyrus、Enterprise Architect、MagicDraw で編集
-- OMG標準に準拠した完全なモデルアーカイブが必要
-- 最終成果物として保存（ツール非依存の標準形式）
-
-**When to enable XMI (Eclipse/EMF形式)**:
-- Sirius、Xtext、Capella、Eclipse UML2 プラグインで編集
-- Eclipse Modeling Framework (EMF) ベースのツールチェーンに統合
-- Ecore/UML2 モデルとして保存・変換
+**When to enable XMI:**
+- UMLツール（Papyrus、Enterprise Architect）で編集
+- 完全なモデルアーカイブが必要
+- 最終成果物として保存
 
 ---
 
@@ -237,15 +228,12 @@ def generate_plantuml_from_json(domain_model: dict) -> str:
 
 ### Step 3: XMI Generation
 
-#### 3a. OMG標準 UML 2.5.1 形式
-
 ```python
 from lxml import etree
 
-def generate_xmi_omg(domain_model: dict) -> str:
+def generate_xmi_from_json(domain_model: dict) -> str:
     """
-    JSONからOMG標準 UML 2.5.1 XMIを生成
-    対象ツール: Papyrus, Enterprise Architect, MagicDraw
+    JSONからUML 2.5.1 XMIを生成
     """
     # XMI root
     xmi = etree.Element("xmi:XMI", nsmap={
@@ -253,170 +241,51 @@ def generate_xmi_omg(domain_model: dict) -> str:
         'uml': 'http://www.omg.org/spec/UML/20161101'
     })
     xmi.set("{http://www.omg.org/spec/XMI/20131001}version", "2.5.1")
-
+    
     # UML Model
     model = etree.SubElement(xmi, "{http://www.omg.org/spec/UML/20161101}Model")
     model.set("name", domain_model['metadata'].get('project_name', 'DomainModel'))
-
+    
     # Package for domain model
     package = etree.SubElement(model, "{http://www.omg.org/spec/UML/20161101}packagedElement")
     package.set("{http://www.omg.org/spec/XMI/20131001}type", "{http://www.omg.org/spec/UML/20161101}Package")
     package.set("name", "DomainModel")
-
+    
     # Generate enumerations
     for enum in domain_model.get('enumerations', []):
         enum_elem = etree.SubElement(package, "{http://www.omg.org/spec/UML/20161101}packagedElement")
         enum_elem.set("{http://www.omg.org/spec/XMI/20131001}type", "{http://www.omg.org/spec/UML/20161101}Enumeration")
         enum_elem.set("name", enum['name'])
-
+        
         for value in enum['values']:
             literal = etree.SubElement(enum_elem, "{http://www.omg.org/spec/UML/20161101}ownedLiteral")
             literal.set("{http://www.omg.org/spec/XMI/20131001}type", "{http://www.omg.org/spec/UML/20161101}EnumerationLiteral")
             val_name = value['name'] if isinstance(value, dict) else value
             literal.set("name", val_name)
-
+    
     # Generate classes (entities)
     for entity in domain_model['entities']:
         class_elem = etree.SubElement(package, "{http://www.omg.org/spec/UML/20161101}packagedElement")
         class_elem.set("{http://www.omg.org/spec/XMI/20131001}type", "{http://www.omg.org/spec/UML/20161101}Class")
         class_elem.set("name", entity['name'])
-
+        
         # Attributes
         for attr in entity.get('attributes', []):
             attr_elem = etree.SubElement(class_elem, "{http://www.omg.org/spec/UML/20161101}ownedAttribute")
             attr_elem.set("{http://www.omg.org/spec/XMI/20131001}type", "{http://www.omg.org/spec/UML/20161101}Property")
             attr_elem.set("name", attr['name'])
             # Type reference would be added here
-
+        
         # Operations (business methods)
         for method in entity.get('business_methods', []):
             op_elem = etree.SubElement(class_elem, "{http://www.omg.org/spec/UML/20161101}ownedOperation")
             op_elem.set("{http://www.omg.org/spec/XMI/20131001}type", "{http://www.omg.org/spec/UML/20161101}Operation")
             op_elem.set("name", method['name'])
-
+    
     # Generate associations (relationships)
-    for entity in domain_model['entities']:
-        for rel in entity.get('relationships', []):
-            assoc = etree.SubElement(package, "{http://www.omg.org/spec/UML/20161101}packagedElement")
-            assoc.set("{http://www.omg.org/spec/XMI/20131001}type", "{http://www.omg.org/spec/UML/20161101}Association")
-            assoc.set("name", f"{entity['name']}_{rel['target']}")
-
+    # (Simplified - full implementation would include proper association handling)
+    
     return etree.tostring(xmi, pretty_print=True, encoding='unicode', xml_declaration=True)
-```
-
-#### 3b. Eclipse/EMF 形式
-
-```python
-from lxml import etree
-
-def generate_xmi_emf(domain_model: dict) -> str:
-    """
-    JSONからEclipse/EMF形式のXMIを生成
-    対象ツール: Sirius, Xtext, Capella, Eclipse UML2 プラグイン
-    namespace: http://www.eclipse.org/uml2/5.0.0/UML
-    """
-    # XMI root with Eclipse UML2 namespace
-    xmi = etree.Element("xmi:XMI", nsmap={
-        'xmi':   'http://www.omg.org/XMI',
-        'uml':   'http://www.eclipse.org/uml2/5.0.0/UML',
-        'ecore': 'http://www.eclipse.org/emf/2002/Ecore'
-    })
-    xmi.set("{http://www.omg.org/XMI}version", "2.0")
-
-    # UML Model element (Eclipse UML2 style)
-    model = etree.SubElement(xmi, "{http://www.eclipse.org/uml2/5.0.0/UML}Model")
-    model.set("{http://www.omg.org/XMI}id", "_model_" + domain_model['metadata'].get('project_name', 'DomainModel'))
-    model.set("name", domain_model['metadata'].get('project_name', 'DomainModel'))
-
-    # Package
-    package = etree.SubElement(model, "packagedElement")
-    package.set("{http://www.omg.org/XMI}type", "uml:Package")
-    package.set("{http://www.omg.org/XMI}id", "_pkg_DomainModel")
-    package.set("name", "DomainModel")
-
-    # Enumerations
-    for enum in domain_model.get('enumerations', []):
-        enum_id = f"_enum_{enum['name']}"
-        enum_elem = etree.SubElement(package, "packagedElement")
-        enum_elem.set("{http://www.omg.org/XMI}type", "uml:Enumeration")
-        enum_elem.set("{http://www.omg.org/XMI}id", enum_id)
-        enum_elem.set("name", enum['name'])
-
-        for value in enum['values']:
-            val_name = value['name'] if isinstance(value, dict) else value
-            lit = etree.SubElement(enum_elem, "ownedLiteral")
-            lit.set("{http://www.omg.org/XMI}type", "uml:EnumerationLiteral")
-            lit.set("{http://www.omg.org/XMI}id", f"_lit_{enum['name']}_{val_name}")
-            lit.set("name", val_name)
-
-    # Classes (entities)
-    for entity in domain_model['entities']:
-        class_id = f"_class_{entity['name']}"
-        class_elem = etree.SubElement(package, "packagedElement")
-        class_elem.set("{http://www.omg.org/XMI}type", "uml:Class")
-        class_elem.set("{http://www.omg.org/XMI}id", class_id)
-        class_elem.set("name", entity['name'])
-
-        # Attributes → ownedAttribute
-        for attr in entity.get('attributes', []):
-            attr_id = f"_attr_{entity['name']}_{attr['name']}"
-            attr_elem = etree.SubElement(class_elem, "ownedAttribute")
-            attr_elem.set("{http://www.omg.org/XMI}type", "uml:Property")
-            attr_elem.set("{http://www.omg.org/XMI}id", attr_id)
-            attr_elem.set("name", attr['name'])
-            if attr.get('required'):
-                attr_elem.set("lower", "1")
-                attr_elem.set("upper", "1")
-            else:
-                attr_elem.set("lower", "0")
-                attr_elem.set("upper", "1")
-
-        # Operations (business methods)
-        for method in entity.get('business_methods', []):
-            op_id = f"_op_{entity['name']}_{method['name']}"
-            op_elem = etree.SubElement(class_elem, "ownedOperation")
-            op_elem.set("{http://www.omg.org/XMI}type", "uml:Operation")
-            op_elem.set("{http://www.omg.org/XMI}id", op_id)
-            op_elem.set("name", method['name'])
-
-    # Associations (relationships)
-    for entity in domain_model['entities']:
-        for rel in entity.get('relationships', []):
-            assoc_id = f"_assoc_{entity['name']}_{rel['target']}"
-            assoc = etree.SubElement(package, "packagedElement")
-            assoc.set("{http://www.omg.org/XMI}type", "uml:Association")
-            assoc.set("{http://www.omg.org/XMI}id", assoc_id)
-            assoc.set("name", f"{entity['name']}_{rel['target']}")
-
-            # memberEnd references
-            src_end = etree.SubElement(assoc, "ownedEnd")
-            src_end.set("{http://www.omg.org/XMI}type", "uml:Property")
-            src_end.set("{http://www.omg.org/XMI}id", f"{assoc_id}_src")
-            src_end.set("type", f"_class_{entity['name']}")
-            src_end.set("lower", rel.get('source_multiplicity', '1').replace('*', '-1'))
-            src_end.set("upper", rel.get('source_multiplicity', '1').replace('*', '-1'))
-
-            tgt_end = etree.SubElement(assoc, "ownedEnd")
-            tgt_end.set("{http://www.omg.org/XMI}type", "uml:Property")
-            tgt_end.set("{http://www.omg.org/XMI}id", f"{assoc_id}_tgt")
-            tgt_end.set("type", f"_class_{rel['target']}")
-            tgt_end.set("lower", rel.get('target_multiplicity', '*').replace('*', '-1'))
-            tgt_end.set("upper", rel.get('target_multiplicity', '*').replace('*', '-1'))
-
-    return etree.tostring(xmi, pretty_print=True, encoding='unicode', xml_declaration=True)
-```
-
-#### 3c. 形式選択ディスパッチャ
-
-```python
-def generate_xmi_from_json(domain_model: dict, xmi_format: str = "omg") -> str:
-    """
-    xmi_format: "omg" | "emf"
-    """
-    if xmi_format == "emf":
-        return generate_xmi_emf(domain_model)
-    else:
-        return generate_xmi_omg(domain_model)
 ```
 
 ### Step 4: Markdown Documentation Generation
@@ -478,9 +347,7 @@ def generate_architecture_overview_from_json(domain_model: dict) -> str:
 
 **生成される成果物は実行オプションに依存します。**
 
-### If generate_xmi = True:
-
-選択した形式に応じてファイル名とフォーマットが変わります。
+### If generate_xmi = True (デフォルト):
 
 **1. PlantUML Class Diagram**
 
@@ -490,10 +357,9 @@ def generate_architecture_overview_from_json(domain_model: dict) -> str:
 
 **2. XMI Model** ✅
 
-| 形式 | Filename | Namespace |
-|------|----------|-----------|
-| OMG標準 UML 2.5.1 | `{project}_class-model.xmi` | `http://www.omg.org/spec/UML/20161101` |
-| Eclipse/EMF形式 | `{project}_class-model-emf.xmi` | `http://www.eclipse.org/uml2/5.0.0/UML` |
+**Filename:** `{project}_class-model.xmi`
+
+UML 2.5.1標準形式。UMLツールで読み込み可能。
 
 **3. Architecture Overview**
 
@@ -555,35 +421,17 @@ domain-model.jsonのmetadataを更新:
 
 ### Example 0: 実行オプションの選択
 
-**パターンA: OMG標準 XMI生成（Papyrus / EA向け）**
+**パターンA: 完全な再生成（デフォルト）**
 ```
 ユーザー: json-to-modelsでdomain-model.jsonから再生成してください
 
 Claude: XMIファイルを生成しますか？ (はい/いいえ)
 ユーザー: はい
 
-Claude: XMI形式を選択してください
-        1. OMG標準 UML 2.5.1（Papyrus / EA / MagicDraw向け）
-        2. Eclipse/EMF形式（Sirius / Xtext / Capella向け）
-ユーザー: 1
-
-→ PlantUML + XMI(OMG) + Markdown 生成
+→ PlantUML + XMI + Markdown 生成
 ```
 
-**パターンB: Eclipse/EMF XMI生成（Sirius / Capella向け）**
-```
-ユーザー: json-to-modelsでEMF形式のXMIを生成してください
-
-Claude: XMIファイルを生成しますか？ (はい/いいえ)
-ユーザー: はい
-
-Claude: XMI形式を選択してください
-ユーザー: 2（Eclipse/EMF形式）
-
-→ PlantUML + XMI(EMF) + Markdown 生成
-```
-
-**パターンC: 素早い確認**
+**パターンB: 素早い確認**
 ```
 ユーザー: json-to-modelsでPlantUMLだけ素早く確認したい
 
@@ -718,8 +566,7 @@ Claude: json-to-modelsを実行
    - 生成されたPlantUMLがエラーなし
 
 2. **XMI構造検証**
-   - OMG標準: UML 2.5.1スキーマに準拠
-   - Eclipse/EMF: Eclipse UML2 5.0.0 namespace / xmi:id 全要素付与を確認
+   - UML 2.5.1スキーマに準拠
 
 ---
 

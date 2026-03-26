@@ -3,6 +3,7 @@ name: scenario-to-activity-v1
 description: Generate UML activity diagrams from comprehensive business scenarios with multi-language support (Japanese/English/Bilingual). Creates temporary domain model during analysis without requiring pre-existing class diagrams. Supports structured input including business overview, scenarios, business rules, glossary, stakeholders, and non-functional requirements. Auto-detects input language and generates outputs accordingly. Use when transforming business requirements into visual workflow representations.
 ---
 
+
 # Scenario to Activity Diagram v1
 
 Transform comprehensive business scenarios into UML activity diagrams with internally-managed temporary domain models.

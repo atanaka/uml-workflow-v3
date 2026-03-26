@@ -3,6 +3,7 @@ name: class-to-statemachine-v1
 description: Generate UML state machine diagrams from domain model entities with status attributes with multi-language support (Japanese/English/Bilingual). Defines entity lifecycles, state transitions, guards, and actions based on business rules. Inherits language settings for state names and transition labels. Essential for understanding entity behavior, implementing state validation, and ensuring business rule compliance. Use after usecase-to-class-v1 for stateful entities.
 ---
 
+
 # Class to State Machine Diagram Generator v1
 
 Generate comprehensive UML state machine diagrams for stateful domain entities.

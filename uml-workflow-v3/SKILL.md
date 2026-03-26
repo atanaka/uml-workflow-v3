@@ -167,21 +167,6 @@ ask_user_input_v0({
         }
     ]
 })
-
-# XMI=はい を選択した場合のみ、続けて形式を質問する
-if xmi_selected == "はい":
-    ask_user_input_v0({
-        "questions": [
-            {
-                "question": "XMI形式を選択してください",
-                "type": "single_select",
-                "options": [
-                    "OMG標準 UML 2.5.1（Papyrus / Enterprise Architect / MagicDraw向け）",
-                    "Eclipse/EMF形式（Sirius / Xtext / Capella / Eclipse UML2向け）"
-                ]
-            }
-        ]
-    })
 ```
 
 ### Follow-up Questions / 追加質問
@@ -285,9 +270,8 @@ start_step = 3  # if user selected "Step 3: ユースケース → クラス図"
 # ... up to step 9
 
 # XMI generation
-xmi_flag = ""            # if user selected "いいえ（推奨）"
-xmi_flag = "--xmi-omg"   # if user selected "はい" → "OMG標準 UML 2.5.1"
-xmi_flag = "--xmi-emf"   # if user selected "はい" → "Eclipse/EMF形式"
+xmi_flag = ""        # if user selected "いいえ（推奨）"
+xmi_flag = "--xmi"   # if user selected "はい"
 
 # Test generation
 test_flag = ""          # if user selected "はい（推奨）"
@@ -304,7 +288,7 @@ python3 /mnt/skills/user/uml-workflow-v3/scripts/run_workflow.py \
   --cache {cache_param} \
   --mode {mode_param} \
   [--start-step {start_step}] \
-  [--xmi-omg | --xmi-emf] \
+  [{xmi_flag}] \
   [{test_flag}]
 ```
 
@@ -350,7 +334,7 @@ Execution Plan - {project_name}
 ========================================
 Mode: {execution_mode}
 Cache: {enabled/disabled}
-XMI Generation: {disabled | OMG標準 UML 2.5.1 | Eclipse/EMF形式}
+XMI Generation: {enabled/disabled}
 
 Phase A (Modeling - Steps 1-7):
   🟢 Step 1: scenario-to-activity-v1
@@ -704,8 +688,26 @@ cache_file('{project_name}', 'security_design', 'security-config',
 ```
 IF execution_mode == "full" AND steps_include(8, 9, 10):
     1. Cache all Step 1-7 outputs (if not already cached)
-    2. Present all Phase A files to user via present_files
-    3. Display Phase A completion summary:
+
+    2. [v3.2.0] Phase A 状態ファイルを保存する（テックスタック選択を自動引き継ぎ）
+    ```bash
+    python3 -c "
+    import sys
+    sys.path.append('/mnt/skills/user/uml-workflow-v3/scripts')
+    from workflow_cache_helper import save_phase_a_state
+    save_phase_a_state('{project_name}', {
+        'backend_framework':  '{selected_backend}',
+        'frontend_framework': '{selected_frontend}',
+        'architecture':       '{selected_architecture}',
+        'generate_tests':     {generate_tests_bool},
+        'language':           '{detected_language}',
+        'completed_steps':    [1, 2, 3, 4, 5, 6, 7],
+    })
+    "
+    ```
+
+    3. Present all Phase A files to user via present_files
+    4. Display Phase A completion summary:
     
     ========================================
     ✅ PHASE A COMPLETE (Modeling & Validation)
@@ -722,19 +724,18 @@ IF execution_mode == "full" AND steps_include(8, 9, 10):
       ✅ Validation Report
       🔒 Security Design + Config
     
-    All outputs cached for Phase B.
+    Phase A 状態（テックスタック）を自動保存しました。
     
     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
     📢 NEXT: Start a NEW conversation and say:
     
     「uml-workflow-v3で{project_name}のStep 8から再開」
     
-    Tech stack: {selected_backend} + {selected_frontend}
-    Architecture: {selected_architecture}
-    Tests: {yes/no}
+    ※ テックスタック情報は phase-a-state.json から自動読み込みされます。
+      手動でのコピペは不要です。
     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
     
-    4. STOP. Do NOT proceed to Step 8.
+    5. STOP. Do NOT proceed to Step 8.
     
 ELSE IF execution_mode == "models_only":
     → Proceed to PHASE 5 (Completion)
@@ -753,20 +754,34 @@ ELSE IF execution_mode == "resume" AND start_step >= 8:
 python3 -c "
 import sys, os
 sys.path.append('/mnt/skills/user/uml-workflow-v3/scripts')
-from workflow_cache_helper import restore_all_cached_files
+from workflow_cache_helper import restore_all_cached_files, load_phase_a_state
+
+# キャッシュファイルを復元
 restore_all_cached_files('{project_name}')
-"
+
+# [v3.2.0] Phase A 状態ファイルを読み込む（テックスタック自動引き継ぎ）
+state = load_phase_a_state('{project_name}')
+if state:
+    print('Phase A 状態を自動読み込みしました:')
+    print(f'  バックエンド: {state.get("backend_framework", "未設定")}')
+    print(f'  フロントエンド: {state.get("frontend_framework", "未設定")}')
+    print(f'  アーキテクチャ: {state.get("architecture", "未設定")}')
+    print(f'  テスト生成: {state.get("generate_tests", True)}')
+else:
+    print('⚠️  Phase A 状態ファイルが見つかりません。')
+    print('   テックスタックをメッセージで指定してください。')
+" 2>&1
 ls /mnt/user-data/outputs/{project_name}_domain-model.json
 ls /mnt/user-data/outputs/{project_name}_usecase-output.json
 ```
 
 **Execution**:
 
-> ⚠️ **IMPORTANT — テックスタックの質問は Phase 1 で実施済み**
+> ⚠️ **IMPORTANT — テックスタックの引き継ぎ方法（v3.2.0 変更）**
 >
-> Phase B（Step 8から再開）の場合、ユーザーのメッセージからテックスタック情報を取得する。
-> Phase A完了時に表示されたテックスタック情報をユーザーがコピーして送ってくるため、
-> そこから backend_framework, frontend_framework, architecture を読み取る。
+> Phase B（Step 8から再開）の場合、上記の `load_phase_a_state()` が自動的にテックスタック情報を読み込む。
+> state が None でない場合は state の値をそのまま使用し、**ユーザーへの再確認は行わない**。
+> state が None の場合のみ、ユーザーのメッセージから読み取るか確認を求める（後方互換）。
 > **Step 8 でユーザーに再度質問してはならない**。
 
 Claude reads `references/usecase-to-code-v1/PIPELINE.md`, then executes:

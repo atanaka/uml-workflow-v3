@@ -397,14 +397,11 @@ From stakeholder information (if provided):
 ```
 
 **2b. Create actor definitions:**
-**IMPORTANT:** クラス図では `actor` キーワードではなく `class` キーワードに `<<actor>>` ステレオタイプを使用すること。
-`actor` キーワードを使うとPlantUMLがユースケース図と誤認識し、"Assumed diagram type: component" エラーが発生する。
-
 ```plantuml
-class 顧客 <<actor>>
-class 受注係 <<actor>>
-class 出荷係 <<actor>>
-class システム <<actor>>
+actor 顧客 <<actor>>
+actor 受注係 <<actor>>
+actor 出荷係 <<actor>>
+actor システム <<actor>>
 ```
 
 **2c. Add actor descriptions (from context):**
@@ -593,9 +590,9 @@ end note
 ```plantuml
 @startuml {project}_class
 
-' Actors (class keyword with <<actor>> stereotype - NOT actor keyword)
-class 顧客 <<actor>>
-class 受注係 <<actor>>
+' Actors
+actor 顧客 <<actor>>
+actor 受注係 <<actor>>
 ...
 
 ' Enumerations
@@ -1281,7 +1278,7 @@ Inferred model says: "status: string"
 - ❌ Skip attributes because they seem "obvious"
 - ❌ Use generic "status: string" instead of enums
 - ❌ Omit relationships between entities
-- ❌ Use `actor` keyword in class diagrams (causes PlantUML diagram type detection errors)
+- ❌ Forget actor definitions
 
 ### ✅ Do
 
@@ -1289,7 +1286,7 @@ Inferred model says: "status: string"
 - ✅ Define complete attribute sets
 - ✅ Use strong types (enums, decimals)
 - ✅ Specify relationship cardinality
-- ✅ Include all actors using `class X <<actor>>` (NOT `actor X <<actor>>`)
+- ✅ Include all actors with stereotypes
 
 ---
 

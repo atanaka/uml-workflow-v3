@@ -4,6 +4,21 @@
 
 ---
 
+## 📦 Release Notes
+
+### v3.2.0 (latest)
+- **#1 Fix**: キャッシュパスをローカル化（`~/.uml-workflow-cache`）。`/mnt/user-data/outputs/` 非存在環境でもキャッシュが正常動作するよう修正
+- **#1 Fix**: `restore_all_cached_files()` を実装（SKILL.md から参照されていたが未実装だった）
+- **#2 New**: Phase A→B ハンドオフの自動化。`save_phase_a_state()` / `load_phase_a_state()` によりテックスタック選択のコピペ不要に
+- **#3 New**: `DEMO-GUIDE.md` 同梱。初回セットアップ〜Phase A/B 実行の手順書
+
+### v3.1.0
+- 10-step 完全統合、キャッシュ・レジューム・XMI最適化
+- 日英バイリンガル対応、Phase A/B 自動分割
+
+---
+
+
 ## 🎯 これは何？ / What is this?
 
 **uml-workflow-v3** は、自然言語で書かれたビジネスシナリオを入力として、UML設計からフルスタックコード・テスト・トレーサビリティマトリクスまでを自動生成する Claude AI スキルです。 **uml-workflow-v3** is a Claude AI skill that takes a natural-language business scenario and automatically generates UML diagrams, full-stack application code, test suites, and a complete traceability matrix — all in a single 10-step pipeline.
