@@ -290,4 +290,4 @@ uml-workflow-v3でorder-managementのStep 5から再開
 ## お問い合わせ
 
 - GitHub Issues: [リポジトリ URL]
-- 導入支援・POC 相談: ModelCraft AI（[連絡先]）
+- 導入支援・POC 相談: atanaka まで
