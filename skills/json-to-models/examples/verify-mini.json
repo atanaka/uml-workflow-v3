@@ -1,0 +1,46 @@
+{
+  "metadata": {
+    "project_name": "TestClass",
+    "version": "1.0",
+    "language": "ja",
+    "description": "Papyrus 7.1.0 実機検証用 baseline モデル。Papyrus 実機サンプル PNG (2026-05-13) と構造を 1:1 で対応させ、最小機能の動作確認を行う。"
+  },
+  "entities": [
+    {
+      "name": "Party",
+      "description": "Person と OrgUnit の基底クラス。汎用的な「組織や人」を表す。",
+      "attributes": [
+        {
+          "name": "name",
+          "type": "String",
+          "required": true,
+          "description": "Party の名前"
+        }
+      ],
+      "relationships": []
+    },
+    {
+      "name": "Person",
+      "description": "個人を表すクラス。Party のサブクラス。",
+      "extends": "Party",
+      "attributes": [],
+      "relationships": []
+    },
+    {
+      "name": "OrgUnit",
+      "description": "組織単位を表すクラス。Party のサブクラスで、複数の Party を構成要素として持つ（composition）。",
+      "extends": "Party",
+      "attributes": [],
+      "relationships": [
+        {
+          "target": "Party",
+          "type": "composition",
+          "target_multiplicity": "1..*",
+          "source_multiplicity": "1",
+          "description": "OrgUnit は 1 件以上の Party を構成要素として保持する"
+        }
+      ]
+    }
+  ],
+  "enumerations": []
+}

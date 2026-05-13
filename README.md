@@ -394,6 +394,8 @@ uml-workflow-v3-release/
 
 | Version | Changes / 変更内容 |
 |---------|--------------------|
+| **v3.3.0** ⭐ | Papyrus 7.1.0 公式サポート (json-to-models v1.3.1), abstract クラス対応 (`is_abstract`), XMI 二形式同時出力 (OMG + EMF), PNG ベストエフォート生成, Papyrus 実機検証 26 機能 100% PASS |
+| **v3.2.0** | キャッシュパスローカル化, Phase A→B ハンドオフ自動化, DEMO-GUIDE.md 同梱, `restore_all_cached_files()` 実装 |
 | **v3.1.0** | 2-Phase Auto-Split（コンテキスト枯渇対策）, Template Lazy Loading（テンプレート遅延読込）, SKILL.md 38%圧縮, PIPELINE.md 30%圧縮, v2-enhanced統合廃止 |
 | **v3.0.0** | 10-step pipeline (Step 10 Traceability Matrix追加), references architecture, Claude.ai Skills正式対応 |
 | v2.0.0 | 9-step pipeline, caching system / キャッシュシステム, XMI optimization / XMI最適化, security design / セキュリティ設計 |

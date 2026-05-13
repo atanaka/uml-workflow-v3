@@ -1,0 +1,355 @@
+{
+  "metadata": {
+    "source": "manual-edit",
+    "generated_at": "2026-05-13T00:00:00Z",
+    "version": "1.0",
+    "status": "formal",
+    "project_name": "SchoolMgmt",
+    "japanese_name": "学校管理システム",
+    "language": "ja",
+    "description": "json-to-models v1.3 の Comprehensive 検証用ドメインモデル。学校・学科・コース・教員・生徒・履修登録を題材に、v1.3 全機能 (多段継承、自己参照、composition、aggregation、has-many、Enumeration、複数 PrimitiveType、Optional 属性、Operation) を網羅する。"
+  },
+  "entities": [
+    {
+      "name": "Person",
+      "japanese_name": "人",
+      "description": "学校に関わる人 (生徒・教員・職員) の共通基底クラス。直接インスタンス化しない抽象クラス。",
+      "stereotype": "entity",
+      "is_abstract": true,
+      "attributes": [
+        {
+          "name": "id",
+          "type": "Integer",
+          "required": true,
+          "primary_key": true,
+          "description": "ユニーク ID"
+        },
+        {
+          "name": "firstName",
+          "type": "String",
+          "required": true,
+          "description": "名"
+        },
+        {
+          "name": "middleName",
+          "type": "String",
+          "required": false,
+          "description": "ミドルネーム (Optional 属性、v1.3 で [0..1] になることを検証)"
+        },
+        {
+          "name": "lastName",
+          "type": "String",
+          "required": true,
+          "description": "姓"
+        },
+        {
+          "name": "birthDate",
+          "type": "String",
+          "required": true,
+          "description": "生年月日 (ISO 8601 形式の文字列)"
+        },
+        {
+          "name": "isActive",
+          "type": "Boolean",
+          "required": true,
+          "description": "在籍中か否か (PrimitiveType Boolean の検証)"
+        }
+      ],
+      "relationships": []
+    },
+    {
+      "name": "Student",
+      "japanese_name": "生徒",
+      "description": "生徒。Person を継承する。",
+      "stereotype": "entity",
+      "extends": "Person",
+      "attributes": [
+        {
+          "name": "studentId",
+          "type": "Integer",
+          "required": true,
+          "unique": true,
+          "description": "学籍番号"
+        },
+        {
+          "name": "gpa",
+          "type": "Real",
+          "required": true,
+          "description": "GPA (PrimitiveType Real の検証)"
+        },
+        {
+          "name": "enrollYear",
+          "type": "Integer",
+          "required": true,
+          "description": "入学年"
+        }
+      ],
+      "relationships": []
+    },
+    {
+      "name": "Staff",
+      "japanese_name": "職員",
+      "description": "職員クラス。Person を継承し、Teacher の親クラスでもある (多段継承の中間ノード)。直接インスタンス化しない抽象クラス。",
+      "stereotype": "entity",
+      "extends": "Person",
+      "is_abstract": true,
+      "attributes": [
+        {
+          "name": "employeeId",
+          "type": "Integer",
+          "required": true,
+          "unique": true,
+          "description": "職員番号"
+        },
+        {
+          "name": "salary",
+          "type": "Real",
+          "required": true,
+          "description": "給与"
+        },
+        {
+          "name": "hireDate",
+          "type": "String",
+          "required": true,
+          "description": "雇用日"
+        }
+      ],
+      "relationships": []
+    },
+    {
+      "name": "Teacher",
+      "japanese_name": "教員",
+      "description": "教員。Staff を継承する (3 段継承: Person ← Staff ← Teacher を構成)。自己参照 (mentor) を持つ。",
+      "stereotype": "entity",
+      "extends": "Staff",
+      "attributes": [
+        {
+          "name": "specialization",
+          "type": "String",
+          "required": true,
+          "description": "専門分野"
+        },
+        {
+          "name": "maxYearsExperience",
+          "type": "UnlimitedNatural",
+          "required": true,
+          "description": "想定最大勤続年数 (PrimitiveType UnlimitedNatural の検証)"
+        }
+      ],
+      "relationships": [
+        {
+          "type": "has-one",
+          "target": "Teacher",
+          "source_multiplicity": "0..*",
+          "target_multiplicity": "0..1",
+          "description": "メンター (自己参照 Association の検証)"
+        }
+      ],
+      "business_methods": [
+        {
+          "name": "calculateBonus",
+          "description": "賞与額を計算する",
+          "parameters": [
+            {
+              "name": "performanceScore",
+              "type": "Real"
+            }
+          ],
+          "return_type": "Real"
+        }
+      ]
+    },
+    {
+      "name": "School",
+      "japanese_name": "学校",
+      "description": "学校。複数の Department を構成要素として持つ (composition の検証)。",
+      "stereotype": "aggregate_root",
+      "attributes": [
+        {
+          "name": "name",
+          "type": "String",
+          "required": true,
+          "description": "校名"
+        },
+        {
+          "name": "foundedYear",
+          "type": "Integer",
+          "required": true,
+          "description": "創立年"
+        }
+      ],
+      "relationships": [
+        {
+          "type": "composition",
+          "target": "Department",
+          "source_multiplicity": "1",
+          "target_multiplicity": "1..*",
+          "description": "学校は 1 つ以上の学科を構成要素として保持する (composition の検証)"
+        }
+      ]
+    },
+    {
+      "name": "Department",
+      "japanese_name": "学科",
+      "description": "学科。複数の Course を構成要素として持ち、複数の Teacher を集約する (composition + aggregation の検証)。",
+      "stereotype": "entity",
+      "attributes": [
+        {
+          "name": "name",
+          "type": "String",
+          "required": true,
+          "description": "学科名"
+        },
+        {
+          "name": "budget",
+          "type": "Real",
+          "required": true,
+          "description": "予算"
+        }
+      ],
+      "relationships": [
+        {
+          "type": "composition",
+          "target": "Course",
+          "source_multiplicity": "1",
+          "target_multiplicity": "1..*",
+          "description": "学科は 1 つ以上のコースを構成要素として保持する"
+        },
+        {
+          "type": "aggregation",
+          "target": "Teacher",
+          "source_multiplicity": "0..*",
+          "target_multiplicity": "1..*",
+          "description": "学科は複数の教員を所属させる (aggregation=shared の検証)"
+        }
+      ]
+    },
+    {
+      "name": "Course",
+      "japanese_name": "コース",
+      "description": "コース。1 人の教員が担当し、複数の履修登録 (Enrollment) を持つ。",
+      "stereotype": "entity",
+      "attributes": [
+        {
+          "name": "code",
+          "type": "String",
+          "required": true,
+          "unique": true,
+          "description": "コースコード"
+        },
+        {
+          "name": "title",
+          "type": "String",
+          "required": true,
+          "description": "コース名"
+        },
+        {
+          "name": "credits",
+          "type": "Integer",
+          "required": true,
+          "description": "単位数"
+        },
+        {
+          "name": "level",
+          "type": "Grade",
+          "required": true,
+          "description": "対象学年 (属性型が Enumeration の検証)"
+        },
+        {
+          "name": "subject",
+          "type": "Subject",
+          "required": true,
+          "description": "教科 (属性型が Enumeration の検証)"
+        }
+      ],
+      "relationships": [
+        {
+          "type": "has-one",
+          "target": "Teacher",
+          "source_multiplicity": "0..*",
+          "target_multiplicity": "1",
+          "description": "コースを担当する教員 (has-one、aggregation=none)"
+        },
+        {
+          "type": "has-many",
+          "target": "Enrollment",
+          "source_multiplicity": "1",
+          "target_multiplicity": "0..*",
+          "description": "コースに対する履修登録 (has-many)"
+        }
+      ],
+      "business_methods": [
+        {
+          "name": "enroll",
+          "description": "生徒をコースに登録する",
+          "parameters": [
+            {
+              "name": "student",
+              "type": "Student"
+            }
+          ],
+          "return_type": "Boolean"
+        }
+      ]
+    },
+    {
+      "name": "Enrollment",
+      "japanese_name": "履修登録",
+      "description": "Student と Course の履修関係を表す。Association class の代替表現として通常クラス化。",
+      "stereotype": "entity",
+      "attributes": [
+        {
+          "name": "enrolledDate",
+          "type": "String",
+          "required": true,
+          "description": "履修登録日"
+        },
+        {
+          "name": "grade",
+          "type": "Real",
+          "required": false,
+          "description": "成績 (未評価時は null、Optional 属性の追加検証)"
+        }
+      ],
+      "relationships": [
+        {
+          "type": "belongs-to",
+          "target": "Student",
+          "source_multiplicity": "0..*",
+          "target_multiplicity": "1",
+          "description": "履修登録は 1 人の生徒に属する"
+        }
+      ]
+    }
+  ],
+  "enumerations": [
+    {
+      "name": "Grade",
+      "japanese_name": "学年",
+      "description": "小学校の学年。",
+      "values": [
+        { "name": "ELEMENTARY_1" },
+        { "name": "ELEMENTARY_2" },
+        { "name": "ELEMENTARY_3" },
+        { "name": "ELEMENTARY_4" },
+        { "name": "ELEMENTARY_5" },
+        { "name": "ELEMENTARY_6" }
+      ]
+    },
+    {
+      "name": "Subject",
+      "japanese_name": "教科",
+      "description": "教科の種別。",
+      "values": [
+        { "name": "JAPANESE" },
+        { "name": "MATH" },
+        { "name": "SCIENCE" },
+        { "name": "SOCIAL_STUDIES" },
+        { "name": "ENGLISH" },
+        { "name": "MUSIC" },
+        { "name": "ART" },
+        { "name": "PE" }
+      ]
+    }
+  ]
+}
