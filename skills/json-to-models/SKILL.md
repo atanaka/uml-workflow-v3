@@ -214,9 +214,9 @@ def generate_plantuml_from_json(domain_model: dict) -> str:
             elif rel_type == 'has-one':
                 arrow = "--|>"
             elif rel_type == 'has-many':
-                arrow = "\"1\" --o \"*\""
+                arrow = "\"1\" o-- \"*\""
             else:  # many-to-many
-                arrow = "\"*\" --o \"*\""
+                arrow = "\"*\" o-- \"*\""
             
             puml_lines.append(f"{source} {arrow} {target}")
     
